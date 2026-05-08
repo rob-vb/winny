@@ -12,7 +12,7 @@ import { useFonts } from "@expo-google-fonts/nunito/useFonts";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { db } from "@/src/db/client";
 import migrations from "@/drizzle/migrations";
-import "./global.css";
+import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 

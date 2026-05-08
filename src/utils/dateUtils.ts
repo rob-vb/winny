@@ -14,7 +14,7 @@ export function computeStreak(distinctDateKeys: string[]): number {
 
   if (sorted[0] !== today) {
     // Grace: streak still alive if most recent win was yesterday
-    const yesterday = toDateKey(new Date(Date.now() - 86400000));
+    const yesterday = toDateKey(new Date(new Date(today + "T12:00:00").getTime() - 86400000));
     if (sorted[0] !== yesterday) return 0;
   }
 
