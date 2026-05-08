@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "winning-streak-template",
-    "slug": "winning-streak-template",
+    "name": "Winning Streak",
+    "slug": "winning-streak",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "winningstreaktemplate",
+    "scheme": "winning-streak",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FAF8F4"
     },
     "ios": {
       "supportsTablet": true
