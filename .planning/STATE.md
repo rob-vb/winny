@@ -19,7 +19,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-08)
 
 **Core value:** A frictionless daily habit of noticing wins — the streak counter and history prove you're already winning.
-**Current focus:** Phase 1
+**Current focus:** Phase 2
 
 ## Phase Status
 
@@ -85,9 +85,9 @@ None
 
 ## Session Continuity
 
-- Last action: Phase 1 complete — Walking Skeleton executed, verified, code review passed (2 criticals fixed), UAT deferred
-- Resume file: None — advancing to Phase 2
-- Next action: `/gsd-discuss-phase 2` (or `/gsd-plan-phase 2` to skip discuss)
+- Last action: Phase 2 context gathered — Home layout, entry flow, session model decided
+- Resume file: `.planning/phases/02-core-win-entry-loop/02-CONTEXT.md`
+- Next action: `/gsd-plan-phase 2`
 
 ## History
 
@@ -98,3 +98,4 @@ None
 - 2026-05-08: Phase 1 planned — 01-01 Walking Skeleton (3 tasks, 22 files, verification passed)
 - 2026-05-08: Phase 1 Plan 01-01 executed — Expo SDK 55 Walking Skeleton complete (22 files, 3 commits: 45f521e, cbfdec6, bffa1d7)
 - 2026-05-08: Phase 1 complete — code review 2 criticals fixed (CSS import path, DST yesterday anchor), verification passed (5/5 automated), UAT deferred to next simulator session
+- 2026-05-09: Phase 2 context gathered — inline Home entry (no nav), chat-style layout, no "I'm done" button, trophy header with baked-in streak label, micro-animation on add
