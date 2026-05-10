@@ -5,7 +5,8 @@ status: draft
 design_system: nativewind-v4
 preset: none
 created: 2026-05-10
-platform: react-native
+revised: 2026-05-10
+revision_reason: "UI-checker findings: D4 typography 4→2 weights; D1 CTA label 'Add'→'Add Win'"
 ---
 
 # Phase 2 — UI Design Contract
@@ -48,9 +49,10 @@ Inherited from Phase 1 (NativeWind v4 Tailwind spacing, multiples of 4 only).
 | 3xl | 64px | `p-16` / `gap-16` | Reserved — not used in Phase 2 screens |
 
 **Exceptions:**
-- Minimum touch target for the Add button: 44px height (iOS HIG). Use `min-h-[44px]` on the Add Pressable.
+- Minimum touch target for the Add Win button: 44px height (iOS HIG). Use `min-h-[44px]` on the Add Win Pressable.
 - Input area pinned bottom padding accounts for safe area inset via `SafeAreaView` — do not add extra padding that duplicates inset.
 - Win card vertical padding: `py-3` (12px) — slightly off standard scale, chosen for comfortable text reading. Acceptable exception documented here.
+- Input area gap between TextInput and Add Win button: `gap-3` (12px) — slightly off standard scale, chosen to keep the button visually tight to the input without crowding. Acceptable exception documented here.
 
 ---
 
@@ -58,23 +60,28 @@ Inherited from Phase 1 (NativeWind v4 Tailwind spacing, multiples of 4 only).
 
 All text uses **Nunito** (all weights preloaded by `app/_layout.tsx` in Phase 1).
 
+**Phase 2 active weight contract: exactly 2 weights in use.**
+
 | Role | Size | Weight | Nunito variant | NativeWind class | Line Height | Usage in Phase 2 |
 |------|------|--------|---------------|-----------------|-------------|-----------------|
 | Body | 16px | 400 | `Nunito_400Regular` | `font-nunito-regular text-base` | 1.5 | Win card text; input placeholder; example prompts |
-| Label | 14px | 600 | `Nunito_600SemiBold` | `font-nunito-semibold text-sm` | 1.4 | "Total wins" counter label; Add button label; character count hint |
-| Heading | 28px | 800 | `Nunito_800ExtraBold` | `font-nunito-extrabold text-[28px]` | 1.2 | Empty state "What was your win today?" heading |
+| Label | 14px | 700 | `Nunito_700Bold` | `font-nunito-bold text-sm` | 1.4 | "Total wins" counter label; Add Win button label; character count hint |
+| Heading | 28px | 700 | `Nunito_700Bold` | `font-nunito-bold text-[28px]` | 1.2 | Empty state "What was your win today?" heading |
 | Display | 20px | 700 | `Nunito_700Bold` | `font-nunito-bold text-xl` | 1.3 | Streak label string (e.g. "12 day streak! You're on fire! 🔥") |
 
 **Weight declarations active in Phase 2:**
 
-| Weight | Nunito variant | Role |
-|--------|---------------|------|
-| 400 | `Nunito_400Regular` | Body text, win card copy, prompts |
-| 600 | `Nunito_600SemiBold` | Labels, button copy, total-wins counter |
-| 700 | `Nunito_700Bold` | Streak label display line |
-| 800 | `Nunito_800ExtraBold` | Empty state heading |
+| Weight | Nunito variant | Roles |
+|--------|---------------|-------|
+| 400 | `Nunito_400Regular` | Body text, win card copy, input text, prompts |
+| 700 | `Nunito_700Bold` | All emphasis: labels, button copy, streak label display, empty state heading, total wins number |
 
-**Note on 900 (Black):** `Nunito_900Black` is preloaded but not assigned a role in Phase 2. It is reserved for Phase 3+ hero numbers (total wins count, history header). Do not use in Phase 2.
+**Weights NOT in active use for Phase 2 (available but reserved):**
+- 600 `Nunito_600SemiBold` — not assigned; available if needed in later phases
+- 800 `Nunito_800ExtraBold` — not assigned; available if needed in later phases
+- 900 `Nunito_900Black` — reserved for Phase 3+ hero numbers (total wins count, history header); do not use in Phase 2
+
+The Nunito family is fully preloaded (all weights) by Phase 1. Phase 2 constrains active use to the 2-weight pairing above for visual consistency. Do not introduce a third weight in Phase 2 implementation.
 
 ---
 
@@ -89,16 +96,16 @@ All tokens locked from Phase 1 (`tailwind.config.js`). Phase 2 specifies which e
 | Primary text (30%) | `#1C1C1E` | `text-text-primary` | Win card text; streak label; heading; input text |
 | Muted text (30%) | `#8E8E93` | `text-text-secondary` | Example prompt text (3 muted lines); input placeholder; total-wins counter label; character count hint |
 | Border | `#F0EDE8` | `border-border` | Win card bottom border; input field border; input area top separator |
-| Primary / CTA orange (10%) | `#F5A623` | `bg-primary` / `text-primary` | Add button background; Add button label text (if inverted) |
+| Primary / CTA orange (10%) | `#F5A623` | `bg-primary` / `text-primary` | Add Win button background; Add Win button label text (if inverted) |
 | Gold (10%) | `#F7C217` | `text-gold` / `bg-gold` | Trophy image tint (if programmatically tinted); "total wins" count number |
 | Accent red (rare) | `#FF6B6B` | `text-accent` | Heart icon on win cards (Phase 1 locked: hearts only) |
 
 **60 / 30 / 10 split in Phase 2:**
 - 60%: `#FAF8F4` warm cream — all screen backgrounds and FlatList fill
 - 30%: `#FFFFFF` (cards/input) + `#1C1C1E` (text) + `#8E8E93` (muted) + `#F0EDE8` (borders)
-- 10%: `#F5A623` orange — Add button only; `#F7C217` gold — total wins number display
+- 10%: `#F5A623` orange — Add Win button only; `#F7C217` gold — total wins number display
 
-**Accent (`#FF6B6B`) reserved exclusively for:** heart icon on win cards. Never use for the Add button, backgrounds, or headings.
+**Accent (`#FF6B6B`) reserved exclusively for:** heart icon on win cards. Never use for the Add Win button, backgrounds, or headings.
 
 **No destructive color needed in Phase 2.** No delete, clear, or destructive action is in scope for this phase.
 
@@ -117,7 +124,7 @@ SafeAreaView (flex-1 bg-background)
         ├── [Empty OR Populated] — flex-1 region
         │     EMPTY: View (flex-1, centered)
         │               Image: trophy.png (~120px wide)
-        │               Text: "What was your win today?" (Heading/28px ExtraBold)
+        │               Text: "What was your win today?" (Heading/28px Bold)
         │     POPULATED: FlatList (flex-1, todayWins newest-first)
         │               WinCard (each win, animated on add)
         ├── ExamplePrompts       — 3 muted prompt lines, always visible
@@ -135,7 +142,7 @@ SafeAreaView (flex-1 bg-background)
 | Trophy image size | 48px × 48px |
 | Streak label | Display role: 20px Nunito Bold, `text-text-primary` |
 | Streak label format | Full baked-in string — count embedded (see Streak Label Copy section) |
-| Total wins counter | Label role: 14px Nunito SemiBold, `text-text-secondary`; format: "47 total wins" |
+| Total wins counter | Label role: 14px Nunito Bold, `text-text-secondary`; format: "47 total wins" |
 | Separator | 1px bottom border `border-border` below header |
 
 ### Empty State (0 wins today)
@@ -145,7 +152,7 @@ SafeAreaView (flex-1 bg-background)
 | Region | flex-1 centered vertically and horizontally |
 | Trophy image | `assets/images/trophy.png`, width 120px, resizeMode="contain" |
 | Trophy bottom margin | `mb-8` (32px) |
-| Heading | "What was your win today?" — Heading role (28px ExtraBold), `text-text-primary`, `text-center` |
+| Heading | "What was your win today?" — Heading role (28px Bold), `text-text-primary`, `text-center` |
 | Heading max width | 80% of screen width to allow natural wrapping |
 
 ### Populated State (≥1 wins today)
@@ -194,8 +201,8 @@ SafeAreaView (flex-1 bg-background)
 |----------|-------|
 | Background | `bg-surface` |
 | Padding | `px-4 py-3` |
-| Layout | Row: TextInput (flex-1) + Add button (fixed width) |
-| Gap between input and button | `gap-3` (12px) |
+| Layout | Row: TextInput (flex-1) + Add Win button (fixed width) |
+| Gap between input and button | `gap-3` (12px — documented spacing exception) |
 | TextInput background | `bg-background` |
 | TextInput border | 1px `border-border`, `rounded-lg` (8px radius) |
 | TextInput padding | `px-4 py-3` |
@@ -203,12 +210,12 @@ SafeAreaView (flex-1 bg-background)
 | TextInput font | Body role: 16px Nunito Regular |
 | TextInput maxLength | 200 characters |
 | TextInput multiline | false — single line input; user submits with button |
-| TextInput returnKeyType | "done" — triggers Add on iOS keyboard return |
-| Add button background | `bg-primary` (`#F5A623`) |
-| Add button shape | Square with `rounded-lg` (8px), 44px minimum height and width |
-| Add button label | "Add" — Label role: 14px Nunito SemiBold, `text-white` |
-| Add button disabled state | `opacity-50` when `inputText.trim().length === 0` OR `isAdding === true` |
-| Add button on press | `addWin(text)` → clear input → scroll FlatList to top → keyboard stays open |
+| TextInput returnKeyType | "done" — triggers Add Win on iOS keyboard return |
+| Add Win button background | `bg-primary` (`#F5A623`) |
+| Add Win button shape | Square with `rounded-lg` (8px), 44px minimum height and width |
+| Add Win button label | "Add Win" — Label role: 14px Nunito Bold, `text-white` |
+| Add Win button disabled state | `opacity-50` when `inputText.trim().length === 0` OR `isAdding === true` |
+| Add Win button on press | `addWin(text)` → clear input → scroll FlatList to top → keyboard stays open |
 | Top separator | 1px `border-t border-border` |
 
 ---
@@ -237,7 +244,7 @@ Pure function `streakLabel(count: number): string`. All labels baked into the st
 
 | Element | Copy | Source |
 |---------|------|--------|
-| Primary CTA | "Add" (button label on WinInputArea) | CONTEXT.md D-08 direction; researcher default |
+| Primary CTA | "Add Win" (button label on WinInputArea) | UI-checker D1 fix — matches `accessibilityLabel="Add win"`; verb + noun required |
 | Input placeholder | "What did you win today?" | Researcher default — warm, open question |
 | Empty state heading | "What was your win today?" | CONTEXT.md D-07 |
 | Empty state body | (none — heading alone is sufficient; example prompts provide context) | Researcher decision — avoids copy clutter |
@@ -265,15 +272,15 @@ Pure function `streakLabel(count: number): string`. All labels baked into the st
 ### Win Add Flow
 
 1. User types in TextInput (focus on mount — `autoFocus={true}`).
-2. User taps "Add" button OR presses keyboard return key.
+2. User taps "Add Win" button OR presses keyboard return key.
 3. Guard: if `inputText.trim().length === 0` or `isAdding`, do nothing.
 4. Guard: if `inputText.length > 200`, do nothing (maxLength prevents this at UI level).
-5. Set `isAdding = true`; disable Add button (`opacity-50`).
+5. Set `isAdding = true`; disable Add Win button (`opacity-50`).
 6. Call `addWin(text.trim())` — async write to SQLite + store re-hydrate.
 7. Clear `inputText` to `""`.
 8. Call `flatListRef.current?.scrollToOffset({ offset: 0, animated: true })`.
 9. Do NOT call `TextInput.blur()` — keyboard stays open for next win.
-10. Set `isAdding = false`; re-enable Add button.
+10. Set `isAdding = false`; re-enable Add Win button.
 11. New win item at index 0 receives `ZoomIn.duration(300)` entering animation.
 
 ### Keyboard Behavior
@@ -313,7 +320,7 @@ Pure function `streakLabel(count: number): string`. All labels baked into the st
 
 | Element | Contract |
 |---------|---------|
-| Add button | `accessibilityLabel="Add win"` `accessibilityRole="button"` |
+| Add Win button | `accessibilityLabel="Add win"` `accessibilityRole="button"` |
 | TextInput | `accessibilityLabel="Win text input"` `accessibilityHint="Type your win for today, up to 200 characters"` |
 | Trophy image | `accessibilityLabel="Winning Streak trophy"` |
 | Streak header | `accessibilityLabel={streakLabel(streak)}` on the containing view |
@@ -329,7 +336,7 @@ Pure function `streakLabel(count: number): string`. All labels baked into the st
 
 **Pool:** 40–50 curated short phrases. Generated by Claude during execution (Phase 2 Wave 1). Stored in `src/constants/examplePrompts.ts`. Format: plain short phrases, first-person, past tense. Example: "I helped a colleague today", "I finished something I'd been avoiding", "I showed up even when I didn't feel like it".
 
-**Display format:** Each prompt prefixed with a bullet or subtle prefix character — no tappable affordance, no underline, no chevron.
+**Display format:** Each prompt prefixed with "e.g. " — no tappable affordance, no underline, no chevron.
 
 **Width:** Prompts are truncated to 1 line with `numberOfLines={1} ellipsizeMode="tail"` to prevent wrapping disrupting the compact layout.
 
@@ -361,12 +368,12 @@ For executor convenience — these are the exact class names Phase 2 uses.
 | Primary text | `text-text-primary` |
 | Muted / secondary text | `text-text-secondary` |
 | Border / separator | `border-border` |
-| Add button | `bg-primary` |
+| Add Win button | `bg-primary` |
 | Total wins count (number) | `text-gold` |
 | Heart icon | `text-accent` |
 | Body text | `font-nunito-regular text-base` |
-| Label | `font-nunito-semibold text-sm` |
-| Heading (empty state) | `font-nunito-extrabold text-[28px]` |
+| Label (button copy, counter label) | `font-nunito-bold text-sm` |
+| Heading (empty state) | `font-nunito-bold text-[28px]` |
 | Streak label display | `font-nunito-bold text-xl` |
 
 ---
@@ -389,8 +396,8 @@ For executor convenience — these are the exact class names Phase 2 uses.
 | Field | Source | Count |
 |-------|--------|-------|
 | Color palette (all tokens) | Phase 1 CONTEXT.md D-02 + Phase 1 UI-SPEC | 9 tokens |
-| Font family + weights | Phase 1 CONTEXT.md D-03 + Phase 1 UI-SPEC | 4 weights active |
-| Spacing scale | Phase 1 UI-SPEC | 7 tokens + 3 exceptions |
+| Font family + weights | Phase 1 CONTEXT.md D-03 + Phase 1 UI-SPEC; revised to 2-weight contract per UI-checker D4 | 2 weights active |
+| Spacing scale | Phase 1 UI-SPEC | 7 tokens + 4 exceptions |
 | Design system tool + icon library | Phase 1 CONTEXT.md D-01 | 2 decisions |
 | Screen layout structure | Phase 2 CONTEXT.md D-01, D-02, D-04, D-07 | 5 decisions |
 | No "I'm done" button | Phase 2 CONTEXT.md D-03 | 1 decision |
@@ -401,5 +408,14 @@ For executor convenience — these are the exact class names Phase 2 uses.
 | FlatList direction (non-inverted) | Phase 2 RESEARCH.md Section 5 | 1 decision |
 | isNew animation guard | Phase 2 RESEARCH.md Section 6 | 1 decision |
 | Streak label tier strings | Researcher default — CONTEXT.md D-05 tone constraint | 9 tiers |
-| Input placeholder / CTA copy | Researcher default | 3 strings |
+| Input placeholder copy | Researcher default | 1 string |
+| CTA label | "Add Win" — UI-checker D1 fix (verb + noun; matches accessibilityLabel) | 1 string |
 | Accessibility labels | Researcher default (standard RN accessibility) | 6 elements |
+
+## Revision Log
+
+| Date | Revision | Reason |
+|------|----------|--------|
+| 2026-05-10 | Typography: collapsed 4 active weights (400/600/700/800) → 2 (400/700). Label role: 600 SemiBold → 700 Bold. Heading role: 800 ExtraBold → 700 Bold. Updated typography table, weight declarations table, StreakHeader spec, NativeWind quick reference. | UI-checker BLOCKING finding: D4 max 2 active weights |
+| 2026-05-10 | Copywriting: CTA button label "Add" → "Add Win". Updated WinInputArea spec, Interaction Contract, Copywriting Contract table. | UI-checker D1 finding: single word without noun is a FLAG |
+| 2026-05-10 | Spacing: confirmed `gap-3` exception doc added to Spacing Scale exceptions table. `py-3` exception was already documented. | UI-checker D5 non-blocking confirmation |
