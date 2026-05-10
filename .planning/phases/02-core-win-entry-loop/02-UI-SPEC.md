@@ -1,11 +1,12 @@
 ---
 phase: 2
 slug: core-win-entry-loop
-status: draft
+status: approved
 design_system: nativewind-v4
 preset: none
 created: 2026-05-10
 revised: 2026-05-10
+reviewed_at: 2026-05-10
 revision_reason: "UI-checker findings: D4 typography 4→2 weights; D1 CTA label 'Add'→'Add Win'"
 ---
 
