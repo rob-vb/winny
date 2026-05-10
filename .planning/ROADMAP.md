@@ -8,7 +8,7 @@
 | # | Phase | Goal | Requirements | Success Criteria |
 |---|-------|------|--------------|-----------------|
 | 1 | Data Foundation + Nav Shell | 1/1 | Complete   | 2026-05-08 |
-| 2 | Core Win-Entry Loop | Users can log wins and see their streak — the complete core value loop | WIN-01, WIN-02, WIN-03, WIN-04, STREAK-01, STREAK-02, STREAK-03, STREAK-04 | 5 |
+| 2 | Core Win-Entry Loop | 2/5 | In Progress|  |
 | 3 | Win History | Users can review their full wins history grouped by date | HIST-01, HIST-02, HIST-03 | 3 |
 | 4 | Dream Goal | Users can write, save, and edit a Dream Goal that frames their progress | GOAL-01, GOAL-02, GOAL-03 | 3 |
 | 5 | Notifications + Settings | Users receive daily reminders and control their experience | NOTF-01, NOTF-02, NOTF-03, NOTF-04, SET-01, SET-02, SET-03 | 4 |
@@ -51,7 +51,7 @@ Plans:
 ### Phase 2: Core Win-Entry Loop
 **Goal:** Users can open the app, log one or more wins, see rotating example prompts, end their session, and immediately see their current streak and total wins count — the entire core value loop is functional
 **Mode:** mvp
-**Plans:** 5 plans
+**Plans:** 2/5 plans executed
 **Requirements:**
 - WIN-01: User can type a free-text win (1–200 characters)
 - WIN-02: Win entry screen shows 3 non-tappable example prompts (inspiration only), rotating daily from a pool of 40–50 curated prompts
@@ -71,8 +71,8 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 02-01-PLAN.md — Test scaffold + pure utilities: Jest setup, streakLabel, promptUtils, examplePrompts + unit tests (Wave 1)
-- [ ] 02-02-PLAN.md — Trophy asset + Zustand store: assets/images/trophy.png, useWinsStore (Wave 1, parallel)
+- [x] 02-01-PLAN.md — Test scaffold + pure utilities: Jest setup, streakLabel, promptUtils, examplePrompts + unit tests (Wave 1)
+- [x] 02-02-PLAN.md — Trophy asset + Zustand store: assets/images/trophy.png, useWinsStore (Wave 1, parallel)
 - [ ] 02-03-PLAN.md — UI components: StreakHeader, WinCard, ExamplePrompts, WinInputArea (Wave 2)
 - [ ] 02-04-PLAN.md — Home screen assembly: full app/(tabs)/index.tsx replacement (Wave 3)
 - [ ] 02-05-PLAN.md — Human verification checkpoint: automated checks + interactive E2E (Wave 4)
