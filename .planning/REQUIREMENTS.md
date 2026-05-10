@@ -22,7 +22,7 @@
 - [ ] **WIN-01**: User can type a free-text win (1–200 characters)
 - [ ] **WIN-02**: Win entry screen shows 3 non-tappable example prompts (inspiration only), rotating daily from a pool of 40–50 curated prompts
 - [ ] **WIN-03**: User can add multiple wins in one session without leaving the screen
-- [ ] **WIN-04**: User taps "I'm done for today" to end session and sees a summary of all wins logged today
+- [~] **WIN-04**: User taps "I'm done for today" to end session and sees a summary of all wins logged today — **Overridden by D-03.** No session-lock button. Always-open calendar-day model satisfies intent: today's wins always visible inline.
 
 ### Streak & Stats
 
@@ -108,14 +108,14 @@
 | FNDTN-02 | Phase 1 | Complete |
 | FNDTN-03 | Phase 1 | Complete |
 | FNDTN-04 | Phase 1 | Complete |
-| WIN-01 | Phase 2 | Pending |
-| WIN-02 | Phase 2 | Pending |
-| WIN-03 | Phase 2 | Pending |
-| WIN-04 | Phase 2 | Pending |
-| STREAK-01 | Phase 2 | Pending |
-| STREAK-02 | Phase 2 | Pending |
-| STREAK-03 | Phase 2 | Pending |
-| STREAK-04 | Phase 2 | Pending |
+| WIN-01 | Phase 2 | Complete |
+| WIN-02 | Phase 2 | Complete |
+| WIN-03 | Phase 2 | Complete |
+| WIN-04 | Phase 2 | Overridden by D-03 |
+| STREAK-01 | Phase 2 | Complete |
+| STREAK-02 | Phase 2 | Complete |
+| STREAK-03 | Phase 2 | Complete |
+| STREAK-04 | Phase 2 | Complete |
 | HIST-01 | Phase 3 | Pending |
 | HIST-02 | Phase 3 | Pending |
 | HIST-03 | Phase 3 | Pending |
