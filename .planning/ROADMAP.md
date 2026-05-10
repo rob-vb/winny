@@ -51,6 +51,7 @@ Plans:
 ### Phase 2: Core Win-Entry Loop
 **Goal:** Users can open the app, log one or more wins, see rotating example prompts, end their session, and immediately see their current streak and total wins count — the entire core value loop is functional
 **Mode:** mvp
+**Plans:** 5 plans
 **Requirements:**
 - WIN-01: User can type a free-text win (1–200 characters)
 - WIN-02: Win entry screen shows 3 non-tappable example prompts (inspiration only), rotating daily from a pool of 40–50 curated prompts
@@ -68,6 +69,13 @@ Plans:
 5. Missing a full calendar day resets the streak to 0; total wins counter never decreases
 **Dependencies:** Phase 1
 **UI hint**: yes
+
+Plans:
+- [ ] 02-01-PLAN.md — Test scaffold + pure utilities: Jest setup, streakLabel, promptUtils, examplePrompts + unit tests (Wave 1)
+- [ ] 02-02-PLAN.md — Trophy asset + Zustand store: assets/images/trophy.png, useWinsStore (Wave 1, parallel)
+- [ ] 02-03-PLAN.md — UI components: StreakHeader, WinCard, ExamplePrompts, WinInputArea (Wave 2)
+- [ ] 02-04-PLAN.md — Home screen assembly: full app/(tabs)/index.tsx replacement (Wave 3)
+- [ ] 02-05-PLAN.md — Human verification checkpoint: automated checks + interactive E2E (Wave 4)
 
 ### Phase 3: Win History
 **Goal:** Users can review everything they have ever logged, grouped by date with collapsible day groups and a prominent total wins count, giving them proof that they are already winning
@@ -149,8 +157,8 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Data Foundation + Nav Shell | 0/1 | Ready to execute | — |
-| 2. Core Win-Entry Loop | 0/? | Not started | — |
+| 1. Data Foundation + Nav Shell | 1/1 | Complete | 2026-05-08 |
+| 2. Core Win-Entry Loop | 0/5 | Planned | — |
 | 3. Win History | 0/? | Not started | — |
 | 4. Dream Goal | 0/? | Not started | — |
 | 5. Notifications + Settings | 0/? | Not started | — |
