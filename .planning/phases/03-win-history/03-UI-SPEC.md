@@ -1,10 +1,11 @@
 ---
 phase: 3
 slug: win-history
-status: draft
+status: approved
 design_system: nativewind-v4
 preset: none
 created: 2026-05-11
+reviewed_at: 2026-05-11
 platform: react-native
 ---
 
