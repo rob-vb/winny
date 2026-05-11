@@ -80,6 +80,7 @@ Plans:
 ### Phase 3: Win History
 **Goal:** Users can review everything they have ever logged, grouped by date with collapsible day groups and a prominent total wins count, giving them proof that they are already winning
 **Mode:** mvp
+**Plans:** 4 plans
 **Requirements:**
 - HIST-01: My Wins screen shows all wins grouped by date, newest first (SectionList)
 - HIST-02: Each date group shows win count badge and is individually collapsible
@@ -91,6 +92,12 @@ Plans:
 4. Total wins count is visible at the top of the screen before the list begins
 **Dependencies:** Phase 2
 **UI hint**: yes
+
+Plans:
+- [ ] 03-01-PLAN.md — formatDateKey utility + historyUtils unit tests (Wave 1)
+- [ ] 03-02-PLAN.md — HistoryHeroHeader + DateSectionHeader components (Wave 1, parallel)
+- [ ] 03-03-PLAN.md — WinsScreen assembly: SectionList + collapse state + empty state (Wave 2)
+- [ ] 03-04-PLAN.md — Human verification checkpoint (Wave 3)
 
 ### Phase 4: Dream Goal
 **Goal:** Users can write, save, and later edit a personal Dream Goal that is framed motivationally, anchoring every win to something they care about
@@ -158,8 +165,8 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Data Foundation + Nav Shell | 1/1 | Complete | 2026-05-08 |
-| 2. Core Win-Entry Loop | 0/5 | Planned | — |
-| 3. Win History | 0/? | Not started | — |
+| 2. Core Win-Entry Loop | 5/5 | Complete | 2026-05-10 |
+| 3. Win History | 0/4 | Planned | — |
 | 4. Dream Goal | 0/? | Not started | — |
 | 5. Notifications + Settings | 0/? | Not started | — |
 | 6. Onboarding + Copy System | 0/? | Not started | — |
