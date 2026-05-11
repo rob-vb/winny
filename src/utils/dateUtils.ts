@@ -1,3 +1,5 @@
+import { isToday, isYesterday, isSameYear, format } from "date-fns";
+
 // CRITICAL: 'en-CA' locale produces YYYY-MM-DD in device LOCAL time
 // NEVER use date.toISOString().slice(0,10) — that returns UTC date (RESEARCH Pitfall 4)
 export function toDateKey(date: Date = new Date()): string {
@@ -31,4 +33,16 @@ export function computeStreak(distinctDateKeys: string[]): number {
     }
   }
   return streak;
+}
+
+// Formats a YYYY-MM-DD date_key string into a human-readable relative-then-absolute label.
+// D-01: Today / Yesterday / EEE, MMM d (same year) / MMM d, yyyy (prior year)
+// CRITICAL: Uses T12:00:00 noon anchor to prevent DST off-by-one (RESEARCH Pitfall 3)
+// NEVER use new Date(dateKey) directly — that parses as UTC midnight
+export function formatDateKey(dateKey: string): string {
+  const d = new Date(dateKey + "T12:00:00");
+  if (isToday(d)) return "Today";
+  if (isYesterday(d)) return "Yesterday";
+  if (isSameYear(d, new Date())) return format(d, "EEE, MMM d"); // "Sat, May 9"
+  return format(d, "MMM d, yyyy"); // "Dec 1, 2025"
 }
