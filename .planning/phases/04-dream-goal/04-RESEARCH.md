@@ -577,18 +577,18 @@ No threat patterns beyond standard local storage. No data leaves the device in P
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **GoalCard vs GoalEditor height delta**
    - What we know: GoalCard (hero text at 28px bold, `py-6`) will be taller for short goals and shorter for long goals. GoalEditor (TextInput with `minHeight 120px`, `py-4`) has a fixed minimum.
    - What's unclear: For very short goals (1-2 words), GoalCard might be shorter than GoalEditor, causing a layout height change on swap — which the opacity-only approach does NOT handle (it would cause a content jump).
-   - Recommendation: Both GoalCard and GoalEditor should be visible siblings in a View with `position: relative`; use `pointerEvents="none"` on the hidden one. This way both always occupy their natural height but only one is interactive. The ScrollView absorbs any height difference.
-   - Alternative: Set a fixed `minHeight` on GoalCard matching GoalEditor's minimum.
+   - **RESOLVED:** Use Strategy A — both GoalCard and GoalEditor stay mounted as siblings; apply `pointerEvents="none"` to the hidden one via Reanimated `useAnimatedStyle`. ScrollView absorbs any height difference. Implemented in Plan 04-03 (goal.tsx state machine).
+   - Alternative considered + rejected: fixed `minHeight` on GoalCard — adds visual artifact on short goals.
 
 2. **Empty state — GoalEditor reuse or dedicated layout**
    - What we know: UI-SPEC defines empty state as "GoalEditor — same component as edit mode". The Save row in empty state is full-width (not flex-row with Cancel), which differs from edit mode (flex-row with Cancel + Save).
    - What's unclear: Does GoalEditor need a `mode: 'empty' | 'editing'` prop to control the action row, or should GoalScreen render the Save button separately in empty state?
-   - Recommendation: Pass `showCancel: boolean` prop to GoalEditor. When `false` (empty state), only Save button renders full-width. When `true` (edit mode), Cancel + Save render as flex-row. This keeps GoalEditor as the single edit component.
+   - **RESOLVED:** Add `showCancel: boolean` prop to GoalEditor. `showCancel={false}` (empty state) → Save renders full-width. `showCancel={true}` (edit mode) → Cancel + Save render flex-row. Single component, no `mode` enum. Implemented in Plan 04-02 (GoalEditor props) and Plan 04-03 (passed from goal.tsx).
 
 ---
 
