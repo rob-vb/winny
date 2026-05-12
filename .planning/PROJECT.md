@@ -33,10 +33,10 @@ A frictionless daily habit of noticing wins — the streak counter and history p
 - [ ] Total wins counter always grows, never resets
 - [ ] Encouraging tone throughout — no shame/guilt messaging for missed days
 
-**Win History**
-- [ ] My Wins screen shows all wins grouped by date, newest first
-- [ ] Each date group is collapsible, shows win count for that day
-- [ ] Total wins count displayed prominently (e.g. "167 Total Wins")
+**Win History** *(validated in Phase 3: Win History — 2026-05-12)*
+- [x] My Wins screen shows all wins grouped by date, newest first
+- [x] Each date group is collapsible, shows win count for that day
+- [x] Total wins count displayed prominently (e.g. "167 Total Wins")
 
 **Dream Goal**
 - [ ] User can write and save a long-form Dream Goal (up to 500 chars)
