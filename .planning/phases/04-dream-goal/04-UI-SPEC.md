@@ -51,17 +51,18 @@ Exceptions:
 
 | Role | Size | Weight | Line Height | NativeWind class | Usage |
 |------|------|--------|-------------|-----------------|-------|
-| Body | 16px (text-base) | 400 (regular) | 1.5 (leading-relaxed) | `font-nunito-regular text-base leading-relaxed` | Goal text in view mode, motivational copy, input text |
-| Label | 14px (text-sm) | 600 (semibold) | 1.4 (leading-snug) | `font-nunito-semibold text-sm` | Character counter, Cancel button label |
+| Body | 16px (text-base) | 400 (regular) | 1.5 (leading-relaxed) | `font-nunito-regular text-base leading-relaxed` | Goal text in view mode (non-hero), motivational copy, input text, placeholder text |
+| Label | 14px (text-sm) | 700 (bold) | 1.4 (leading-snug) | `font-nunito-bold text-sm leading-snug` | Character counter, Cancel button label |
 | Heading | 20px (text-xl) | 700 (bold) | 1.2 (leading-tight) | `font-nunito-bold text-xl leading-tight` | Screen section headers, "Your Dream Goal" label |
-| Display | 28px (text-[28px]) | 800 (extrabold) | 1.2 (leading-tight) | `font-nunito-extrabold text-[28px] leading-tight` | Goal text rendered as hero in view mode |
+| Display | 28px (text-[28px]) | 700 (bold) | 1.2 (leading-tight) | `font-nunito-bold text-[28px] leading-tight` | Goal text rendered as hero in view mode |
 
 Source: Phase 1 CONTEXT.md D-03; `WinCard.tsx`, `StreakHeader.tsx`, `HistoryHeroHeader.tsx` patterns.
 
 Notes:
-- Goal text in view mode renders at Display size (28px, extrabold) to establish visual hero weight.
+- Goal text in view mode renders at Display size (28px, bold) to establish visual hero weight.
 - Motivational copy ("You're building your dream one win at a time") renders at Body size (16px, regular) in `text-text-secondary`.
 - TextInput in edit mode uses Body size (16px, regular) matching `WinInputArea` pattern.
+- Two weights only: regular (400) for all body/placeholder/label-level text, bold (700) for all headings, CTA labels, and the Display hero text.
 
 ---
 
@@ -116,16 +117,16 @@ SafeAreaView bg-background
   ScrollView px-4
     [Header row — top of scroll area]
       View flex-row items-center justify-between py-4
-        Text "Dream Goal"              ← Heading size (20px bold, text-primary)
+        Text "Dream Goal"              ← Heading size (20px font-nunito-bold, text-primary)
         Pressable min-h-[44px] min-w-[44px]   ← pencil-outline icon (16px, text-secondary)
 
     [GoalCard]
       View bg-surface rounded-xl px-4 py-6 shadow-sm border border-border mt-2
-        Text goal.text                 ← Display size (28px extrabold, text-primary, leading-tight)
+        Text goal.text                 ← Display size (28px font-nunito-bold, text-primary, leading-tight)
 
     [Motivational copy — below card]
       Text "You're building your dream one win at a time."
-                                       ← Body size (16px regular, text-secondary, text-center, mt-4)
+                                       ← Body size (16px font-nunito-regular, text-secondary, text-center, mt-4)
 ```
 
 ### Edit Mode (in-place replacement)
@@ -135,24 +136,24 @@ SafeAreaView bg-background
   ScrollView px-4
     [Header row]
       View flex-row items-center justify-between py-4
-        Text "Dream Goal"              ← Heading size, text-primary
+        Text "Dream Goal"              ← Heading size (font-nunito-bold), text-primary
         [no pencil icon in edit mode]
 
     [GoalEditor]
       View bg-surface rounded-xl px-4 py-4 shadow-sm border border-border mt-2
-        TextInput multiline             ← Body size, text-primary, minHeight 120px
+        TextInput multiline             ← Body size (font-nunito-regular), text-primary, minHeight 120px
           placeholder "What are you working toward?"
           placeholderTextColor #8E8E93
           maxLength={500}
         [Character counter — visible only when ≤100 chars remain]
-          Text "{N} / 500"             ← Label size (14px semibold, text-secondary, text-right, mt-1)
+          Text "{N} / 500"             ← Label size (14px font-nunito-bold, text-secondary, text-right, mt-1)
 
     [Action row — below editor, not inside card]
       View flex-row gap-3 mt-4
         Pressable Cancel               ← ghost button, text-secondary, min-h-[44px], flex-1
-          Text "Cancel"               ← Label size, text-secondary
+          Text "Cancel"               ← Label size (font-nunito-bold), text-secondary
         Pressable Save                 ← bg-primary rounded-lg, min-h-[44px], flex-1
-          Text "Save Goal"            ← Label size, text-white, font-nunito-bold
+          Text "Save Goal"            ← Label size (font-nunito-bold), text-white
           disabled when !isDirty → opacity-50
 ```
 
@@ -163,16 +164,33 @@ SafeAreaView bg-background
   ScrollView px-4
     [Motivational copy — above input]
       Text "You're building your dream one win at a time."
-                                       ← Body size, text-secondary, text-center, mt-8 mb-6
+                                       ← Body size (font-nunito-regular), text-secondary, text-center, mt-8 mb-6
 
     [GoalEditor — same component as edit mode]
       [Character counter logic same as edit mode]
 
     [Save action]
       Pressable Save Goal             ← bg-primary, full-width, min-h-[44px], mt-4
-        Text "Save Goal"             ← font-nunito-bold, text-sm, text-white
+        Text "Save Goal"             ← font-nunito-bold text-sm, text-white
         disabled when text.trim() === "" → opacity-50
 ```
+
+### Error State
+
+```
+SafeAreaView bg-background
+  ScrollView px-4
+    [Header row]
+      View flex-row items-center justify-between py-4
+        Text "Dream Goal"              ← Heading size (font-nunito-bold), text-primary
+
+    [Error message — centered in content area]
+      View items-center justify-center mt-8 px-4
+        Text [error copy — see Copywriting Contract]
+                                       ← Body size (font-nunito-regular), text-secondary, text-center
+```
+
+Note: Save error does NOT trigger the error state layout — it returns the user to `editing` state with their text intact and surfaces the error message inline below the action row. Load error on mount transitions to the `error` state layout above.
 
 ### Interaction Transitions
 
@@ -180,6 +198,7 @@ SafeAreaView bg-background
 - Edit mode → View mode (Save): save to DB, show updated text immediately, swap back via same 200ms fade.
 - Edit mode → View mode (Cancel): silently discard changes (D-02), swap back to GoalCard with last saved text. No confirmation dialog.
 - Empty → View mode (after first Save): same 200ms fade, GoalEditor disappears, GoalCard appears.
+- Save failure: remain in `editing` state, re-enable Save button, show inline error copy below action row.
 
 ---
 
@@ -197,12 +216,16 @@ SafeAreaView bg-background
 | Motivational copy (view mode) | "You're building your dream one win at a time." |
 | Character counter format | "{N} / 500" (visible only when ≤100 chars remain) |
 | Save disabled accessibility hint | "Edit your goal text to enable saving" |
+| Load error (error state) | "Couldn't load your goal — please restart the app." |
+| Save error (inline, below action row) | "Couldn't save your goal — tap Save Goal to try again." |
 
 Source: CONTEXT.md D-09 (empty state motivational copy above input), D-07 (character counter), D-03 (motivational copy below in view mode), D-05 (Save button style), D-02 (Cancel silently discards).
 
-No-guilt invariant (CLAUDE.md): zero shame language. Empty state uses invitation framing ("What are you working toward?"), not deficit framing ("You haven't set a goal yet").
+No-guilt invariant (CLAUDE.md): zero shame language. Empty state uses invitation framing ("What are you working toward?"), not deficit framing ("You haven't set a goal yet"). Error states are practical and action-oriented, not accusatory.
 
 No destructive actions in Phase 4. Delete goal is not in scope. Cancel is non-destructive (in-session discard only).
+
+Save error behavior: user text is preserved in the TextInput — the screen returns to `editing` state so the user can retry without re-typing their goal.
 
 ---
 
@@ -228,10 +251,11 @@ Minimum touch target: 44×44px for all interactive elements (Pressables with `mi
 | `loading` | mount | SafeAreaView bg-background, empty (no flash of empty state) |
 | `empty` | load returns null | Empty state layout (motivational copy above, TextInput below) |
 | `view` | load returns text, or after Save | GoalCard with hero text + motivational copy below, pencil icon |
-| `editing` | pencil icon tap | GoalEditor in-place, Save + Cancel row |
+| `editing` | pencil icon tap; or save failure (text preserved) | GoalEditor in-place, Save + Cancel row |
 | `saving` | Save pressed | Save button opacity-50 + disabled during async `upsertGoal()` call |
+| `error` | `getGoal()` throws on mount | Error state layout with load error copy; Save error does not enter this state — returns to `editing` |
 
-State variable: local `useState` with `'loading' | 'empty' | 'view' | 'editing' | 'saving'` discriminated union.
+State variable: local `useState` with `'loading' | 'empty' | 'view' | 'editing' | 'saving' | 'error'` discriminated union.
 
 ---
 
