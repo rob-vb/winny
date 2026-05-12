@@ -37,7 +37,7 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
   // Sync rotation animation when isCollapsed prop changes
   useEffect(() => {
     rotation.value = withTiming(isCollapsed ? 180 : 0, { duration: 200 });
-  }, [isCollapsed]);
+  }, [isCollapsed, rotation]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${rotation.value}deg` }],

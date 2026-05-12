@@ -46,15 +46,15 @@ export default function WinsScreen() {
     }))
   );
 
-  // Hydration guard — RESEARCH.md Pitfall 4: do not re-hydrate here.
-  // index.tsx drives hydration at app boot; WinsScreen only guards on isHydrated.
-  if (!isHydrated) return null;
-
+  // Hooks MUST be called before any conditional return (Rules of Hooks).
   // Collapse state: Record<date_key, boolean>. D-15: not persisted across launches.
   // D-14: default {} means all sections start expanded.
   const [collapsedSections, setCollapsedSections] = useState<
     Record<string, boolean>
   >({});
+
+  // Memoize section grouping — mandatory at scale, prevents O(n) on every render (HIST-01)
+  const sections = useMemo(() => groupWinsByDate(wins), [wins]);
 
   const toggleSection = (date_key: string) => {
     setCollapsedSections((prev) => ({
@@ -63,8 +63,9 @@ export default function WinsScreen() {
     }));
   };
 
-  // Memoize section grouping — mandatory at scale, prevents O(n) on every render (HIST-01)
-  const sections = useMemo(() => groupWinsByDate(wins), [wins]);
+  // Hydration guard — RESEARCH.md Pitfall 4: do not re-hydrate here.
+  // index.tsx drives hydration at app boot; WinsScreen only guards on isHydrated.
+  if (!isHydrated) return null;
 
   // Empty state — D-08: no hero header shown when totalWins === 0
   if (totalWins === 0) {
@@ -103,7 +104,9 @@ export default function WinsScreen() {
         showsVerticalScrollIndicator={false}
         initialNumToRender={20}
         renderItem={({ item, section }) =>
-          collapsedSections[(section as WinSection).date_key] ? null : (
+          collapsedSections[(section as WinSection).date_key] ? (
+            <View style={{ height: 0 }} />
+          ) : (
             <WinCard win={item} isNew={false} />
           )
         }
