@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-last_updated: "2026-05-13T11:41:50.000Z"
+status: Ready to execute
+last_updated: "2026-05-13T12:10:00.000Z"
 progress:
   total_phases: 7
   completed_phases: 5
-  total_plans: 18
+  total_plans: 22
   completed_plans: 18
-  percent: 100
+  percent: 82
 ---
 
 # Project State — Winning Streak
@@ -30,27 +30,27 @@ See: .planning/PROJECT.md (updated 2026-05-08)
 | 3 | Win History | Complete |
 | 4 | Dream Goal | Complete |
 | 5 | Notifications + Settings | Implementation Complete (EAS verification deferred to final QA) |
-| 6 | Onboarding + Copy System | Context Gathered |
+| 6 | Onboarding + Copy System | Planned |
 | 7 | EAS Build + App Store Submission | Not Started |
 
 ## Current Position
 
-Phase: 6 (Onboarding + Copy System) — READY TO PLAN
-**Status:** Context gathered; ready to plan
-**Progress:** [██████████] 100%
+Phase: 6 (Onboarding + Copy System) — READY TO EXECUTE
+**Status:** Planned; ready to execute
+**Progress:** [████████░░] 82%
 
 ## Performance Metrics
 
 - Phases complete: 5 / 7
 - Requirements delivered: 25 / 29 (Phases 1–5 requirements; NOTF/SET pending EAS QA)
-- Plans executed: 18
+- Plans executed: 18 / 22
 
 ## Active Context
 
 - Phases 1–4 complete; Phase 5 implementation complete (EAS device verification deferred to final QA pass)
 - Phase 5 delivered: notificationService, AppState top-up, rolling 30-day window, Settings (Reminders/Profile/About), How It Works screen
-- Phase 6 context gathered: gated onboarding before tabs, skippable Dream Goal setup, central typed copy catalog, Home-only milestone/comeback banners
-- Phase 6 next: create implementation plan from `.planning/phases/06-onboarding-copy-system/06-CONTEXT.md`
+- Phase 6 planned: 4 implementation plans covering copy catalog/utilities, onboarding gate/screens, Home feedback banners, and copy audit/UAT
+- Phase 6 next: execute `.planning/phases/06-onboarding-copy-system/06-01-PLAN.md`
 
 ## Accumulated Context
 
@@ -80,9 +80,9 @@ None. EAS device verification deferred to final QA before Phase 7.
 
 ## Session Continuity
 
-- Last action: Phase 6 context gathered and committed (`77f3f8c docs(06): capture phase context`)
-- Resume file: `.planning/phases/06-onboarding-copy-system/06-CONTEXT.md`
-- Next action: `/gsd-plan-phase 6` — Onboarding + Copy System
+- Last action: Phase 6 planned (4 plans + pattern map)
+- Resume file: `.planning/phases/06-onboarding-copy-system/06-01-PLAN.md`
+- Next action: `/gsd-execute-phase 6` — Onboarding + Copy System
 
 ## History
 
@@ -100,3 +100,4 @@ None. EAS device verification deferred to final QA before Phase 7.
 - 2026-05-13: Phase 4 complete — Dream Goal (4 plans, UAT sign-off)
 - 2026-05-13: Phase 5 implemented — notifications service, Settings Reminders/Profile/About sections, How It Works route; EAS device verification deferred to final QA
 - 2026-05-13: Phase 6 context gathered — onboarding gate, skippable Dream Goal setup, copy catalog, milestone/comeback behavior captured (`77f3f8c`)
+- 2026-05-13: Phase 6 planned — 4 plans plus pattern map (copy catalog/utilities, onboarding gate/screens, Home feedback banners, copy audit/UAT)

@@ -156,6 +156,12 @@ Plans:
 **Dependencies:** Phase 5
 **UI hint**: yes
 
+Plans:
+- [ ] 06-01-PLAN.md — Copy catalog + post-win moment utilities: typed emotional states, deterministic variants, streak/notification wrappers, milestone/comeback tests (Wave 1)
+- [ ] 06-02-PLAN.md — Onboarding gate + screens: root first-run gate, Welcome, skippable Dream Goal setup, onboarding settings persistence (Wave 2)
+- [ ] 06-03-PLAN.md — Home feedback banners: PostWinBanner, first-win/milestone/comeback rendering, non-blocking Home integration (Wave 3)
+- [ ] 06-04-PLAN.md — Copy audit + human UAT checkpoint: no-guilt audit, fresh-install onboarding checks, seeded milestone/comeback verification (Wave 4)
+
 ### Phase 7: EAS Build + App Store Submission
 **Goal:** The app is reviewed, approved, and publicly available on the App Store and Google Play
 **Mode:** mvp
@@ -176,5 +182,5 @@ Plans:
 | 3. Win History | 0/4 | Planned | — |
 | 4. Dream Goal | 0/? | Not started | — |
 | 5. Notifications + Settings | 4/4 | Verification pending | — |
-| 6. Onboarding + Copy System | 0/? | Not started | — |
+| 6. Onboarding + Copy System | 0/4 | Planned | — |
 | 7. EAS Build + App Store Submission | 0/? | Not started | — |
