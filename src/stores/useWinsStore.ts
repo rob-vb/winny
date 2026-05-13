@@ -5,6 +5,11 @@ import {
   getWins,
   getDistinctDateKeys,
 } from "@/src/db/repositories/wins";
+import { getSetting, setSetting } from "@/src/db/repositories/settings";
+import {
+  requestPermission,
+  scheduleNext30Days,
+} from "@/src/notifications/notificationService";
 import { computeStreak, toDateKey } from "@/src/utils/dateUtils";
 import type { Win } from "@/src/db/schema";
 
@@ -55,6 +60,17 @@ export const useWinsStore = create<WinsState & WinsActions>()(
         streak: computeStreak(dateKeys),
         totalWins: wins.length,
       });
+
+      const permStatus = await getSetting("notification_permission_status");
+      if (permStatus === null || permStatus === "undetermined") {
+        const result = await requestPermission();
+        await setSetting("notification_permission_status", result);
+        if (result === "granted") {
+          await setSetting("reminder_enabled", "true");
+          await setSetting("reminder_time", "20:00");
+          await scheduleNext30Days("20:00");
+        }
+      }
     },
   })
 );
