@@ -822,24 +822,26 @@ The planner should structure this phase in three vertical slices, each deployabl
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Does `toDateKey()` accept a `Date` argument?**
+> All four questions are answered in Plan 05-01 `<interfaces>` and task `<action>` blocks. Left below for traceability.
+
+1. **Does `toDateKey()` accept a `Date` argument?** — RESOLVED. Verified `src/utils/dateUtils.ts` line 5: `toDateKey(date: Date = new Date())`. Plan 01 passes explicit `target` Date in scheduler loop.
    - What we know: The function exists in `src/utils/dateUtils.ts` and is used by `useWinsStore.addWin` with no argument for today's date.
    - What's unclear: Whether it accepts an optional `Date` parameter for offset dates.
    - Recommendation: Read `src/utils/dateUtils.ts` before implementing `scheduleNext30Days`. If it only accepts no args, add an optional parameter in the same file (small, safe change).
 
-2. **`setNotificationHandler` call timing in _layout.tsx**
+2. **`setNotificationHandler` call timing in _layout.tsx** — RESOLVED. Plan 01 Task 3 action: call `initNotificationHandler()` as first statement in `RootLayout()` component body, before any conditional returns.
    - What we know: It must be called before any notification can be received, and before `scheduleNotificationAsync`.
    - What's unclear: Whether calling it at module level in `notificationService.ts` (before component mount) is safe with Expo's module system.
    - Recommendation: Call `initNotificationHandler()` as the first statement inside `RootLayout()` component body (before any conditional returns), which guarantees it runs before any notification could be received.
 
-3. **How It Works screen navigation: stack push vs modal**
+3. **How It Works screen navigation: stack push vs modal** — RESOLVED. Plan 01 Task 3 registers `<Stack.Screen name="settings/how-it-works" options={{ title: 'How It Works' }} />` in `_layout.tsx`. Plan 04 Task 1 creates `app/settings/how-it-works.tsx`. Navigation: `router.push('/settings/how-it-works')`.
    - What we know: CONTEXT.md D-14 says "sub-route `settings/how-it-works` or modal stack". UI-SPEC says "back navigation via Expo Router default".
    - What's unclear: Whether the Expo Router stack for `app/settings/` requires adding a screen to `app/_layout.tsx`'s `<Stack>`.
    - Recommendation: Use `app/settings/how-it-works.tsx` as a file-route (Expo Router auto-discovers it). In `_layout.tsx`, the existing `<Stack>` already handles non-tab routes. Add `<Stack.Screen name="settings/how-it-works" options={{ title: 'How It Works' }} />` for a header title. Navigation: `router.push('/settings/how-it-works')`.
 
-4. **Expo Router `app/settings/` directory — does it conflict with `app/(tabs)/settings.tsx`?**
+4. **Expo Router `app/settings/` directory — does it conflict with `app/(tabs)/settings.tsx`?** — RESOLVED. Safe: `(tabs)` is a layout group, not a URL segment. `app/(tabs)/settings.tsx` → `/settings`; `app/settings/how-it-works.tsx` → `/settings/how-it-works`. Plan 04 Task 1 proceeds with the file route.
    - What we know: `app/(tabs)/settings.tsx` is the tab screen. `app/settings/how-it-works.tsx` would be a stack route outside the tabs group.
    - What's unclear: Whether Expo Router handles this cleanly (two different `settings` paths at different levels).
    - Recommendation: This is safe — `(tabs)/settings.tsx` maps to `/settings` (the tab) and `settings/how-it-works.tsx` maps to `/settings/how-it-works` (a stack route). Expo Router handles this cleanly because the `(tabs)` group is a layout group, not a URL segment. Verify with `npx expo start` after creating the file.
