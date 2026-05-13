@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { Redirect, Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { AppState, type AppStateStatus } from "react-native";
 import {
@@ -15,6 +15,10 @@ import { db } from "@/src/db/client";
 import migrations from "@/drizzle/migrations";
 import { getSetting } from "@/src/db/repositories/settings";
 import {
+  hasCompletedOnboarding,
+  subscribeOnboardingCompleted,
+} from "@/src/db/repositories/onboarding";
+import {
   initNotificationHandler,
   scheduleNext30Days,
 } from "@/src/notifications/notificationService";
@@ -27,6 +31,9 @@ export default function RootLayout() {
 
   const { success: migrationsSuccess, error: migrationsError } =
     useMigrations(db, migrations);
+  const segments = useSegments();
+  const [onboardingChecked, setOnboardingChecked] = useState(false);
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   const [fontsLoaded, fontError] = useFonts({
     Nunito_400Regular,
@@ -43,6 +50,29 @@ export default function RootLayout() {
     if (ready) {
       SplashScreen.hideAsync();
     }
+  }, [ready]);
+
+  useEffect(() => {
+    if (!ready) return;
+
+    let cancelled = false;
+    const unsubscribe = subscribeOnboardingCompleted(() => {
+      setOnboardingComplete(true);
+      setOnboardingChecked(true);
+    });
+
+    (async () => {
+      const completed = await hasCompletedOnboarding();
+      if (!cancelled) {
+        setOnboardingComplete(completed);
+        setOnboardingChecked(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, [ready]);
 
   useEffect(() => {
@@ -73,14 +103,24 @@ export default function RootLayout() {
     return () => subscription.remove();
   }, [ready]);
 
-  if (!ready) return null;
+  if (!ready || !onboardingChecked) return null;
 
   if (migrationsError) {
     console.error("Migration failed:", migrationsError);
   }
 
+  const inOnboarding = segments[0] === "onboarding";
+  if (!onboardingComplete && !inOnboarding) {
+    return <Redirect href="/onboarding/welcome" />;
+  }
+
   return (
     <Stack>
+      <Stack.Screen name="onboarding/welcome" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="onboarding/dream-goal"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="settings/how-it-works"

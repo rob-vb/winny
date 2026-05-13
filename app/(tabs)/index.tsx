@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,8 @@ import { StreakHeader } from "@/src/components/StreakHeader";
 import { WinCard } from "@/src/components/WinCard";
 import { ExamplePrompts } from "@/src/components/ExamplePrompts";
 import { WinInputArea } from "@/src/components/WinInputArea";
+import { PostWinBanner } from "@/src/components/PostWinBanner";
+import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import type { Win } from "@/src/db/schema";
 
 // WIN-04 override (D-03): No "I'm done for today" button.
@@ -34,6 +36,7 @@ export default function HomeScreen() {
     );
 
   const flatListRef = useRef<FlatList<Win>>(null);
+  const [postWinMoment, setPostWinMoment] = useState<PostWinMoment | null>(null);
 
   // Track previous list length to identify the newly added item (Pitfall 2 / RESEARCH Section 6)
   const prevLengthRef = useRef(todayWins.length);
@@ -55,7 +58,8 @@ export default function HomeScreen() {
   );
 
   const handleAddWin = async (text: string) => {
-    await addWin(text);
+    const result = await addWin(text);
+    setPostWinMoment(result.moment);
     // Scroll to top to show the newly added win
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
@@ -83,6 +87,13 @@ export default function HomeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <StreakHeader streak={streak} totalWins={totalWins} />
+
+        {postWinMoment && (
+          <PostWinBanner
+            moment={postWinMoment}
+            onDismiss={() => setPostWinMoment(null)}
+          />
+        )}
 
         {todayWins.length === 0 ? (
           // Empty state — 0 wins today (D-07)

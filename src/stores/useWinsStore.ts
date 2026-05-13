@@ -11,7 +11,17 @@ import {
   scheduleNext30Days,
 } from "@/src/notifications/notificationService";
 import { computeStreak, toDateKey } from "@/src/utils/dateUtils";
+import type { PostWinMoment } from "@/src/utils/postWinMoment";
+import { getPostWinMoment } from "@/src/utils/postWinMoment";
 import type { Win } from "@/src/db/schema";
+
+export interface AddWinResult {
+  moment: PostWinMoment;
+  previousTotalWins: number;
+  previousLatestDateKey: string | null;
+  nextStreak: number;
+  todayDateKey: string;
+}
 
 interface WinsState {
   wins: Win[];
@@ -23,7 +33,7 @@ interface WinsState {
 
 interface WinsActions {
   hydrate: () => Promise<void>;
-  addWin: (text: string) => Promise<void>;
+  addWin: (text: string) => Promise<AddWinResult>;
 }
 
 export const useWinsStore = create<WinsState & WinsActions>()(
@@ -48,16 +58,28 @@ export const useWinsStore = create<WinsState & WinsActions>()(
     },
 
     addWin: async (text: string) => {
+      const previousWins = await getWins();
+      const previousTotalWins = previousWins.length;
+      const previousLatestDateKey = previousWins[0]?.date_key ?? null;
+
       // insertWin handles UUID pk, date_key, logged_at internally (Pitfall 5)
       await insertWin(text);
       // Re-query DB as single source of truth (avoids optimistic update divergence)
       const wins = await getWins();
       const dateKeys = await getDistinctDateKeys();
       const today = toDateKey();
+      const nextStreak = computeStreak(dateKeys);
+      const moment = getPostWinMoment({
+        previousTotalWins,
+        nextStreak,
+        previousLatestDateKey,
+        todayDateKey: today,
+      });
+
       set({
         wins,
         todayWins: wins.filter((w) => w.date_key === today),
-        streak: computeStreak(dateKeys),
+        streak: nextStreak,
         totalWins: wins.length,
       });
 
@@ -71,6 +93,14 @@ export const useWinsStore = create<WinsState & WinsActions>()(
           await scheduleNext30Days("20:00");
         }
       }
+
+      return {
+        moment,
+        previousTotalWins,
+        previousLatestDateKey,
+        nextStreak,
+        todayDateKey: today,
+      };
     },
   })
 );

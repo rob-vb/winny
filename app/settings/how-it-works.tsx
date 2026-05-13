@@ -8,7 +8,7 @@ const SECTIONS = [
   },
   {
     heading: "The streak",
-    body: "Your streak grows every day you log at least one win. Miss a day and it resets — but your total wins never go backward.",
+    body: "Your streak grows every day you log at least one win. If a day passes without a win, the streak starts fresh — and your total wins never go backward.",
   },
   {
     heading: "Your wins",

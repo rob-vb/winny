@@ -42,7 +42,7 @@ export const EXAMPLE_PROMPTS: string[] = [
   "I saved money instead of spending it",
   "I took care of my mental health today",
   "I followed through on something I committed to",
-  "I fixed something that was broken",
+  "I fixed something that needed attention",
   "I wrote down my thoughts",
   "I practiced a skill I'm working on",
   "I gave someone honest feedback",

@@ -1,17 +1,12 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import { notificationPrompts, pickCopyVariant } from "@/src/copy/catalog";
 import { toDateKey } from "@/src/utils/dateUtils";
 
 const CHANNEL_ID = "daily-reminder";
 const NOTIFICATION_TITLE = "Just Keep Winning";
 
-export const COPY_POOL = [
-  "What was your win today?",
-  "One small win counts. Log it.",
-  "Time to notice what's working.",
-  "Your dream is built one win at a time.",
-  "Add one win — that's enough.",
-] as const;
+export const COPY_POOL = notificationPrompts;
 
 export function initNotificationHandler(): void {
   Notifications.setNotificationHandler({
@@ -25,11 +20,7 @@ export function initNotificationHandler(): void {
 }
 
 export function pickPromptForDate(dateKey: string): string {
-  let hash = 0;
-  for (let index = 0; index < dateKey.length; index++) {
-    hash = (hash * 31 + dateKey.charCodeAt(index)) >>> 0;
-  }
-  return COPY_POOL[hash % COPY_POOL.length];
+  return pickCopyVariant(COPY_POOL, dateKey);
 }
 
 export function parseHHmmToDate(hhMm: string): Date {
