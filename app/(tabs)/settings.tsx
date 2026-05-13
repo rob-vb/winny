@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
-import { Linking, Pressable, ScrollView, Switch, Text, View } from "react-native";
+import {
+  Linking,
+  Pressable,
+  ScrollView,
+  Share,
+  Switch,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import * as StoreReview from "expo-store-review";
+import * as WebBrowser from "expo-web-browser";
 import { getSetting, setSetting } from "@/src/db/repositories/settings";
 import {
   cancelAll,
@@ -12,10 +23,17 @@ import { SettingsRow } from "@/src/components/settings/SettingsRow";
 import { SettingsSection } from "@/src/components/settings/SettingsSection";
 import { TimePickerRow } from "@/src/components/settings/TimePickerRow";
 import { EditableNameRow } from "@/src/components/settings/EditableNameRow";
+import {
+  APP_STORE_URL,
+  PRIVACY_URL,
+  SHARE_MESSAGE,
+  TERMS_URL,
+} from "@/src/constants/links";
 
 const DEFAULT_REMINDER_TIME = "20:00";
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [reminderEnabled, setReminderEnabled] = useState(true);
@@ -108,6 +126,39 @@ export default function SettingsScreen() {
     setConfirmation(`Reminders set for ${formatHHmmFor12h(hhMm)}`);
   };
 
+  const handleOpenBrowser = async (url: string) => {
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch {
+      // External action failures are non-blocking.
+    }
+  };
+
+  const handleRateApp = async () => {
+    try {
+      const isAvailable = await StoreReview.isAvailableAsync();
+      if (isAvailable) {
+        await StoreReview.requestReview();
+      } else {
+        await Linking.openURL(APP_STORE_URL);
+      }
+    } catch {
+      // Store review can fail or be throttled; no UI needed.
+    }
+  };
+
+  const handleShareApp = async () => {
+    try {
+      await Share.share({
+        message: `${SHARE_MESSAGE} ${APP_STORE_URL}`,
+        title: "Just Keep Winning",
+        url: APP_STORE_URL,
+      });
+    } catch {
+      // Some platforms reject when share is cancelled.
+    }
+  };
+
   if (isLoading) {
     return <SafeAreaView className="flex-1 bg-background" />;
   }
@@ -182,7 +233,34 @@ export default function SettingsScreen() {
                 isLast
               />
             </SettingsSection>
-            <SettingsSection title="About" />
+            <SettingsSection title="About">
+              <SettingsRow
+                icon="information-circle-outline"
+                label="How It Works"
+                onPress={() => router.push("/settings/how-it-works")}
+              />
+              <SettingsRow
+                icon="lock-closed-outline"
+                label="Privacy Policy"
+                onPress={() => handleOpenBrowser(PRIVACY_URL)}
+              />
+              <SettingsRow
+                icon="document-text-outline"
+                label="Terms of Use"
+                onPress={() => handleOpenBrowser(TERMS_URL)}
+              />
+              <SettingsRow
+                icon="star-outline"
+                label="Rate App"
+                onPress={handleRateApp}
+              />
+              <SettingsRow
+                icon="share-outline"
+                label="Share App"
+                onPress={handleShareApp}
+                isLast
+              />
+            </SettingsSection>
           </>
         )}
       </ScrollView>

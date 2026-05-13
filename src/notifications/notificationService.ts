@@ -10,7 +10,7 @@ export const COPY_POOL = [
   "One small win counts. Log it.",
   "Time to notice what's working.",
   "Your dream is built one win at a time.",
-  "Add one win - that's enough.",
+  "Add one win — that's enough.",
 ] as const;
 
 export function initNotificationHandler(): void {
