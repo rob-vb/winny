@@ -11,6 +11,7 @@ import {
 import { SettingsRow } from "@/src/components/settings/SettingsRow";
 import { SettingsSection } from "@/src/components/settings/SettingsSection";
 import { TimePickerRow } from "@/src/components/settings/TimePickerRow";
+import { EditableNameRow } from "@/src/components/settings/EditableNameRow";
 
 const DEFAULT_REMINDER_TIME = "20:00";
 
@@ -22,6 +23,7 @@ export default function SettingsScreen() {
   const [permissionStatus, setPermissionStatus] = useState<
     "undetermined" | "granted" | "denied"
   >("undetermined");
+  const [displayName, setDisplayName] = useState("");
   const [confirmation, setConfirmation] = useState("");
 
   useEffect(() => {
@@ -29,10 +31,11 @@ export default function SettingsScreen() {
 
     async function loadSettings() {
       try {
-        const [enabled, time, status] = await Promise.all([
+        const [enabled, time, status, name] = await Promise.all([
           getSetting("reminder_enabled"),
           getSetting("reminder_time"),
           getSetting("notification_permission_status"),
+          getSetting("display_name"),
         ]);
         if (!isMounted) return;
         setReminderEnabled(enabled !== "false");
@@ -40,6 +43,7 @@ export default function SettingsScreen() {
         setPermissionStatus(
           status === "granted" || status === "denied" ? status : "undetermined"
         );
+        setDisplayName(name ?? "");
       } catch {
         if (isMounted) {
           setLoadError(true);
@@ -167,7 +171,17 @@ export default function SettingsScreen() {
               </View>
             )}
 
-            <SettingsSection title="Profile" />
+            <SettingsSection title="Profile">
+              <EditableNameRow
+                value={displayName}
+                onSave={async (name) => {
+                  await setSetting("display_name", name);
+                  setDisplayName(name);
+                }}
+                placeholder="Add your name"
+                isLast
+              />
+            </SettingsSection>
             <SettingsSection title="About" />
           </>
         )}
