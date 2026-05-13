@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-05-13T11:45:00.000Z"
+status: Ready to plan
+last_updated: "2026-05-13T11:41:50.000Z"
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 18
   completed_plans: 18
   percent: 100
@@ -19,48 +19,38 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-08)
 
 **Core value:** A frictionless daily habit of noticing wins — the streak counter and history prove you're already winning.
-**Current focus:** Phase 5 — Notifications + Settings
+**Current focus:** Phase 6 — Onboarding + Copy System
 
 ## Phase Status
 
 | Phase | Name | Status |
 |-------|------|--------|
 | 1 | Data Foundation + Nav Shell | Complete |
-| 2 | Core Win-Entry Loop | Not Started |
-| 3 | Win History | Not Started |
-| 4 | Dream Goal | Not Started |
-| 5 | Notifications + Settings | Human Verification Pending |
-| 6 | Onboarding + Copy System | Not Started |
+| 2 | Core Win-Entry Loop | Complete |
+| 3 | Win History | Complete |
+| 4 | Dream Goal | Complete |
+| 5 | Notifications + Settings | Implementation Complete (EAS verification deferred to final QA) |
+| 6 | Onboarding + Copy System | Context Gathered |
 | 7 | EAS Build + App Store Submission | Not Started |
 
 ## Current Position
 
-Phase: 5 (Notifications + Settings) — EXECUTING
-Plan: 4 of 4
-**Phase:** 5
-**Plan:** Human EAS verification pending
-**Status:** Implementation complete; awaiting device verification
+Phase: 6 (Onboarding + Copy System) — READY TO PLAN
+**Status:** Context gathered; ready to plan
 **Progress:** [██████████] 100%
-
-```
-[███████] 100%
-```
 
 ## Performance Metrics
 
-- Phases complete: 1 / 7
-- Requirements delivered: 4 / 29 (FNDTN-01, FNDTN-02, FNDTN-03, FNDTN-04)
+- Phases complete: 5 / 7
+- Requirements delivered: 25 / 29 (Phases 1–5 requirements; NOTF/SET pending EAS QA)
 - Plans executed: 18
 
 ## Active Context
 
-- Phase 5 implementation complete — 4 plans, 4 waves
-  - 05-01: notificationService, native deps, AppState top-up, first-win permission hook
-  - 05-02: SettingsRow/SettingsSection/TimePickerRow and Reminders section
-  - 05-03: EditableNameRow and Profile display_name setting
-  - 05-04: How It Works route and five About rows
-- Blocking checkpoint remaining: EAS dev build device verification for notification permission timing, notification firing, rolling window, AppState top-up, and About row actions
-- Run EAS dev build verification before marking Phase 5 complete
+- Phases 1–4 complete; Phase 5 implementation complete (EAS device verification deferred to final QA pass)
+- Phase 5 delivered: notificationService, AppState top-up, rolling 30-day window, Settings (Reminders/Profile/About), How It Works screen
+- Phase 6 context gathered: gated onboarding before tabs, skippable Dream Goal setup, central typed copy catalog, Home-only milestone/comeback banners
+- Phase 6 next: create implementation plan from `.planning/phases/06-onboarding-copy-system/06-CONTEXT.md`
 
 ## Accumulated Context
 
@@ -86,13 +76,13 @@ Plan: 4 of 4
 
 ### Blockers
 
-Phase 5 human verification pending. Notifications require EAS dev build, not Expo Go.
+None. EAS device verification deferred to final QA before Phase 7.
 
 ## Session Continuity
 
-- Last action: Phase 5 implementation committed through Plan 05-04 and summaries written
-- Resume file: `.planning/phases/05-notifications-settings/05-04-SUMMARY.md`
-- Next action: Run EAS dev build verification checklist from Plan 05-04 Task 3
+- Last action: Phase 6 context gathered and committed (`77f3f8c docs(06): capture phase context`)
+- Resume file: `.planning/phases/06-onboarding-copy-system/06-CONTEXT.md`
+- Next action: `/gsd-plan-phase 6` — Onboarding + Copy System
 
 ## History
 
@@ -105,4 +95,8 @@ Phase 5 human verification pending. Notifications require EAS dev build, not Exp
 - 2026-05-08: Phase 1 complete — code review 2 criticals fixed (CSS import path, DST yesterday anchor), verification passed (5/5 automated), UAT deferred to next simulator session
 - 2026-05-09: Phase 2 context gathered — inline Home entry (no nav), chat-style layout, no "I'm done" button, trophy header with baked-in streak label, micro-animation on add
 - 2026-05-11: Phase 3 planned — pattern map + 4 plans (03-01 tdd utility, 03-02 components, 03-03 screen assembly, 03-04 human checkpoint), plan-checker verification passed across 12 dimensions
-- 2026-05-13: Phase 5 implemented — notifications service, Settings Reminders/Profile/About sections, How It Works route; EAS device verification pending
+- 2026-05-10: Phase 2 complete — Core Win-Entry Loop (5 plans)
+- 2026-05-12: Phase 3 complete — Win History (4 plans)
+- 2026-05-13: Phase 4 complete — Dream Goal (4 plans, UAT sign-off)
+- 2026-05-13: Phase 5 implemented — notifications service, Settings Reminders/Profile/About sections, How It Works route; EAS device verification deferred to final QA
+- 2026-05-13: Phase 6 context gathered — onboarding gate, skippable Dream Goal setup, copy catalog, milestone/comeback behavior captured (`77f3f8c`)
