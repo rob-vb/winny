@@ -1,15 +1,8 @@
-import React, { useEffect } from "react";
-import { View, Text, Pressable } from "react-native";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated";
+import React, { useEffect, useRef } from "react";
+import { Animated, View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { formatDateKey } from "@/src/utils/dateUtils";
 
-// winCountLabel is a pure function — defined at module level (not inside component)
-// HIST-02: singular "1 win", plural "N wins"
 const winCountLabel = (count: number): string =>
   count === 1 ? "1 win" : `${count} wins`;
 
@@ -25,23 +18,29 @@ interface DateSectionHeaderProps {
 }
 
 // React.memo is MANDATORY — mitigates RN #43597 sticky header + virtualization glitch
-// (RESEARCH.md Pitfall 2)
 export const DateSectionHeader = React.memo(function DateSectionHeader({
   section,
   isCollapsed,
   onToggle,
 }: DateSectionHeaderProps) {
-  // Initialize shared value from isCollapsed prop (handles initial render correctly)
-  const rotation = useSharedValue(isCollapsed ? 180 : 0);
+  const rotation = useRef(new Animated.Value(isCollapsed ? 1 : 0)).current;
 
-  // Sync rotation animation when isCollapsed prop changes
   useEffect(() => {
-    rotation.value = withTiming(isCollapsed ? 180 : 0, { duration: 200 });
-  }, [isCollapsed, rotation]);
+    Animated.timing(rotation, {
+      toValue: isCollapsed ? 1 : 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [isCollapsed]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotation.value}deg` }],
-  }));
+  const animatedStyle = {
+    transform: [{
+      rotate: rotation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "180deg"],
+      }),
+    }],
+  };
 
   const dateLabel = formatDateKey(section.date_key);
   const count = section.data.length;
@@ -56,7 +55,6 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
       <Text className="font-nunito-bold text-sm text-text-primary flex-1">
         {dateLabel}
       </Text>
-      {/* Pill badge — hidden from a11y tree since content is in Pressable label */}
       <View
         className="bg-gold/20 rounded-full px-2 py-0.5"
         accessibilityElementsHidden={true}
@@ -65,7 +63,6 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
           {winCountLabel(count)}
         </Text>
       </View>
-      {/* Chevron — decorative affordance, hidden from accessibility tree */}
       <Animated.View
         style={[animatedStyle, { marginLeft: 8 }]}
         accessibilityElementsHidden={true}

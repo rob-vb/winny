@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { validateWinText } from "@/src/utils/winValidation";
+import { EXAMPLE_PROMPTS } from "@/src/constants/examplePrompts";
 
 // PROP CONTRACT: the prop is named `onSubmit` — NOT `onAdd`.
 // 02-PATTERNS.md uses a stale `onAdd` name; ignore it. Plans 03 and 04 are authoritative.
@@ -11,6 +12,10 @@ interface WinInputAreaProps {
 export function WinInputArea({ onSubmit }: WinInputAreaProps) {
   const [inputText, setInputText] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const placeholder = useMemo(
+    () => EXAMPLE_PROMPTS[Math.floor(Math.random() * EXAMPLE_PROMPTS.length)],
+    []
+  );
 
   const isDisabled = !validateWinText(inputText) || isAdding;
 
@@ -31,7 +36,7 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
       <View className="flex-row items-center gap-3">
         <TextInput
           className="flex-1 bg-background border border-border rounded-lg px-4 py-3 font-nunito-regular text-base text-text-primary"
-          placeholder="What did you win today?"
+          placeholder={`e.g. ${placeholder}`}
           placeholderTextColor="#8E8E93"
           value={inputText}
           onChangeText={setInputText}

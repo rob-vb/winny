@@ -11,7 +11,7 @@ import {
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { completeOnboarding } from "@/src/db/repositories/onboarding";
-import { upsertGoal } from "@/src/db/repositories/dreamGoal";
+import { addGoal } from "@/src/db/repositories/dreamGoals";
 import { validateGoalText } from "@/src/utils/goalValidation";
 
 type OnboardingGoalState = "editing" | "saving" | "saved" | "skipping" | "error";
@@ -27,14 +27,14 @@ export default function OnboardingGoalScreen() {
   const remaining = 500 - currentText.length;
   const showCounter = remaining <= 100;
 
-  const goHome = () => router.replace("/(tabs)");
+  const goHome = () => router.replace("/");
 
   const handleSave = async () => {
     if (!canSave) return;
 
     setScreenState("saving");
     try {
-      await upsertGoal(currentText.trim());
+      await addGoal(currentText.trim());
       await completeOnboarding();
       setScreenState("saved");
       setTimeout(goHome, 700);
@@ -66,10 +66,10 @@ export default function OnboardingGoalScreen() {
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
         >
           <Text className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight mt-8">
-            Set a Dream Goal
+            Set Dream Goals
           </Text>
           <Text className="font-nunito-regular text-base text-text-secondary text-center leading-relaxed mt-3 mb-6">
-            Optional, but powerful: name what your wins are building toward.
+            Optional, but powerful: name what your wins are building toward. You can add more later.
           </Text>
 
           <View className="bg-surface rounded-xl px-4 py-4 border border-border">
@@ -115,7 +115,7 @@ export default function OnboardingGoalScreen() {
               isBusy ? "opacity-50" : "opacity-100"
             }`}
             accessibilityRole="button"
-            accessibilityLabel="Skip Dream Goal setup for now"
+            accessibilityLabel="Skip Dream Goals setup for now"
           >
             <Text className="font-nunito-bold text-sm text-text-secondary">
               Skip for now

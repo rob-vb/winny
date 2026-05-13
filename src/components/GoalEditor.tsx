@@ -1,5 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
-import Animated from "react-native-reanimated";
+import { Animated, View, Text, TextInput, Pressable } from "react-native";
 
 interface GoalEditorProps {
   currentText: string;
@@ -8,8 +7,8 @@ interface GoalEditorProps {
   onCancel: () => void;
   isDirty: boolean;
   isSaving: boolean;
-  showCancel: boolean; // false in empty state, true in edit mode
-  style?: object; // useAnimatedStyle for crossfade from parent
+  showCancel: boolean;
+  style?: object;
 }
 
 export function GoalEditor({
@@ -28,7 +27,6 @@ export function GoalEditor({
 
   return (
     <Animated.View style={style}>
-      {/* TextInput card */}
       <View className="bg-surface rounded-xl px-4 py-4 shadow-sm border border-border mt-2">
         <TextInput
           className="font-nunito-regular text-base text-text-primary"
@@ -53,7 +51,6 @@ export function GoalEditor({
         )}
       </View>
 
-      {/* Action row */}
       <View className={`mt-4 ${showCancel ? "flex-row gap-3" : ""}`}>
         {showCancel && (
           <Pressable

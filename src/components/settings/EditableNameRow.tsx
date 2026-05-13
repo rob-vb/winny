@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Keyboard, Pressable, Text, TextInput, View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated";
+import { Animated, Keyboard, Pressable, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface EditableNameRowProps {
@@ -22,6 +18,8 @@ export function EditableNameRow({
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(value);
   const savingRef = useRef(false);
+  const viewOpacity = useRef(new Animated.Value(1)).current;
+  const editOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (!isEditing) {
@@ -29,13 +27,12 @@ export function EditableNameRow({
     }
   }, [isEditing, value]);
 
-  const viewStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(isEditing ? 0 : 1, { duration: 200 }),
-  }));
-
-  const editStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(isEditing ? 1 : 0, { duration: 200 }),
-  }));
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(viewOpacity, { toValue: isEditing ? 0 : 1, duration: 200, useNativeDriver: true }),
+      Animated.timing(editOpacity, { toValue: isEditing ? 1 : 0, duration: 200, useNativeDriver: true }),
+    ]).start();
+  }, [isEditing]);
 
   const beginEditing = () => {
     savingRef.current = false;
@@ -60,7 +57,7 @@ export function EditableNameRow({
         isLast ? "" : "border-b border-border"
       }`}
     >
-      <Animated.View style={viewStyle} pointerEvents={isEditing ? "none" : "auto"}>
+      <Animated.View style={{ opacity: viewOpacity }} pointerEvents={isEditing ? "none" : "auto"}>
         <Pressable
           onPress={beginEditing}
           className="min-h-[52px] px-4 py-3 flex-row items-center gap-3"
@@ -77,7 +74,7 @@ export function EditableNameRow({
         </Pressable>
       </Animated.View>
       <Animated.View
-        style={editStyle}
+        style={{ opacity: editOpacity }}
         pointerEvents={isEditing ? "auto" : "none"}
         className="absolute inset-0"
       >

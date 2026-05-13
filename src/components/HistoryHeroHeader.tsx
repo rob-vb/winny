@@ -17,9 +17,9 @@ export function HistoryHeroHeader({ totalWins, streak }: HistoryHeroHeaderProps)
         style={{ width: 64, height: 64 }}
         resizeMode="contain"
         className="mb-4"
-        accessibilityLabel="Winning Streak trophy"
+        accessibilityLabel="Just Keep Winning trophy"
       />
-      <Text className="font-nunito-black text-[64px] text-gold leading-none">
+      <Text className="font-nunito-black text-[64px] text-gold" style={{ lineHeight: 80 }}>
         {totalWins}
       </Text>
       <Text className="font-nunito-bold text-sm text-text-secondary mt-1">

@@ -1,24 +1,45 @@
-import { Text } from "react-native";
-import Animated from "react-native-reanimated";
+import { View, Text, Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import type { DreamGoalItem } from "@/src/db/schema";
 
 interface GoalCardProps {
-  text: string;
-  style?: object; // for useAnimatedStyle opacity from parent (Strategy A crossfade)
+  goal: DreamGoalItem;
+  onToggle: (id: string, completed: boolean) => void;
+  onDelete: (id: string) => void;
 }
 
-export function GoalCard({ text, style }: GoalCardProps) {
+export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
   return (
-    <Animated.View
-      style={style}
-      className="bg-surface rounded-xl px-4 py-6 shadow-sm border border-border mt-2"
-      accessibilityLabel={text}
-    >
-      <Text className="font-nunito-bold text-[28px] text-text-primary leading-tight">
-        {text}
+    <View className="flex-row items-center bg-surface rounded-xl px-3 py-2 border border-border mb-2">
+      <Pressable
+        onPress={() => onToggle(goal.id, !goal.completed)}
+        className="min-h-[44px] min-w-[44px] items-center justify-center"
+        accessibilityRole="checkbox"
+        accessibilityLabel={goal.completed ? "Mark as not achieved" : "Mark as achieved"}
+        accessibilityState={{ checked: !!goal.completed }}
+      >
+        <Ionicons
+          name={goal.completed ? "checkmark-circle" : "ellipse-outline"}
+          size={26}
+          color={goal.completed ? "#F5A623" : "#8E8E93"}
+        />
+      </Pressable>
+      <Text
+        className={`flex-1 font-nunito-regular text-base mx-2 ${
+          goal.completed ? "line-through text-text-secondary" : "text-text-primary"
+        }`}
+        numberOfLines={4}
+      >
+        {goal.text}
       </Text>
-      <Text className="font-nunito-regular text-base text-text-secondary leading-relaxed mt-4 text-center">
-        You're building your dream one win at a time.
-      </Text>
-    </Animated.View>
+      <Pressable
+        onPress={() => onDelete(goal.id)}
+        className="min-h-[44px] min-w-[44px] items-center justify-center"
+        accessibilityRole="button"
+        accessibilityLabel="Delete goal"
+      >
+        <Ionicons name="trash-outline" size={16} color="#C7C7CC" />
+      </Pressable>
+    </View>
   );
 }

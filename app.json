@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Winning Streak",
-    "slug": "winning-streak",
+    "name": "Just Keep Winning",
+    "slug": "just-keep-winning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#FAF8F4"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.justkeepwinning.winningstreak"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,10 +34,17 @@
       "expo-router",
       "expo-sqlite",
       "expo-font",
-      "expo-notifications"
+      "expo-notifications",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "68833b07-973e-43b0-9845-8d9881301850"
+      }
+    },
+    "owner": "robvb"
   }
 }

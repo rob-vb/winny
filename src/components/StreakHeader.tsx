@@ -17,7 +17,7 @@ export function StreakHeader({ streak, totalWins }: StreakHeaderProps) {
         source={require("@/assets/images/trophy.png")}
         style={{ width: 48, height: 48 }}
         resizeMode="contain"
-        accessibilityLabel="Winning Streak trophy"
+        accessibilityLabel="Just Keep Winning trophy"
       />
       <View className="ml-3 flex-1">
         <Text className="font-nunito-bold text-xl text-text-primary leading-tight">

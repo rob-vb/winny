@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SECTIONS = [
   {
     heading: "What this is",
-    body: "Winning Streak is a daily habit of noticing what went right. Small wins add up — and your streak proves it.",
+    body: "Just Keep Winning is a daily habit of noticing what went right. Small wins add up — and your streak proves it.",
   },
   {
     heading: "The streak",
@@ -15,8 +15,8 @@ const SECTIONS = [
     body: "Every win you log is yours permanently. The My Wins tab shows your full history, grouped by day.",
   },
   {
-    heading: "Dream Goal",
-    body: "Set a Dream Goal to anchor your wins to something that matters. You can update it any time.",
+    heading: "Dream Goals",
+    body: "Set Dream Goals to anchor your wins to something that matters. Check them off when you achieve them and add new ones any time.",
   },
   {
     heading: "Why no AI yet",
@@ -29,7 +29,7 @@ export default function HowItWorksScreen() {
     <SafeAreaView className="flex-1 bg-background">
       <ScrollView className="px-4 py-6">
         <Text className="font-nunito-bold text-xl text-text-primary leading-tight mb-6">
-          How Winning Streak Works
+          How Just Keep Winning Works
         </Text>
         {SECTIONS.map((section) => (
           <View key={section.heading} className="mb-6">

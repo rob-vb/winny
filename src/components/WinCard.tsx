@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
-import Animated, { ZoomIn } from "react-native-reanimated";
+import { useEffect, useRef } from "react";
+import { Animated, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { Win } from "@/src/db/schema";
 
@@ -9,9 +9,21 @@ interface WinCardProps {
 }
 
 export function WinCard({ win, isNew }: WinCardProps) {
+  const scale = useRef(new Animated.Value(isNew ? 0.8 : 1)).current;
+  const opacity = useRef(new Animated.Value(isNew ? 0 : 1)).current;
+
+  useEffect(() => {
+    if (isNew) {
+      Animated.parallel([
+        Animated.spring(scale, { toValue: 1, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 1, duration: 300, useNativeDriver: true }),
+      ]).start();
+    }
+  }, []);
+
   return (
     <Animated.View
-      entering={isNew ? ZoomIn.duration(300) : undefined}
+      style={{ transform: [{ scale }], opacity }}
       className="bg-surface rounded-xl px-4 py-3 mb-2 shadow-sm flex-row items-start"
       accessibilityLabel={win.text}
     >
@@ -19,9 +31,9 @@ export function WinCard({ win, isNew }: WinCardProps) {
         {win.text}
       </Text>
       <Ionicons
-        name="heart-outline"
+        name="checkmark-circle"
         size={16}
-        color="#FF6B6B"
+        color="#4CAF50"
         style={{ marginLeft: 8, marginTop: 2 }}
       />
     </Animated.View>

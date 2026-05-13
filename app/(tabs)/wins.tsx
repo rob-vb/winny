@@ -80,7 +80,7 @@ export default function WinsScreen() {
             style={{ width: 120, height: 120 }}
             resizeMode="contain"
             className="mb-8"
-            accessibilityLabel="Winning Streak trophy"
+            accessibilityLabel="Just Keep Winning trophy"
           />
           <Text className="font-nunito-bold text-sm text-text-primary text-center max-w-[280px]">
             Your wins will live here

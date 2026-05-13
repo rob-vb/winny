@@ -12,9 +12,8 @@ import { useShallow } from "zustand/react/shallow";
 import { useWinsStore } from "@/src/stores/useWinsStore";
 import { StreakHeader } from "@/src/components/StreakHeader";
 import { WinCard } from "@/src/components/WinCard";
-import { ExamplePrompts } from "@/src/components/ExamplePrompts";
 import { WinInputArea } from "@/src/components/WinInputArea";
-import { PostWinBanner } from "@/src/components/PostWinBanner";
+import { WinCelebration } from "@/src/components/WinCelebration";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import type { Win } from "@/src/db/schema";
 
@@ -74,7 +73,6 @@ export default function HomeScreen() {
             Loading...
           </Text>
         </View>
-        <ExamplePrompts />
         <WinInputArea onSubmit={async () => {}} />
       </SafeAreaView>
     );
@@ -89,7 +87,7 @@ export default function HomeScreen() {
         <StreakHeader streak={streak} totalWins={totalWins} />
 
         {postWinMoment && (
-          <PostWinBanner
+          <WinCelebration
             moment={postWinMoment}
             onDismiss={() => setPostWinMoment(null)}
           />
@@ -103,7 +101,7 @@ export default function HomeScreen() {
               style={{ width: 120, height: 120 }}
               resizeMode="contain"
               className="mb-8"
-              accessibilityLabel="Winning Streak trophy"
+              accessibilityLabel="Just Keep Winning trophy"
             />
             <Text
               className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight"
@@ -132,7 +130,6 @@ export default function HomeScreen() {
         )}
 
         {/* Always visible — both empty and populated states */}
-        <ExamplePrompts />
         <WinInputArea onSubmit={handleAddWin} />
       </KeyboardAvoidingView>
     </SafeAreaView>

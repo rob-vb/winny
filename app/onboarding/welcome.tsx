@@ -13,13 +13,13 @@ export default function WelcomeScreen() {
           style={{ width: 132, height: 132 }}
           resizeMode="contain"
           className="mb-8"
-          accessibilityLabel="Winning Streak trophy"
+          accessibilityLabel="Just Keep Winning trophy"
         />
         <Text
           className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight"
           style={{ maxWidth: 320 }}
         >
-          Welcome to Winning Streak
+          Welcome to Just Keep Winning
         </Text>
         <Text
           className="font-nunito-regular text-base text-text-secondary text-center leading-relaxed mt-4"

@@ -1,95 +1,91 @@
 import { useState, useEffect } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import { getGoal, upsertGoal } from "@/src/db/repositories/dreamGoal";
+import {
+  getGoals,
+  addGoal,
+  toggleGoalComplete,
+  deleteGoal,
+} from "@/src/db/repositories/dreamGoals";
 import { GoalCard } from "@/src/components/GoalCard";
-import { GoalEditor } from "@/src/components/GoalEditor";
-
-type GoalState = "loading" | "empty" | "view" | "editing" | "saving" | "error";
+import type { DreamGoalItem } from "@/src/db/schema";
 
 export default function GoalScreen() {
-  const [screenState, setScreenState] = useState<GoalState>("loading");
-  const [savedText, setSavedText] = useState("");
-  const [currentText, setCurrentText] = useState("");
-  const [saveError, setSaveError] = useState(false);
+  const [goals, setGoals] = useState<DreamGoalItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [newGoalText, setNewGoalText] = useState("");
+  const [adding, setAdding] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
-  // Reanimated shared values — must be declared before any conditional returns (hooks rule)
-  const cardOpacity = useSharedValue(0);
-  const editorOpacity = useSharedValue(0);
-  const cardStyle = useAnimatedStyle(() => ({ opacity: cardOpacity.value }));
-  const editorStyle = useAnimatedStyle(() => ({ opacity: editorOpacity.value }));
+  const loadGoals = async () => {
+    try {
+      const data = await getGoals();
+      setGoals(data);
+      setLoadError(false);
+    } catch {
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Derived state — not stored
-  const isDirty = currentText.trim() !== savedText.trim();
-
-  // Load goal from DB on mount
   useEffect(() => {
-    (async () => {
-      try {
-        const goal = await getGoal();
-        if (goal === null || goal.text === "") {
-          editorOpacity.value = withTiming(1, { duration: 200 });
-          setScreenState("empty");
-        } else {
-          setSavedText(goal.text);
-          setCurrentText(goal.text);
-          cardOpacity.value = withTiming(1, { duration: 200 });
-          setScreenState("view");
-        }
-      } catch {
-        setScreenState("error");
-      }
-    })();
+    loadGoals();
   }, []);
 
-  // Loading state — empty SafeAreaView prevents content flash (Pitfall 6)
-  if (screenState === "loading") {
+  const handleAdd = async () => {
+    const text = newGoalText.trim();
+    if (!text || adding) return;
+    setAdding(true);
+    try {
+      await addGoal(text);
+      setNewGoalText("");
+      await loadGoals();
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleToggle = async (id: string, completed: boolean) => {
+    setGoals((prev) =>
+      prev.map((g) =>
+        g.id === id
+          ? { ...g, completed, completed_at: completed ? new Date().toISOString() : null }
+          : g
+      )
+    );
+    try {
+      await toggleGoalComplete(id, completed);
+    } catch {
+      await loadGoals();
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    setGoals((prev) => prev.filter((g) => g.id !== id));
+    try {
+      await deleteGoal(id);
+    } catch {
+      await loadGoals();
+    }
+  };
+
+  if (loading) {
     return <SafeAreaView className="flex-1 bg-background" />;
   }
 
-  const enterEditMode = () => {
-    cardOpacity.value = withTiming(0, { duration: 200 });
-    editorOpacity.value = withTiming(1, { duration: 200 });
-    setScreenState("editing");
-  };
-
-  const handleCancel = () => {
-    setCurrentText(savedText);
-    setSaveError(false);
-    editorOpacity.value = withTiming(0, { duration: 200 });
-    cardOpacity.value = withTiming(1, { duration: 200 });
-    setScreenState("view");
-  };
-
-  const handleSave = async () => {
-    if (screenState === "saving") return;
-    setScreenState("saving");
-    setSaveError(false);
-    try {
-      await upsertGoal(currentText.trim());
-      setSavedText(currentText.trim());
-      setCurrentText(currentText.trim());
-      editorOpacity.value = withTiming(0, { duration: 200 });
-      cardOpacity.value = withTiming(1, { duration: 200 });
-      setScreenState("view");
-    } catch {
-      setSaveError(true);
-      setScreenState(savedText === "" ? "empty" : "editing");
-    }
-  };
+  const activeGoals = goals.filter((g) => !g.completed);
+  const achievedGoals = goals.filter((g) => g.completed);
+  const canAdd = newGoalText.trim().length > 0 && !adding;
 
   return (
     <SafeAreaView className="flex-1 bg-background">
@@ -100,102 +96,78 @@ export default function GoalScreen() {
         <ScrollView
           className="flex-1"
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+          keyboardShouldPersistTaps="handled"
         >
-          {/* Empty state layout (screenState === "empty") */}
-          {screenState === "empty" && (
-            <>
-              <Text className="font-nunito-regular text-base text-text-secondary text-center mt-8 mb-6">
-                You're building your dream one win at a time.
-              </Text>
-              <GoalEditor
-                style={editorStyle}
-                currentText={currentText}
-                onChangeText={setCurrentText}
-                onSave={handleSave}
-                onCancel={() => {}}
-                isDirty={isDirty}
-                isSaving={false}
-                showCancel={false}
-              />
-              {saveError && (
-                <Text className="font-nunito-regular text-sm text-accent text-center mt-2">
-                  Couldn't save your goal — tap Save Goal to try again.
-                </Text>
-              )}
-            </>
+          <Text className="font-nunito-bold text-xl text-text-primary py-4">
+            Dream Goals
+          </Text>
+
+          {loadError && (
+            <Text className="font-nunito-regular text-sm text-accent text-center mt-2 mb-4">
+              Couldn't load your goals — please restart the app.
+            </Text>
           )}
 
-          {/* View + Edit + Saving states: header row + Strategy A always-mounted pair */}
-          {(screenState === "view" ||
-            screenState === "editing" ||
-            screenState === "saving") && (
+          {activeGoals.length === 0 && achievedGoals.length === 0 && (
+            <Text className="font-nunito-regular text-base text-text-secondary text-center mt-4 mb-6">
+              Name what your wins are building toward.
+            </Text>
+          )}
+
+          {activeGoals.map((goal) => (
+            <GoalCard
+              key={goal.id}
+              goal={goal}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+            />
+          ))}
+
+          {achievedGoals.length > 0 && (
             <>
-              {/* Header row */}
-              <View className="flex-row items-center justify-between py-4">
-                <Text className="font-nunito-bold text-xl text-text-primary">
-                  Dream Goal
-                </Text>
-                {screenState === "view" && (
-                  <Pressable
-                    onPress={enterEditMode}
-                    className="min-h-[44px] min-w-[44px] items-center justify-center"
-                    accessibilityRole="button"
-                    accessibilityLabel="Edit Dream Goal"
-                  >
-                    <Ionicons name="pencil-outline" size={16} color="#8E8E93" />
-                  </Pressable>
-                )}
-              </View>
-
-              {/*
-                Strategy A — always-mounted views (RESEARCH.md Pitfall 2).
-                Both GoalCard and GoalEditor remain in the render tree for view + editing states.
-                Visibility is controlled via opacity (cardStyle / editorStyle).
-                pointerEvents="none" on the hidden view prevents touch pass-through.
-              */}
-              <Animated.View
-                style={cardStyle}
-                pointerEvents={screenState !== "view" ? "none" : "auto"}
-              >
-                <GoalCard text={savedText} />
-              </Animated.View>
-
-              <Animated.View
-                style={editorStyle}
-                pointerEvents={
-                  screenState !== "editing" && screenState !== "saving"
-                    ? "none"
-                    : "auto"
-                }
-              >
-                <GoalEditor
-                  currentText={currentText}
-                  onChangeText={setCurrentText}
-                  onSave={handleSave}
-                  onCancel={handleCancel}
-                  isDirty={isDirty}
-                  isSaving={screenState === "saving"}
-                  showCancel={true}
+              <Text className="font-nunito-bold text-sm text-text-secondary mt-4 mb-3">
+                Achieved
+              </Text>
+              {achievedGoals.map((goal) => (
+                <GoalCard
+                  key={goal.id}
+                  goal={goal}
+                  onToggle={handleToggle}
+                  onDelete={handleDelete}
                 />
-              </Animated.View>
-
-              {saveError && (
-                <Text className="font-nunito-regular text-sm text-accent text-center mt-2">
-                  Couldn't save your goal — tap Save Goal to try again.
-                </Text>
-              )}
+              ))}
             </>
-          )}
-
-          {/* Error state */}
-          {screenState === "error" && (
-            <View className="items-center justify-center mt-8 px-4">
-              <Text className="font-nunito-regular text-base text-text-secondary text-center">
-                Couldn't load your goal — please restart the app.
-              </Text>
-            </View>
           )}
         </ScrollView>
+
+        <View className="border-t border-border bg-surface px-4 py-3">
+          <View className="flex-row items-center gap-3">
+            <TextInput
+              className="flex-1 bg-background border border-border rounded-lg px-4 py-3 font-nunito-regular text-base text-text-primary"
+              placeholder="Add a dream goal..."
+              placeholderTextColor="#8E8E93"
+              value={newGoalText}
+              onChangeText={setNewGoalText}
+              maxLength={500}
+              onSubmitEditing={handleAdd}
+              returnKeyType="done"
+              accessibilityLabel="New dream goal text"
+              accessibilityHint="Type a dream goal and tap the add button"
+            />
+            <Pressable
+              onPress={handleAdd}
+              disabled={!canAdd}
+              className={`bg-primary rounded-lg min-h-[44px] min-w-[44px] items-center justify-center px-3 ${
+                !canAdd ? "opacity-50" : "opacity-100"
+              }`}
+              accessibilityRole="button"
+              accessibilityLabel="Add dream goal"
+              accessibilityState={{ disabled: !canAdd }}
+            >
+              <Text className="font-nunito-bold text-sm text-white">Add Goal</Text>
+            </Pressable>
+          </View>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

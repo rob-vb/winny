@@ -8,9 +8,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#F5A623",
         tabBarInactiveTintColor: "#8E8E93",
         tabBarStyle: {
-          backgroundColor: "#FFFFFF",
-          borderTopColor: "#F0EDE8",
-          borderTopWidth: 1,
+          borderTopColor: "transparent",
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontFamily: "Nunito_600SemiBold",
@@ -40,7 +39,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="goal"
         options={{
-          title: "Dream Goal",
+          title: "Dream Goals",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" size={size} color={color} />
           ),

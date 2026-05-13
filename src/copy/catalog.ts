@@ -1,5 +1,20 @@
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 
+const POST_SAVE_BODIES = [
+  "One more piece of proof that you're moving.",
+  "That's a W. No takebacks.",
+  "Future you is already thanking you.",
+  "Another brick. Your wall of wins is real.",
+  "Logged. Can't unhappen.",
+  "Small wins build big things. This is proof.",
+  "Your brain just asked for more of this. Feed it.",
+  "You showed up. That's the whole game.",
+  "Stack enough of these and watch what happens.",
+  "The streak is alive. So are you.",
+  "One win closer to who you're becoming.",
+  "That counts. Every single time.",
+];
+
 export type CopyState =
   | "firstWin"
   | "milestone7"
@@ -117,13 +132,16 @@ export function getStreakCopy(streak: number): string {
   if (streak <= 29) return `${streak} day streak! You're on fire! 🔥🔥`;
   if (streak <= 59) return `${streak} day streak! You're unstoppable! 🚀`;
   if (streak <= 99) return `${streak} day streak! Legendary! 🏆`;
-  return `${streak} day streak! You're a Winning Streak champion! 👑`;
+  return `${streak} day streak! You're a Just Keep Winning champion! 👑`;
 }
 
 export function getPostWinCopy(moment: PostWinMoment): CopyMessage {
   if (moment.type === "first-win") return COPY_CATALOG.firstWin as CopyMessage;
   if (moment.type === "comeback") return COPY_CATALOG.comeback as CopyMessage;
-  if (moment.type === "post-save") return COPY_CATALOG.postSave as CopyMessage;
+  if (moment.type === "post-save") {
+    const { title } = COPY_CATALOG.postSave as CopyMessage;
+    return { title, body: POST_SAVE_BODIES[Math.floor(Math.random() * POST_SAVE_BODIES.length)] };
+  }
 
   if (moment.milestone === 7) return COPY_CATALOG.milestone7 as CopyMessage;
   if (moment.milestone === 30) return COPY_CATALOG.milestone30 as CopyMessage;
