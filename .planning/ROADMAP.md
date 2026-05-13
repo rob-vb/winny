@@ -116,7 +116,7 @@ Plans:
 ### Phase 5: Notifications + Settings
 **Goal:** Users receive a daily push reminder at their chosen time and can control their display name, reminder schedule, and find app information — the habit anchor is in place
 **Mode:** mvp
-**Plans:** 4 plans
+**Plans:** 4/4 implementation plans complete; EAS verification checkpoint pending
 **Requirements:**
 - NOTF-01: App requests notification permission after user logs their first win (never on first open)
 - NOTF-02: Daily push reminder fires at user-configurable time (default 8:00 PM local)
@@ -135,10 +135,10 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 05-01-PLAN.md — Notification Foundation: notificationService.ts (TDD), app.json plugin, AppState listener, permission hook in addWin() (Wave 1)
-- [ ] 05-02-PLAN.md — Settings Reminders Section: SettingsRow/SettingsSection/TimePickerRow primitives, Reminders section wired in settings.tsx (Wave 2)
-- [ ] 05-03-PLAN.md — Profile Section: EditableNameRow inline-edit, display_name wired in settings.tsx (Wave 3)
-- [ ] 05-04-PLAN.md — About Section + How It Works Screen: how-it-works.tsx, 5 About rows wired, EAS verification checkpoint (Wave 4)
+- [x] 05-01-PLAN.md — Notification Foundation: notificationService.ts (TDD), app.json plugin, AppState listener, permission hook in addWin() (Wave 1)
+- [x] 05-02-PLAN.md — Settings Reminders Section: SettingsRow/SettingsSection/TimePickerRow primitives, Reminders section wired in settings.tsx (Wave 2)
+- [x] 05-03-PLAN.md — Profile Section: EditableNameRow inline-edit, display_name wired in settings.tsx (Wave 3)
+- [x] 05-04-PLAN.md — About Section + How It Works Screen: how-it-works.tsx, 5 About rows wired, EAS verification checkpoint pending (Wave 4)
 
 ### Phase 6: Onboarding + Copy System
 **Goal:** A new user's first experience is welcoming and frictionless, and every emotional state in the app — first win, streaks, misses, comebacks — uses copy that encourages rather than shames
@@ -175,6 +175,6 @@ Plans:
 | 2. Core Win-Entry Loop | 5/5 | Complete | 2026-05-10 |
 | 3. Win History | 0/4 | Planned | — |
 | 4. Dream Goal | 0/? | Not started | — |
-| 5. Notifications + Settings | 0/4 | Planned | — |
+| 5. Notifications + Settings | 4/4 | Verification pending | — |
 | 6. Onboarding + Copy System | 0/? | Not started | — |
 | 7. EAS Build + App Store Submission | 0/? | Not started | — |
