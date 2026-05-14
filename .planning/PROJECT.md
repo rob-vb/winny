@@ -31,7 +31,7 @@ A frictionless daily habit of noticing wins — the streak counter and history p
 - [ ] Daily streak counter tracks consecutive days with at least one win logged
 - [ ] Streak resets to 0 if user misses a day (no log = miss)
 - [ ] Total wins counter always grows, never resets
-- [ ] Encouraging tone throughout — no shame/guilt messaging for missed days
+- [x] Encouraging tone throughout — no shame/guilt messaging for missed days *(validated Phase 6)*
 
 **Win History** *(validated in Phase 3: Win History — 2026-05-12)*
 - [x] My Wins screen shows all wins grouped by date, newest first
@@ -91,6 +91,8 @@ A frictionless daily habit of noticing wins — the streak counter and history p
 | Dream Goal in V1 | Core to Charlie Rocket philosophy — wins build toward something | — Pending |
 | No in-app AI in V1 | Cost constraint; categorization done offline via Claude Code | — Pending |
 | Convex for V2 backend | Real-time sync + collective aggregation queries; matches data model needs | — Pending |
+| Expo Router `Redirect` for onboarding gate | Declarative, render-safe gating vs imperative `router.replace`; completion subscription in repository avoids redirect race back to Welcome | — Phase 6 |
+| Centralized copy catalog (`src/copy/catalog.ts`) | Single typed source-of-truth for emotional tone; no-guilt audit runnable against one file | — Phase 6 |
 
 ## Evolution
 
@@ -110,4 +112,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-08 after Phase 1 completion*
+*Last updated: 2026-05-14 after Phase 6*
