@@ -176,7 +176,7 @@ Plans:
 
 Plans:
 **Wave 1**
-- [ ] 07-01-PLAN.md — App rename to Winny + expo-updates install + EAS Update config + legal text draft (Wave 1)
+- [x] 07-01-PLAN.md — App rename to Winny + expo-updates install + EAS Update config + legal text draft (Wave 1)
 - [ ] 07-02-PLAN.md — Phase 5 deferred notification verification on physical device + open question capture (Wave 1, checkpoint)
 
 **Wave 2** *(blocked on Wave 1 completion)*
