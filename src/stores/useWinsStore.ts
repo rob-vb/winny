@@ -28,12 +28,14 @@ interface WinsState {
   todayWins: Win[];
   streak: number;
   totalWins: number;
+  displayName: string;
   isHydrated: boolean;
 }
 
 interface WinsActions {
   hydrate: () => Promise<void>;
   addWin: (text: string) => Promise<AddWinResult>;
+  setDisplayName: (name: string) => void;
 }
 
 export const useWinsStore = create<WinsState & WinsActions>()(
@@ -42,20 +44,25 @@ export const useWinsStore = create<WinsState & WinsActions>()(
     todayWins: [],
     streak: 0,
     totalWins: 0,
+    displayName: "",
     isHydrated: false,
 
     hydrate: async () => {
       const wins = await getWins();
       const dateKeys = await getDistinctDateKeys();
       const today = toDateKey();
+      const displayName = (await getSetting("display_name")) ?? "";
       set({
         wins,
         todayWins: wins.filter((w) => w.date_key === today),
         streak: computeStreak(dateKeys),
         totalWins: wins.length,
+        displayName,
         isHydrated: true,
       });
     },
+
+    setDisplayName: (name: string) => set({ displayName: name }),
 
     addWin: async (text: string) => {
       const previousWins = await getWins();
@@ -109,5 +116,6 @@ export const useWinsStore = create<WinsState & WinsActions>()(
 export const useTodayWins = () => useWinsStore((s) => s.todayWins);
 export const useStreak = () => useWinsStore((s) => s.streak);
 export const useTotalWins = () => useWinsStore((s) => s.totalWins);
+export const useDisplayName = () => useWinsStore((s) => s.displayName);
 export const useIsHydrated = () => useWinsStore((s) => s.isHydrated);
 export const useAddWin = () => useWinsStore((s) => s.addWin);

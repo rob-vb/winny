@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useShallow } from "zustand/react/shallow";
-import { useWinsStore } from "@/src/stores/useWinsStore";
+import { useWinsStore, useDisplayName } from "@/src/stores/useWinsStore";
 import { StreakHeader } from "@/src/components/StreakHeader";
 import { WinCard } from "@/src/components/WinCard";
 import { WinInputArea } from "@/src/components/WinInputArea";
@@ -22,6 +22,7 @@ import type { Win } from "@/src/db/schema";
 // Today's wins list IS the session summary — always visible.
 
 export default function HomeScreen() {
+  const displayName = useDisplayName();
   const { hydrate, isHydrated, todayWins, streak, totalWins, addWin } =
     useWinsStore(
       useShallow((s) => ({
@@ -107,7 +108,7 @@ export default function HomeScreen() {
               className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight"
               style={{ maxWidth: "80%" } as any}
             >
-              What was your win today?
+              {displayName ? `What was your win today, ${displayName}?` : "What was your win today?"}
             </Text>
           </View>
         ) : (

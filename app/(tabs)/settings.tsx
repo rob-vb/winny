@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import * as WebBrowser from "expo-web-browser";
 import { getSetting, setSetting } from "@/src/db/repositories/settings";
+import { useWinsStore } from "@/src/stores/useWinsStore";
 import {
   cancelAll,
   formatHHmmFor12h,
@@ -34,6 +35,7 @@ const DEFAULT_REMINDER_TIME = "20:00";
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const setStoreDisplayName = useWinsStore((s) => s.setDisplayName);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [reminderEnabled, setReminderEnabled] = useState(true);
@@ -228,6 +230,7 @@ export default function SettingsScreen() {
                 onSave={async (name) => {
                   await setSetting("display_name", name);
                   setDisplayName(name);
+                  setStoreDisplayName(name);
                 }}
                 placeholder="Add your name"
                 isLast

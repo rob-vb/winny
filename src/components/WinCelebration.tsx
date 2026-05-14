@@ -11,6 +11,7 @@ import {
 import { Image } from "expo-image";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
+import { useDisplayName } from "@/src/stores/useWinsStore";
 
 const CELEBRATION_GIFS = [
   "https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif",
@@ -85,7 +86,8 @@ interface WinCelebrationProps {
 }
 
 export function WinCelebration({ moment, onDismiss }: WinCelebrationProps) {
-  const copy = getPostWinCopy(moment);
+  const displayName = useDisplayName();
+  const copy = getPostWinCopy(moment, displayName);
   const pieces = useRef<ConfettiPiece[]>(makePieces()).current;
   const contentScale = useRef(new Animated.Value(0.6)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;

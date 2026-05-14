@@ -2,6 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
+import { useDisplayName } from "@/src/stores/useWinsStore";
 
 interface PostWinBannerProps {
   moment: PostWinMoment;
@@ -9,7 +10,8 @@ interface PostWinBannerProps {
 }
 
 export function PostWinBanner({ moment, onDismiss }: PostWinBannerProps) {
-  const copy = getPostWinCopy(moment);
+  const displayName = useDisplayName();
+  const copy = getPostWinCopy(moment, displayName);
 
   return (
     <View className="mx-4 mt-3 mb-1 bg-surface rounded-xl border border-border overflow-hidden">

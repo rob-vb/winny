@@ -11,7 +11,7 @@ module.exports = {
       colors: {
         background: "#FAF8F4",
         gold: "#F7C217",
-        primary: "#F5A623",
+        primary: "#F1AF2E",
         "text-primary": "#1C1C1E",
         "text-secondary": "#8E8E93",
         surface: "#FFFFFF",

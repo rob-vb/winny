@@ -66,7 +66,7 @@ export default function OnboardingGoalScreen() {
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
         >
           <Text className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight mt-8">
-            Set Dream Goals
+            Set Goals
           </Text>
           <Text className="font-nunito-regular text-base text-text-secondary text-center leading-relaxed mt-3 mb-6">
             Optional, but powerful: name what your wins are building toward. You can add more later.
@@ -82,8 +82,8 @@ export default function OnboardingGoalScreen() {
               onChangeText={setCurrentText}
               maxLength={500}
               multiline={true}
-              accessibilityLabel="Dream Goal text"
-              accessibilityHint="Type your dream goal, up to 500 characters"
+              accessibilityLabel="Goal text"
+              accessibilityHint="Type your goal, up to 500 characters"
             />
             {showCounter && (
               <Text
@@ -115,7 +115,7 @@ export default function OnboardingGoalScreen() {
               isBusy ? "opacity-50" : "opacity-100"
             }`}
             accessibilityRole="button"
-            accessibilityLabel="Skip Dream Goals setup for now"
+            accessibilityLabel="Skip Goals setup for now"
           >
             <Text className="font-nunito-bold text-sm text-text-secondary">
               Skip for now

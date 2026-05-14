@@ -15,8 +15,8 @@ const SECTIONS = [
     body: "Every win you log is yours permanently. The My Wins tab shows your full history, grouped by day.",
   },
   {
-    heading: "Dream Goals",
-    body: "Set Dream Goals to anchor your wins to something that matters. Check them off when you achieve them and add new ones any time.",
+    heading: "Goals",
+    body: "Set Goals to anchor your wins to something that matters. Check them off when you achieve them and add new ones any time.",
   },
   {
     heading: "Why no AI yet",

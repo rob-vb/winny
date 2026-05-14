@@ -99,7 +99,7 @@ export default function GoalScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <Text className="font-nunito-bold text-xl text-text-primary py-4">
-            Dream Goals
+            Goals
           </Text>
 
           {loadError && (
@@ -144,15 +144,15 @@ export default function GoalScreen() {
           <View className="flex-row items-center gap-3">
             <TextInput
               className="flex-1 bg-background border border-border rounded-lg px-4 py-3 font-nunito-regular text-base text-text-primary"
-              placeholder="Add a dream goal..."
+              placeholder="Add a goal..."
               placeholderTextColor="#8E8E93"
               value={newGoalText}
               onChangeText={setNewGoalText}
               maxLength={500}
               onSubmitEditing={handleAdd}
               returnKeyType="done"
-              accessibilityLabel="New dream goal text"
-              accessibilityHint="Type a dream goal and tap the add button"
+              accessibilityLabel="New goal text"
+              accessibilityHint="Type a goal and tap the add button"
             />
             <Pressable
               onPress={handleAdd}
@@ -161,7 +161,7 @@ export default function GoalScreen() {
                 !canAdd ? "opacity-50" : "opacity-100"
               }`}
               accessibilityRole="button"
-              accessibilityLabel="Add dream goal"
+              accessibilityLabel="Add goal"
               accessibilityState={{ disabled: !canAdd }}
             >
               <Text className="font-nunito-bold text-sm text-white">Add Goal</Text>

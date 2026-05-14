@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { DreamGoalItem } from "@/src/db/schema";
 
@@ -26,14 +26,19 @@ export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
       </Pressable>
       <Text
         className={`flex-1 font-nunito-regular text-base mx-2 ${
-          goal.completed ? "line-through text-text-secondary" : "text-text-primary"
+          goal.completed ? "text-text-primary" : "text-text-primary"
         }`}
         numberOfLines={4}
       >
         {goal.text}
       </Text>
       <Pressable
-        onPress={() => onDelete(goal.id)}
+        onPress={() =>
+          Alert.alert("Delete Goal", "Remove this goal?", [
+            { text: "Cancel", style: "cancel" },
+            { text: "Delete", style: "destructive", onPress: () => onDelete(goal.id) },
+          ])
+        }
         className="min-h-[44px] min-w-[44px] items-center justify-center"
         accessibilityRole="button"
         accessibilityLabel="Delete goal"

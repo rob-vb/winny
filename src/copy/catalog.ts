@@ -87,7 +87,7 @@ export const COPY_CATALOG: Record<CopyState, readonly string[] | CopyMessage> = 
   dreamGoalEmpty: [
     "You're building your dream one win at a time.",
     "Name what your wins are building toward.",
-    "Set a Dream Goal when you're ready.",
+    "Set a Goal when you're ready.",
   ],
   notificationDisabled: [
     "Notifications disabled — tap to open Settings",
@@ -135,15 +135,43 @@ export function getStreakCopy(streak: number): string {
   return `${streak} day streak! You're a Just Keep Winning champion! 👑`;
 }
 
-export function getPostWinCopy(moment: PostWinMoment): CopyMessage {
-  if (moment.type === "first-win") return COPY_CATALOG.firstWin as CopyMessage;
-  if (moment.type === "comeback") return COPY_CATALOG.comeback as CopyMessage;
+export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessage {
+  const n = name?.trim() || "";
+
+  if (moment.type === "first-win") {
+    const base = COPY_CATALOG.firstWin as CopyMessage;
+    return n
+      ? { title: base.title, body: `That's the whole move, ${n}. Notice one win, then come back tomorrow.` }
+      : base;
+  }
+  if (moment.type === "comeback") {
+    const base = COPY_CATALOG.comeback as CopyMessage;
+    return n
+      ? { title: base.title, body: `Today counts, ${n}. Start from this win and keep going.` }
+      : base;
+  }
   if (moment.type === "post-save") {
     const { title } = COPY_CATALOG.postSave as CopyMessage;
-    return { title, body: POST_SAVE_BODIES[Math.floor(Math.random() * POST_SAVE_BODIES.length)] };
+    return {
+      title: n ? `Win added, ${n}!` : title,
+      body: POST_SAVE_BODIES[Math.floor(Math.random() * POST_SAVE_BODIES.length)],
+    };
   }
 
-  if (moment.milestone === 7) return COPY_CATALOG.milestone7 as CopyMessage;
-  if (moment.milestone === 30) return COPY_CATALOG.milestone30 as CopyMessage;
-  return COPY_CATALOG.milestone100 as CopyMessage;
+  if (moment.milestone === 7) {
+    const base = COPY_CATALOG.milestone7 as CopyMessage;
+    return n
+      ? { title: base.title, body: `A full week of noticing what is working, ${n}. Keep building.` }
+      : base;
+  }
+  if (moment.milestone === 30) {
+    const base = COPY_CATALOG.milestone30 as CopyMessage;
+    return n
+      ? { title: base.title, body: `That's a real rhythm, ${n}. Your wins are starting to stack.` }
+      : base;
+  }
+  const base = COPY_CATALOG.milestone100 as CopyMessage;
+  return n
+    ? { title: base.title, body: `${n}, you have built something rare. One win at a time.` }
+    : base;
 }
