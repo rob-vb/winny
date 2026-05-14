@@ -52,9 +52,9 @@ describe("GoalEditor component contract", () => {
     expect(content).toContain("Cancel");
   });
 
-  it("has accessibilityLabel='Dream Goal text' on TextInput", () => {
+  it("has accessibilityLabel='Goal text' on TextInput", () => {
     const content = fs.readFileSync(GOAL_EDITOR_PATH, "utf8");
-    expect(content).toContain('accessibilityLabel="Dream Goal text"');
+    expect(content).toContain('accessibilityLabel="Goal text"');
   });
 
   it("has accessibilityLabel='Save Goal' on Save Pressable", () => {
@@ -72,9 +72,10 @@ describe("GoalEditor component contract", () => {
     expect(content).not.toContain("StyleSheet");
   });
 
-  it("uses Animated.View from react-native-reanimated", () => {
+  it("uses Animated.View from react-native (built-in Animated API)", () => {
     const content = fs.readFileSync(GOAL_EDITOR_PATH, "utf8");
-    expect(content).toContain("react-native-reanimated");
+    // GoalEditor uses React Native's own Animated module, not reanimated
     expect(content).toContain("Animated.View");
+    expect(content).not.toContain("react-native-reanimated");
   });
 });

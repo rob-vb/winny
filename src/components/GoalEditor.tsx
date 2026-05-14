@@ -38,8 +38,8 @@ export function GoalEditor({
           maxLength={500}
           multiline={true}
           autoFocus={false}
-          accessibilityLabel="Dream Goal text"
-          accessibilityHint="Type your dream goal, up to 500 characters"
+          accessibilityLabel="Goal text"
+          accessibilityHint="Type your goal, up to 500 characters"
         />
         {showCounter && (
           <Text
