@@ -175,11 +175,18 @@ Plans:
 **Research flags:** Verify current EAS `runtimeVersion` docs and App Store metadata requirements (privacy policy URL, permission strings, no medical language) before first native build
 
 Plans:
+**Wave 1**
 - [ ] 07-01-PLAN.md — App rename to Winny + expo-updates install + EAS Update config + legal text draft (Wave 1)
 - [ ] 07-02-PLAN.md — Phase 5 deferred notification verification on physical device + open question capture (Wave 1, checkpoint)
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 07-03-PLAN.md — iOS + Android production builds + store listing content draft (Wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 07-04-PLAN.md — App Store Connect setup + ascAppId update + TestFlight upload + smoke test (Wave 3, checkpoint)
 - [ ] 07-05-PLAN.md — Google Play Console setup + first .aab upload + service account + smoke test (Wave 3, checkpoint)
+
+**Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 07-06-PLAN.md — Legal pages live verification + links.ts final URLs + submit for review (Wave 4, checkpoint)
 - [ ] 07-07-PLAN.md — Review outcome confirmation + production go-live + phase complete (Wave 4, checkpoint)
 
