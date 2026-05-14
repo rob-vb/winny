@@ -166,6 +166,7 @@ Plans:
 **Goal:** The app is reviewed, approved, and publicly available on the App Store and Google Play
 **Mode:** mvp
 **Requirements:** None (all 29 v1 requirements delivered in Phases 1–6; this phase is the deployment gate)
+**Plans:** 7 plans
 **Success Criteria:**
 1. App passes App Store review and is publicly available on the iOS App Store
 2. App passes Google Play review and is publicly available on the Google Play Store
@@ -173,14 +174,23 @@ Plans:
 **Dependencies:** Phase 6
 **Research flags:** Verify current EAS `runtimeVersion` docs and App Store metadata requirements (privacy policy URL, permission strings, no medical language) before first native build
 
+Plans:
+- [ ] 07-01-PLAN.md — App rename to Winny + expo-updates install + EAS Update config + legal text draft (Wave 1)
+- [ ] 07-02-PLAN.md — Phase 5 deferred notification verification on physical device + open question capture (Wave 1, checkpoint)
+- [ ] 07-03-PLAN.md — iOS + Android production builds + store listing content draft (Wave 2)
+- [ ] 07-04-PLAN.md — App Store Connect setup + ascAppId update + TestFlight upload + smoke test (Wave 3, checkpoint)
+- [ ] 07-05-PLAN.md — Google Play Console setup + first .aab upload + service account + smoke test (Wave 3, checkpoint)
+- [ ] 07-06-PLAN.md — Legal pages live verification + links.ts final URLs + submit for review (Wave 4, checkpoint)
+- [ ] 07-07-PLAN.md — Review outcome confirmation + production go-live + phase complete (Wave 4, checkpoint)
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Data Foundation + Nav Shell | 1/1 | Complete | 2026-05-08 |
 | 2. Core Win-Entry Loop | 5/5 | Complete | 2026-05-10 |
-| 3. Win History | 0/4 | Planned | — |
-| 4. Dream Goal | 0/? | Not started | — |
+| 3. Win History | 4/4 | Complete | 2026-05-12 |
+| 4. Dream Goal | 4/4 | Complete | 2026-05-13 |
 | 5. Notifications + Settings | 4/4 | Verification pending | — |
-| 6. Onboarding + Copy System | 4/4 | Implementation Complete (UAT pending) | — |
-| 7. EAS Build + App Store Submission | 0/? | Not started | — |
+| 6. Onboarding + Copy System | 4/4 | Complete | 2026-05-14 |
+| 7. EAS Build + App Store Submission | 0/7 | Not started | — |
