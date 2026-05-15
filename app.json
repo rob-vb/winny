@@ -20,7 +20,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.robvb.winny"
+      "bundleIdentifier": "com.robvb.winny",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.robvb.winny",
@@ -50,8 +53,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "68833b07-973e-43b0-9845-8d9881301850"
-      }
+        "projectId": "a5f388d0-3b3d-43a6-b6e9-69ee72370d74"
+      },
+      "router": {}
     },
     "owner": "robvb"
   }
