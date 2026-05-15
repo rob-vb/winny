@@ -85,7 +85,7 @@ export default function HomeScreen() {
         className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <StreakHeader streak={streak} totalWins={totalWins} />
+        {totalWins > 0 && <StreakHeader streak={streak} totalWins={totalWins} />}
 
         {postWinMoment && (
           <WinCelebration
@@ -95,20 +95,24 @@ export default function HomeScreen() {
         )}
 
         {todayWins.length === 0 ? (
-          // Empty state — 0 wins today (D-07)
-          <View className="flex-1 items-center justify-center px-8">
+          <View className="flex-1 px-4 pt-6 items-center">
             <Image
               source={require("@/assets/images/trophy.png")}
-              style={{ width: 120, height: 120 }}
+              style={{ width: 160, height: 160 }}
               resizeMode="contain"
-              className="mb-8"
-              accessibilityLabel="Just Keep Winning trophy"
+              accessibilityLabel="Winny trophy"
             />
             <Text
-              className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight"
-              style={{ maxWidth: "80%" } as any}
+              className="font-nunito-black text-[32px] text-badge-ink leading-tight text-center mt-6"
+              style={{ maxWidth: 320 }}
             >
-              {displayName ? `What was your win today, ${displayName}?` : "What was your win today?"}
+              {displayName ? `What did you win, ${displayName}?` : "What did you win today?"}
+            </Text>
+            <Text
+              className="font-nunito-semibold text-base text-text-secondary leading-relaxed mt-3 text-center"
+              style={{ maxWidth: 320 }}
+            >
+              One sentence is enough. Log the proof and keep the streak moving.
             </Text>
           </View>
         ) : (

@@ -1,11 +1,12 @@
 import { useMemo, useState } from "react";
-import { SectionList, View, Text, Image } from "react-native";
+import { SectionList, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useShallow } from "zustand/react/shallow";
 import { useWinsStore } from "@/src/stores/useWinsStore";
 import { HistoryHeroHeader } from "@/src/components/HistoryHeroHeader";
 import { DateSectionHeader } from "@/src/components/DateSectionHeader";
 import { WinCard } from "@/src/components/WinCard";
+import { ScreenHeader } from "@/src/components/ScreenHeader";
 import type { Win } from "@/src/db/schema";
 
 // WinSection: shape passed to SectionList — date_key is the section identifier
@@ -72,22 +73,13 @@ export default function WinsScreen() {
     return (
       <SafeAreaView className="flex-1 bg-background">
         <View
-          className="flex-1 items-center justify-center px-4"
+          className="flex-1 px-4 pt-4"
           accessibilityLabel="No wins yet. Head to Home to log your first win."
         >
-          <Image
-            source={require("@/assets/images/trophy.png")}
-            style={{ width: 120, height: 120 }}
-            resizeMode="contain"
-            className="mb-8"
-            accessibilityLabel="Just Keep Winning trophy"
+          <ScreenHeader
+            title="Your trophy room is ready."
+            body="Log your first win on Home. This becomes the running proof that progress is happening."
           />
-          <Text className="font-nunito-bold text-sm text-text-primary text-center max-w-[280px]">
-            Your wins will live here
-          </Text>
-          <Text className="font-nunito-regular text-base text-text-secondary text-center leading-relaxed mt-2 max-w-[280px]">
-            Head to Home and log your first win.
-          </Text>
         </View>
       </SafeAreaView>
     );

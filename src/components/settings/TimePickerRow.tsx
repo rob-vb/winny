@@ -67,7 +67,7 @@ export function TimePickerRow({
       />
       {Platform.OS === "ios" && showPicker && (
         <Modal transparent animationType="slide" visible>
-          <View className="flex-1 justify-end bg-black/40">
+          <View className="flex-1 justify-end" style={{ backgroundColor: "rgba(23,19,10,0.58)" }}>
             <View className="bg-surface rounded-t-2xl px-4 pb-6 pt-4">
               <View className="flex-row justify-between mb-2">
                 <Pressable onPress={() => setShowPicker(false)}>

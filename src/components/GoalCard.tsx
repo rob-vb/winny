@@ -10,7 +10,7 @@ interface GoalCardProps {
 
 export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
   return (
-    <View className="flex-row items-center bg-surface rounded-xl px-3 py-2 border border-border mb-2">
+    <View className="flex-row items-center bg-surface rounded-2xl px-3 py-3 border border-border mb-3">
       <Pressable
         onPress={() => onToggle(goal.id, !goal.completed)}
         className="min-h-[44px] min-w-[44px] items-center justify-center"
@@ -21,12 +21,14 @@ export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
         <Ionicons
           name={goal.completed ? "checkmark-circle" : "ellipse-outline"}
           size={26}
-          color={goal.completed ? "#F5A623" : "#8E8E93"}
+          color={goal.completed ? "#F1AF2E" : "#8E8E93"}
         />
       </Pressable>
       <Text
-        className={`flex-1 font-nunito-regular text-base mx-2 ${
-          goal.completed ? "text-text-primary" : "text-text-primary"
+        className={`flex-1 text-base mx-2 ${
+          goal.completed
+            ? "font-nunito-bold text-badge-ink"
+            : "font-nunito-regular text-text-primary"
         }`}
         numberOfLines={4}
       >

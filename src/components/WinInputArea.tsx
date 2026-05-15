@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { validateWinText } from "@/src/utils/winValidation";
 import { EXAMPLE_PROMPTS } from "@/src/constants/examplePrompts";
 
@@ -33,9 +34,12 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
 
   return (
     <View className="border-t border-border bg-surface px-4 py-3">
+      <Text className="font-nunito-extrabold text-xs text-primary uppercase mb-2">
+        Add your win
+      </Text>
       <View className="flex-row items-center gap-3">
         <TextInput
-          className="flex-1 bg-background border border-border rounded-lg px-4 py-3 font-nunito-regular text-base text-text-primary"
+          className="flex-1 bg-background border border-border rounded-2xl px-4 py-3 font-nunito-regular text-base text-text-primary"
           placeholder={`e.g. ${placeholder}`}
           placeholderTextColor="#8E8E93"
           value={inputText}
@@ -51,13 +55,13 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
         <Pressable
           onPress={handleSubmit}
           disabled={isDisabled}
-          className={`bg-primary rounded-lg min-h-[44px] min-w-[44px] items-center justify-center px-3 ${
+          className={`bg-primary rounded-2xl min-h-[48px] min-w-[52px] items-center justify-center px-3 ${
             isDisabled ? "opacity-50" : "opacity-100"
           }`}
           accessibilityLabel="Add win"
           accessibilityRole="button"
         >
-          <Text className="font-nunito-bold text-sm text-white">Add Win</Text>
+          <Ionicons name="arrow-up" size={21} color="#17130A" />
         </Pressable>
       </View>
     </View>

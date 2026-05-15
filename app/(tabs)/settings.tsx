@@ -24,6 +24,7 @@ import { SettingsRow } from "@/src/components/settings/SettingsRow";
 import { SettingsSection } from "@/src/components/settings/SettingsSection";
 import { TimePickerRow } from "@/src/components/settings/TimePickerRow";
 import { EditableNameRow } from "@/src/components/settings/EditableNameRow";
+import { ScreenHeader } from "@/src/components/ScreenHeader";
 import {
   APP_STORE_URL,
   PRIVACY_URL,
@@ -153,7 +154,7 @@ export default function SettingsScreen() {
     try {
       await Share.share({
         message: `${SHARE_MESSAGE} ${APP_STORE_URL}`,
-        title: "Just Keep Winning",
+        title: "Winny",
         url: APP_STORE_URL,
       });
     } catch {
@@ -167,13 +168,18 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <ScrollView className="px-4" contentContainerClassName="py-6">
+      <ScrollView className="px-4" contentContainerClassName="py-4">
         {loadError ? (
           <Text className="font-nunito-regular text-base text-text-secondary">
             Couldn't load settings - please restart the app.
           </Text>
         ) : (
           <>
+            <ScreenHeader
+              eyebrow="Control room"
+              title="Keep the streak easy."
+              body="Reminder, profile, and app settings live here."
+            />
             <SettingsSection title="Reminders">
               <SettingsRow
                 icon="notifications-outline"
@@ -186,8 +192,9 @@ export default function SettingsScreen() {
                     value={reminderEnabled && permissionStatus !== "denied"}
                     onValueChange={handleToggleReminder}
                     disabled={permissionStatus === "denied"}
-                    trackColor={{ false: "#F0EDE8", true: "#F5A623" }}
-                    thumbColor="#FFFFFF"
+                    trackColor={{ false: "#D4CFC2", true: "#F1AF2E" }}
+                    thumbColor="#FFFDF8"
+                    ios_backgroundColor="#D4CFC2"
                     accessibilityRole="switch"
                     accessibilityLabel="Daily Reminder"
                     accessibilityState={{

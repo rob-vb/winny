@@ -4,7 +4,7 @@ import { notificationPrompts, pickCopyVariant } from "@/src/copy/catalog";
 import { toDateKey } from "@/src/utils/dateUtils";
 
 const CHANNEL_ID = "daily-reminder";
-const NOTIFICATION_TITLE = "Just Keep Winning";
+const NOTIFICATION_TITLE = "Winny";
 
 export const COPY_POOL = notificationPrompts;
 

@@ -42,8 +42,12 @@ export function SettingsRow({
       accessibilityHint={accessibilityHint}
       accessibilityState={disabled ? { disabled: true } : undefined}
     >
-      {icon && <Ionicons name={icon} size={20} color="#8E8E93" />}
-      <Text className="font-nunito-bold text-sm text-text-primary flex-1">
+      {icon && (
+        <View className="h-8 w-8 rounded-full bg-warm-paper items-center justify-center">
+          <Ionicons name={icon} size={18} color="#17130A" />
+        </View>
+      )}
+      <Text className="font-nunito-bold text-sm text-badge-ink flex-1">
         {label}
       </Text>
       {value && (
@@ -63,4 +67,3 @@ export function SettingsRow({
     </Pressable>
   );
 }
-
