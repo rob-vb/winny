@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
@@ -13,23 +13,13 @@ import { PIConfetti, type PIConfettiMethods } from "react-native-fast-confetti";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { useDisplayName } from "@/src/stores/useWinsStore";
+import {
+  getRandomCelebrationGif,
+  pingGiphyAnalytics,
+  type CelebrationGif,
+} from "@/src/services/giphy";
 
 const { width: W, height: H } = Dimensions.get("window");
-
-const CELEBRATION_GIFS = [
-  "https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRrYnpyOTBmOHJmNDhvaXA2bWEyNnRpbDF6c3RsYnR5NmdzYmkzdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/b09xElu8in7Lq/giphy.gif",
-  "https://media.giphy.com/media/g9582DNuQppxC/giphy.gif",
-  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3OTlvdTdnMzZicDRxZjBwZmFnOTRob3Bma3JvNXVmY3YxcW5pbXVxNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/GS9pfaxQj5hPKFGGp8/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dDJ3dWR2cTE3bTZsdWpyMTR1ZDg2dXFxeGR4MXRrN2c4cmMyYWNjMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mp1JYId8n0t3y/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dDJ3dWR2cTE3bTZsdWpyMTR1ZDg2dXFxeGR4MXRrN2c4cmMyYWNjMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Jt4y4zi519V6asgGhA/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDlmMGJwbW1vcHAzeTJlZ296bG9wdndlejYzdWlnOGNjaGZuNThkZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/YRuFixSNWFVcXaxpmX/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDlmMGJwbW1vcHAzeTJlZ296bG9wdndlejYzdWlnOGNjaGZuNThkZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mGK1g88HZRa2FlKGbz/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDlmMGJwbW1vcHAzeTJlZ296bG9wdndlejYzdWlnOGNjaGZuNThkZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cdXpgeB32BekIGzBNh/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ajNoeG5jajcyM2RyZ3B3ZnJna2F3MzlkaXo1amkxbHZpaGo5MWxsYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT77XWum9yH7zNkFW0/giphy.gif",
-  "https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif",
-];
 
 const CONFETTI_COLORS = [
   "#F1AF2E", "#FF6B6B", "#3B82F6", "#F7C217",
@@ -54,10 +44,19 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
   const contentScale = useRef(new Animated.Value(0.6)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
   const confettiRef = useRef<PIConfettiMethods>(null);
-  const gifUrl = useMemo(
-    () => CELEBRATION_GIFS[Math.floor(Math.random() * CELEBRATION_GIFS.length)],
-    []
-  );
+  const [gif, setGif] = useState<CelebrationGif | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    getRandomCelebrationGif().then((g) => {
+      if (cancelled || !g) return;
+      setGif(g);
+      pingGiphyAnalytics(g.analytics.onload);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     Animated.parallel([
@@ -125,13 +124,18 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
           ]}
         >
           <View style={[styles.cardHero, mega && styles.cardHeroMega]}>
-            <Image
-              source={{ uri: gifUrl }}
-              style={StyleSheet.absoluteFill}
-              contentFit="cover"
-              autoplay
-              accessibilityLabel="Celebration"
-            />
+            {gif && (
+              <Image
+                source={{ uri: gif.url }}
+                style={StyleSheet.absoluteFill}
+                contentFit="cover"
+                autoplay
+                accessibilityLabel="Celebration"
+              />
+            )}
+            <View style={styles.giphyAttribution} pointerEvents="none">
+              <Text style={styles.giphyAttributionText}>Powered by GIPHY</Text>
+            </View>
           </View>
           <View style={styles.cardBody_}>
             {customCopy?.eyebrow && (
@@ -228,5 +232,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#8E8E93",
     marginTop: 18,
+  },
+  giphyAttribution: {
+    position: "absolute",
+    bottom: 6,
+    right: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    backgroundColor: "rgba(0,0,0,0.45)",
+  },
+  giphyAttributionText: {
+    fontFamily: "Nunito_700Bold",
+    fontSize: 9,
+    letterSpacing: 0.6,
+    color: "#FFFFFF",
   },
 });
