@@ -86,6 +86,9 @@ export function TimePickerRow({
                 mode="time"
                 display="spinner"
                 onChange={handleChange}
+                themeVariant="light"
+                textColor="#17130A"
+                style={{ alignSelf: "stretch" }}
               />
             </View>
           </View>

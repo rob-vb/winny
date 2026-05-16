@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "winny",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "runtimeVersion": {
       "policy": "appVersion"
     },
