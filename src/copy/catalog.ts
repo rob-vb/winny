@@ -85,9 +85,9 @@ export const COPY_CATALOG: Record<CopyState, readonly string[] | CopyMessage> = 
     "Every win you add becomes part of your proof.",
   ],
   dreamGoalEmpty: [
-    "You're building your dream one win at a time.",
-    "Name what your wins are building toward.",
-    "Set a Goal when you're ready.",
+    "Add a goal you want to remember.",
+    "Keep a goal visible until it is done.",
+    "Set a goal when you're ready.",
   ],
   notificationDisabled: [
     "Notifications disabled — tap to open Settings",
@@ -132,7 +132,7 @@ export function getStreakCopy(streak: number): string {
   if (streak <= 29) return `${streak} day streak! You're on fire! 🔥🔥`;
   if (streak <= 59) return `${streak} day streak! You're unstoppable! 🚀`;
   if (streak <= 99) return `${streak} day streak! Legendary! 🏆`;
-  return `${streak} day streak! You're a Just Keep Winning champion! 👑`;
+  return `${streak} day streak! You're a Winny champion! 👑`;
 }
 
 export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessage {
@@ -154,7 +154,7 @@ export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessag
     const { title } = COPY_CATALOG.postSave as CopyMessage;
     return {
       title: n ? `Win added, ${n}!` : title,
-      body: POST_SAVE_BODIES[Math.floor(Math.random() * POST_SAVE_BODIES.length)],
+      body: pickCopyVariant(POST_SAVE_BODIES, `${moment.type}:${n}`),
     };
   }
 

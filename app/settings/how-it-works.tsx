@@ -1,10 +1,11 @@
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScreenHeader } from "@/src/components/ScreenHeader";
 
 const SECTIONS = [
   {
     heading: "What this is",
-    body: "Just Keep Winning is a daily habit of noticing what went right. Small wins add up — and your streak proves it.",
+    body: "Winny is a daily habit of noticing what went right. Small wins add up — and your streak proves it.",
   },
   {
     heading: "The streak",
@@ -27,13 +28,16 @@ const SECTIONS = [
 export default function HowItWorksScreen() {
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <ScrollView className="px-4 py-6">
-        <Text className="font-nunito-bold text-xl text-text-primary leading-tight mb-6">
-          How Just Keep Winning Works
-        </Text>
+      <ScrollView className="px-4 py-4">
+        <ScreenHeader
+          eyebrow="How it works"
+          title="Small wins become proof."
+          body="Winny is built to make the next logged win obvious, fast, and worth coming back for."
+          mascot
+        />
         {SECTIONS.map((section) => (
-          <View key={section.heading} className="mb-6">
-            <Text className="font-nunito-bold text-sm text-text-primary mb-2">
+          <View key={section.heading} className="mb-4 bg-surface rounded-2xl border border-border px-4 py-4">
+            <Text className="font-nunito-extrabold text-base text-badge-ink mb-2">
               {section.heading}
             </Text>
             <Text className="font-nunito-regular text-base text-text-secondary leading-relaxed">

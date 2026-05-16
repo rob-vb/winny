@@ -9,9 +9,12 @@ import {
   View,
 } from "react-native";
 import { Image } from "expo-image";
+import { PIConfetti, type PIConfettiMethods } from "react-native-fast-confetti";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { useDisplayName } from "@/src/stores/useWinsStore";
+
+const { width: W, height: H } = Dimensions.get("window");
 
 const CELEBRATION_GIFS = [
   "https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif",
@@ -28,73 +31,34 @@ const CELEBRATION_GIFS = [
   "https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif",
 ];
 
-const { width: W, height: H } = Dimensions.get("window");
-
-const COLORS = [
-  "#F5A623", "#FF6B6B", "#4ECDC4", "#45B7D1",
-  "#96CEB4", "#FFEAA7", "#FF9FF3", "#A29BFE",
-  "#FD79A8", "#00CEC9", "#FDCB6E", "#6C5CE7",
-  "#FF7675", "#74B9FF", "#55EFC4", "#FAB1A0",
+const CONFETTI_COLORS = [
+  "#F1AF2E", "#FF6B6B", "#3B82F6", "#F7C217",
+  "#E74C3C", "#4A90E2", "#F7DC6F", "#2ECC71",
+  "#FFFFFF", "#FFD700",
 ];
 
-const CONFETTI_COUNT = 50;
-const AUTO_DISMISS_MS = 4000;
-
-interface ConfettiPiece {
-  id: number;
-  startX: number;
-  w: number;
-  h: number;
-  color: string;
-  isCircle: boolean;
-  delay: number;
-  duration: number;
-  swayTo: number;
-  rotations: number;
-  yAnim: Animated.Value;
-  swayAnim: Animated.Value;
-  rotateAnim: Animated.Value;
-  opacityAnim: Animated.Value;
-}
-
-function makePieces(): ConfettiPiece[] {
-  return Array.from({ length: CONFETTI_COUNT }, (_, i) => {
-    const w = 7 + Math.random() * 9;
-    const isCircle = Math.random() > 0.6;
-    return {
-      id: i,
-      startX: Math.random() * (W - 12),
-      w,
-      h: isCircle ? w : w * (1.4 + Math.random()),
-      color: COLORS[i % COLORS.length],
-      isCircle,
-      delay: Math.random() * 600,
-      duration: 2400 + Math.random() * 1400,
-      swayTo: (Math.random() - 0.5) * 110,
-      rotations: 2 + Math.random() * 4,
-      yAnim: new Animated.Value(-20),
-      swayAnim: new Animated.Value(0),
-      rotateAnim: new Animated.Value(0),
-      opacityAnim: new Animated.Value(1),
-    };
-  });
-}
+const AUTO_DISMISS_MS_NORMAL = 4500;
+const AUTO_DISMISS_MS_MEGA = 7500;
 
 interface WinCelebrationProps {
-  moment: PostWinMoment;
+  moment?: PostWinMoment;
+  customCopy?: { eyebrow?: string; title: string; body: string };
+  intensity?: "normal" | "mega";
   onDismiss: () => void;
 }
 
-export function WinCelebration({ moment, onDismiss }: WinCelebrationProps) {
+export function WinCelebration({ moment, customCopy, intensity = "normal", onDismiss }: WinCelebrationProps) {
   const displayName = useDisplayName();
-  const copy = getPostWinCopy(moment, displayName);
-  const pieces = useRef<ConfettiPiece[]>(makePieces()).current;
+  const copy = customCopy ?? (moment ? getPostWinCopy(moment, displayName) : { title: "", body: "" });
+  const mega = intensity === "mega";
   const contentScale = useRef(new Animated.Value(0.6)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
+  const confettiRef = useRef<PIConfettiMethods>(null);
   const gifUrl = useMemo(
     () => CELEBRATION_GIFS[Math.floor(Math.random() * CELEBRATION_GIFS.length)],
     []
   );
+
   useEffect(() => {
     Animated.parallel([
       Animated.spring(contentScale, {
@@ -110,39 +74,15 @@ export function WinCelebration({ moment, onDismiss }: WinCelebrationProps) {
       }),
     ]).start();
 
-    pieces.forEach((p) => {
-      Animated.sequence([
-        Animated.delay(p.delay),
-        Animated.parallel([
-          Animated.timing(p.yAnim, {
-            toValue: H + 80,
-            duration: p.duration,
-            useNativeDriver: true,
-          }),
-          Animated.timing(p.swayAnim, {
-            toValue: p.swayTo,
-            duration: p.duration,
-            useNativeDriver: true,
-          }),
-          Animated.timing(p.rotateAnim, {
-            toValue: p.rotations,
-            duration: p.duration,
-            useNativeDriver: true,
-          }),
-          Animated.sequence([
-            Animated.delay(p.duration * 0.6),
-            Animated.timing(p.opacityAnim, {
-              toValue: 0,
-              duration: p.duration * 0.4,
-              useNativeDriver: true,
-            }),
-          ]),
-        ]),
-      ]).start();
-    });
+    const blastTimer = setTimeout(() => {
+      confettiRef.current?.restart();
+    }, 50);
 
-    const timer = setTimeout(onDismiss, AUTO_DISMISS_MS);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(onDismiss, mega ? AUTO_DISMISS_MS_MEGA : AUTO_DISMISS_MS_NORMAL);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(blastTimer);
+    };
   }, []);
 
   return (
@@ -158,52 +98,49 @@ export function WinCelebration({ moment, onDismiss }: WinCelebrationProps) {
           pointerEvents="none"
         />
 
-        {pieces.map((p) => {
-          const rotate = p.rotateAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: ["0deg", "360deg"],
-          });
-          return (
-            <Animated.View
-              key={p.id}
-              pointerEvents="none"
-              style={{
-                position: "absolute",
-                left: p.startX,
-                top: 0,
-                width: p.w,
-                height: p.isCircle ? p.w : p.h,
-                backgroundColor: p.color,
-                borderRadius: p.isCircle ? p.w / 2 : 3,
-                transform: [
-                  { translateY: p.yAnim },
-                  { translateX: p.swayAnim },
-                  { rotate },
-                ],
-                opacity: p.opacityAnim,
-              }}
-            />
-          );
-        })}
+        <View style={StyleSheet.absoluteFill} pointerEvents="none">
+          <PIConfetti
+            ref={confettiRef}
+            count={mega ? 640 : 280}
+            colors={CONFETTI_COLORS}
+            blastPosition={{ x: W / 2, y: H * 0.32 }}
+            blastRadius={mega ? 320 : 200}
+            fallDuration={mega ? 5200 : 3800}
+            blastDuration={mega ? 700 : 450}
+            fadeOutOnEnd
+            sizeVariation={0.4}
+            flakeSize={{ width: mega ? 12 : 9, height: mega ? 14 : 11 }}
+            radiusRange={[0, 4]}
+          />
+        </View>
 
         <Animated.View
           style={[
             styles.card,
+            mega && styles.cardMega,
             {
               opacity: contentOpacity,
               transform: [{ scale: contentScale }],
             },
           ]}
         >
-          <Image
-            source={{ uri: gifUrl }}
-            style={styles.cardGif}
-            contentFit="cover"
-            autoplay
-          />
+          <View style={[styles.cardHero, mega && styles.cardHeroMega]}>
+            <Image
+              source={{ uri: gifUrl }}
+              style={StyleSheet.absoluteFill}
+              contentFit="cover"
+              autoplay
+              accessibilityLabel="Celebration"
+            />
+          </View>
           <View style={styles.cardBody_}>
-            <Text style={styles.cardTitle}>{copy.title}</Text>
-            <Text style={styles.cardBody}>{copy.body}</Text>
+            {customCopy?.eyebrow && (
+              <Text style={styles.cardEyebrow}>{customCopy.eyebrow}</Text>
+            )}
+            {copy.title ? (
+              <Text style={[styles.cardTitle, mega && styles.cardTitleMega]}>{copy.title}</Text>
+            ) : null}
+            <Text style={[styles.cardBody, mega && styles.cardBodyMega]}>{copy.body}</Text>
             <Text style={styles.cardHint}>Tap anywhere to continue</Text>
           </View>
         </Animated.View>
@@ -214,26 +151,58 @@ export function WinCelebration({ moment, onDismiss }: WinCelebrationProps) {
 
 const styles = StyleSheet.create({
   backdrop: {
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: "rgba(23,19,10,0.58)",
   },
   card: {
     position: "absolute",
     alignSelf: "center",
     top: "30%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFF7E8",
     borderRadius: 24,
     overflow: "hidden",
     width: "80%",
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "#B87413",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 16,
     elevation: 10,
   },
-  cardGif: {
+  cardMega: {
+    top: "18%",
+    width: "90%",
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.36,
+    shadowRadius: 26,
+    elevation: 16,
+  },
+  cardHero: {
     width: "100%",
     height: 200,
+    backgroundColor: "#17130A",
+    overflow: "hidden",
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(184,116,19,0.28)",
+  },
+  cardHeroMega: {
+    height: 260,
+  },
+  cardEyebrow: {
+    fontFamily: "Nunito_800ExtraBold",
+    fontSize: 13,
+    letterSpacing: 2,
+    color: "#B87413",
+    textTransform: "uppercase",
+    marginBottom: 10,
+  },
+  cardTitleMega: {
+    fontSize: 34,
+    lineHeight: 40,
+    marginBottom: 14,
+  },
+  cardBodyMega: {
+    fontSize: 17,
+    lineHeight: 26,
   },
   cardBody_: {
     alignItems: "center",
@@ -242,22 +211,22 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: "Nunito_800ExtraBold",
-    fontSize: 22,
-    color: "#1C1C1E",
+    fontSize: 24,
+    color: "#17130A",
     textAlign: "center",
     marginBottom: 8,
   },
   cardBody: {
     fontFamily: "Nunito_400Regular",
     fontSize: 15,
-    color: "#6B6B6F",
+    color: "#1C1C1E",
     textAlign: "center",
     lineHeight: 22,
   },
   cardHint: {
     fontFamily: "Nunito_600SemiBold",
     fontSize: 12,
-    color: "#C7C7CC",
+    color: "#8E8E93",
     marginTop: 18,
   },
 });

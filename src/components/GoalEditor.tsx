@@ -27,11 +27,11 @@ export function GoalEditor({
 
   return (
     <Animated.View style={style}>
-      <View className="bg-surface rounded-xl px-4 py-4 shadow-sm border border-border mt-2">
+      <View className="bg-surface rounded-3xl px-4 py-4 border border-border mt-2">
         <TextInput
           className="font-nunito-regular text-base text-text-primary"
           style={{ minHeight: 120 }}
-          placeholder="What are you working toward?"
+          placeholder="What do you want to accomplish?"
           placeholderTextColor="#8E8E93"
           value={currentText}
           onChangeText={onChangeText}
@@ -67,7 +67,7 @@ export function GoalEditor({
         <Pressable
           onPress={onSave}
           disabled={!canSave}
-          className={`bg-primary rounded-lg min-h-[44px] items-center justify-center px-3 ${
+          className={`bg-primary rounded-2xl min-h-[48px] items-center justify-center px-3 ${
             showCancel ? "flex-1" : "w-full"
           } ${!canSave ? "opacity-50" : "opacity-100"}`}
           accessibilityRole="button"
@@ -77,7 +77,7 @@ export function GoalEditor({
             !canSave ? "Edit your goal text to enable saving" : undefined
           }
         >
-          <Text className="font-nunito-bold text-sm text-white">Save Goal</Text>
+          <Text className="font-nunito-black text-sm text-badge-ink">Save Goal</Text>
         </Pressable>
       </View>
     </Animated.View>

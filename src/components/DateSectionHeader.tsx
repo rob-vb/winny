@@ -48,18 +48,18 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
   return (
     <Pressable
       onPress={onToggle}
-      className="flex-row items-center px-4 py-3 bg-background border-b border-border"
+      className="flex-row items-center px-4 py-3 bg-background"
       accessibilityRole="button"
       accessibilityLabel={`${dateLabel}, ${winCountLabel(count)}, ${isCollapsed ? "collapsed" : "expanded"}`}
     >
-      <Text className="font-nunito-bold text-sm text-text-primary flex-1">
+      <Text className="font-nunito-extrabold text-sm text-badge-ink flex-1">
         {dateLabel}
       </Text>
       <View
-        className="bg-gold/20 rounded-full px-2 py-0.5"
+        className="bg-primary rounded-full px-3 py-1"
         accessibilityElementsHidden={true}
       >
-        <Text className="font-nunito-bold text-xs text-text-primary">
+        <Text className="font-nunito-extrabold text-xs text-badge-ink">
           {winCountLabel(count)}
         </Text>
       </View>

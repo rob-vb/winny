@@ -14,14 +14,13 @@ export function PostWinBanner({ moment, onDismiss }: PostWinBannerProps) {
   const copy = getPostWinCopy(moment, displayName);
 
   return (
-    <View className="mx-4 mt-3 mb-1 bg-surface rounded-xl border border-border overflow-hidden">
+    <View className="mx-4 mt-3 mb-1 bg-warm-paper rounded-3xl border border-primary overflow-hidden">
       <View className="flex-row">
-        <View className="w-1 bg-primary" />
-        <View className="flex-1 px-4 py-3">
-          <Text className="font-nunito-bold text-xl text-text-primary leading-tight">
+        <View className="flex-1 px-4 py-4">
+          <Text className="font-nunito-black text-[24px] text-badge-ink leading-tight">
             {copy.title}
           </Text>
-          <Text className="font-nunito-regular text-base text-text-secondary leading-relaxed mt-1">
+          <Text className="font-nunito-semibold text-base text-text-primary leading-relaxed mt-1">
             {copy.body}
           </Text>
         </View>

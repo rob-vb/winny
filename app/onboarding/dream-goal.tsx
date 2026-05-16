@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { completeOnboarding } from "@/src/db/repositories/onboarding";
 import { addGoal } from "@/src/db/repositories/dreamGoals";
 import { validateGoalText } from "@/src/utils/goalValidation";
+import { ScreenHeader } from "@/src/components/ScreenHeader";
 
 type OnboardingGoalState = "editing" | "saving" | "saved" | "skipping" | "error";
 
@@ -65,18 +66,17 @@ export default function OnboardingGoalScreen() {
           className="flex-1"
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
         >
-          <Text className="font-nunito-bold text-[28px] text-text-primary text-center leading-tight mt-8">
-            Set Goals
-          </Text>
-          <Text className="font-nunito-regular text-base text-text-secondary text-center leading-relaxed mt-3 mb-6">
-            Optional, but powerful: name what your wins are building toward. You can add more later.
-          </Text>
+          <ScreenHeader
+            eyebrow="Optional goal"
+            title="Add a goal to remember."
+            body="Keep it visible in the Goals tab. Check it off when you accomplish it."
+          />
 
-          <View className="bg-surface rounded-xl px-4 py-4 border border-border">
+          <View className="bg-surface rounded-3xl px-4 py-4 border border-border">
             <TextInput
               className="font-nunito-regular text-base text-text-primary"
               style={{ minHeight: 120 }}
-              placeholder="What are you working toward?"
+              placeholder="What do you want to accomplish?"
               placeholderTextColor="#8E8E93"
               value={currentText}
               onChangeText={setCurrentText}
@@ -98,14 +98,14 @@ export default function OnboardingGoalScreen() {
           <Pressable
             onPress={handleSave}
             disabled={!canSave}
-            className={`bg-primary rounded-lg min-h-[44px] mt-4 items-center justify-center px-3 ${
+            className={`bg-primary rounded-2xl min-h-[52px] mt-4 items-center justify-center px-3 ${
               !canSave ? "opacity-50" : "opacity-100"
             }`}
             accessibilityRole="button"
             accessibilityLabel="Save Goal"
             accessibilityState={{ disabled: !canSave }}
           >
-            <Text className="font-nunito-bold text-sm text-white">Save Goal</Text>
+            <Text className="font-nunito-black text-base text-badge-ink">Save Goal</Text>
           </Pressable>
 
           <Pressable

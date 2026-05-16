@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Animated, Text } from "react-native";
+import { Animated, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { Win } from "@/src/db/schema";
 
@@ -24,18 +24,28 @@ export function WinCard({ win, isNew }: WinCardProps) {
   return (
     <Animated.View
       style={{ transform: [{ scale }], opacity }}
-      className="bg-surface rounded-xl px-4 py-3 mb-2 shadow-sm flex-row items-start"
+      className="bg-surface rounded-2xl px-4 py-4 mb-3 border border-border flex-row items-start"
       accessibilityLabel={win.text}
     >
-      <Text className="font-nunito-regular text-base text-text-primary leading-relaxed flex-1">
-        {win.text}
-      </Text>
-      <Ionicons
-        name="checkmark-circle"
-        size={16}
-        color="#4CAF50"
-        style={{ marginLeft: 8, marginTop: 2 }}
-      />
+      <View
+        style={{
+          width: 26,
+          height: 26,
+          borderRadius: 13,
+          backgroundColor: "#F1AF2E",
+          alignItems: "center",
+          justifyContent: "center",
+          marginRight: 12,
+          marginTop: 1,
+        }}
+      >
+        <Ionicons name="checkmark" size={18} color="#17130A" />
+      </View>
+      <View className="flex-1">
+        <Text className="font-nunito-semibold text-[17px] text-badge-ink leading-relaxed">
+          {win.text}
+        </Text>
+      </View>
     </Animated.View>
   );
 }
