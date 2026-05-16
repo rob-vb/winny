@@ -40,3 +40,6 @@ google-service-account.json
 # generated native folders
 /ios
 /android
+
+# impeccable skill workspace
+.impeccable/

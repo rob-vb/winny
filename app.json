@@ -19,7 +19,7 @@
       "backgroundColor": "#FAF8F4"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.robvb.winny",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -41,7 +41,6 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-dev-client",
       "expo-router",
       "expo-sqlite",
       "expo-font",

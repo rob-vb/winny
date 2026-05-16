@@ -14,6 +14,8 @@ import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { useDisplayName } from "@/src/stores/useWinsStore";
 
+const { width: W, height: H } = Dimensions.get("window");
+
 const CELEBRATION_GIFS = [
   "https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif",
   "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRrYnpyOTBmOHJmNDhvaXA2bWEyNnRpbDF6c3RsYnR5NmdzYmkzdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/b09xElu8in7Lq/giphy.gif",
@@ -28,8 +30,6 @@ const CELEBRATION_GIFS = [
   "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ajNoeG5jajcyM2RyZ3B3ZnJna2F3MzlkaXo1amkxbHZpaGo5MWxsYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT77XWum9yH7zNkFW0/giphy.gif",
   "https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif",
 ];
-
-const { width: W, height: H } = Dimensions.get("window");
 
 const CONFETTI_COLORS = [
   "#F1AF2E", "#FF6B6B", "#3B82F6", "#F7C217",
@@ -124,12 +124,15 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
             },
           ]}
         >
-          <Image
-            source={{ uri: gifUrl }}
-            style={[styles.cardGif, mega && styles.cardGifMega]}
-            contentFit="cover"
-            autoplay
-          />
+          <View style={[styles.cardHero, mega && styles.cardHeroMega]}>
+            <Image
+              source={{ uri: gifUrl }}
+              style={StyleSheet.absoluteFill}
+              contentFit="cover"
+              autoplay
+              accessibilityLabel="Celebration"
+            />
+          </View>
           <View style={styles.cardBody_}>
             {customCopy?.eyebrow && (
               <Text style={styles.cardEyebrow}>{customCopy.eyebrow}</Text>
@@ -173,11 +176,15 @@ const styles = StyleSheet.create({
     shadowRadius: 26,
     elevation: 16,
   },
-  cardGif: {
+  cardHero: {
     width: "100%",
     height: 200,
+    backgroundColor: "#17130A",
+    overflow: "hidden",
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(184,116,19,0.28)",
   },
-  cardGifMega: {
+  cardHeroMega: {
     height: 260,
   },
   cardEyebrow: {

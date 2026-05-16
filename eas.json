@@ -31,7 +31,7 @@
     "production": {
       "ios": {
         "appleId": "rbvbaaren@gmail.com",
-        "ascAppId": "<PLACEHOLDER — fill in after App Store Connect app record is created>",
+        "ascAppId": "6769980813",
         "companyName": "Rob van Baaren"
       },
       "android": {

@@ -154,7 +154,7 @@ export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessag
     const { title } = COPY_CATALOG.postSave as CopyMessage;
     return {
       title: n ? `Win added, ${n}!` : title,
-      body: POST_SAVE_BODIES[Math.floor(Math.random() * POST_SAVE_BODIES.length)],
+      body: pickCopyVariant(POST_SAVE_BODIES, `${moment.type}:${n}`),
     };
   }
 
