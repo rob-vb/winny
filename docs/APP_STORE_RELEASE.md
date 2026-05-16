@@ -28,9 +28,9 @@ This checklist is for publishing Winny 1.0.0 to the Apple App Store. It is based
 3. Set name to `Winny`, SKU to an internal value such as `winny-ios-1`, and primary language to English.
 4. Copy the generated App Store Connect Apple ID into `eas.json` at `submit.production.ios.ascAppId`.
 5. Create or confirm the required URLs:
-   - Privacy policy: `https://winny.app/privacy`
-   - Terms of use: `https://winny.app/terms`
-   - Support URL: recommended `https://winny.app/support`
+   - Privacy policy: `https://getwinny.app/privacy`
+   - Terms of use: `https://getwinny.app/terms`
+   - Support URL: recommended `https://getwinny.app/support`
 
 ## Local Preflight
 
@@ -68,7 +68,7 @@ Winny is a local-first daily wins habit app. Users can log short personal wins, 
 
 - Confirm `6769980813` is the App Store Connect Apple ID for the `Winny` app record before first submit.
 - The public App Store URL may not resolve until Apple publishes the listing.
-- `https://winny.app/privacy` and `https://winny.app/terms` must be live and accurate before review.
+- `https://getwinny.app/privacy` and `https://getwinny.app/terms` must be live and accurate before review.
 - Legal pages and App Store metadata should still be reviewed by a human before submission.
 
 ## Official References

@@ -41,9 +41,9 @@ Winny 1.0.0 is the first App Store release.
 
 ## Support And Legal URLs
 
-- Support URL: `https://winny.app/support`
-- Privacy Policy URL: `https://winny.app/privacy`
-- Terms URL: `https://winny.app/terms`
+- Support URL: `https://getwinny.app/support`
+- Privacy Policy URL: `https://getwinny.app/privacy`
+- Terms URL: `https://getwinny.app/terms`
 
 ## App Review Notes
 
