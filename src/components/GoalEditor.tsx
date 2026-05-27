@@ -1,4 +1,5 @@
 import { Animated, View, Text, TextInput, Pressable } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface GoalEditorProps {
   currentText: string;
@@ -21,6 +22,7 @@ export function GoalEditor({
   showCancel,
   style,
 }: GoalEditorProps) {
+  const { t } = useTranslation();
   const canSave = isDirty && currentText.trim().length > 0 && !isSaving;
   const remaining = 500 - currentText.length;
   const showCounter = remaining <= 100;
@@ -31,20 +33,23 @@ export function GoalEditor({
         <TextInput
           className="font-nunito-regular text-base text-text-primary"
           style={{ minHeight: 120 }}
-          placeholder="What do you want to accomplish?"
+          placeholder={t("goalEditor.placeholder")}
           placeholderTextColor="#8E8E93"
           value={currentText}
           onChangeText={onChangeText}
           maxLength={500}
           multiline={true}
           autoFocus={false}
-          accessibilityLabel="Goal text"
-          accessibilityHint="Type your goal, up to 500 characters"
+          accessibilityLabel={t("goalEditor.inputAria")}
+          accessibilityHint={t("goalEditor.inputHint")}
         />
         {showCounter && (
           <Text
             className="font-nunito-bold text-sm text-text-secondary text-right mt-1"
-            accessibilityLabel={`${currentText.length} of 500 characters used`}
+            accessibilityLabel={t("goalEditor.counterAria", {
+              used: currentText.length,
+              max: 500,
+            })}
           >
             {remaining} / 500
           </Text>
@@ -57,10 +62,10 @@ export function GoalEditor({
             onPress={onCancel}
             className="flex-1 min-h-[44px] items-center justify-center"
             accessibilityRole="button"
-            accessibilityLabel="Cancel editing"
+            accessibilityLabel={t("goalEditor.cancelAria")}
           >
             <Text className="font-nunito-bold text-sm text-text-secondary">
-              Cancel
+              {t("goalEditor.cancel")}
             </Text>
           </Pressable>
         )}
@@ -71,13 +76,11 @@ export function GoalEditor({
             showCancel ? "flex-1" : "w-full"
           } ${!canSave ? "opacity-50" : "opacity-100"}`}
           accessibilityRole="button"
-          accessibilityLabel="Save Goal"
+          accessibilityLabel={t("goalEditor.saveAria")}
           accessibilityState={{ disabled: !canSave }}
-          accessibilityHint={
-            !canSave ? "Edit your goal text to enable saving" : undefined
-          }
+          accessibilityHint={!canSave ? t("goalEditor.saveHint") : undefined}
         >
-          <Text className="font-nunito-black text-sm text-badge-ink">Save Goal</Text>
+          <Text className="font-nunito-black text-sm text-badge-ink">{t("goalEditor.save")}</Text>
         </Pressable>
       </View>
     </Animated.View>

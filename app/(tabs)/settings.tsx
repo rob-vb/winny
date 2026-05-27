@@ -10,10 +10,16 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import * as StoreReview from "expo-store-review";
 import * as WebBrowser from "expo-web-browser";
 import { getSetting, setSetting } from "@/src/db/repositories/settings";
-import { useWinsStore } from "@/src/stores/useWinsStore";
+import {
+  useWinsStore,
+  useLocalePref,
+  useResolvedLocale,
+} from "@/src/stores/useWinsStore";
+import { nativeNameFor } from "@/src/i18n/languages";
 import {
   cancelAll,
   formatHHmmFor12h,
@@ -35,8 +41,15 @@ import {
 const DEFAULT_REMINDER_TIME = "20:00";
 
 export default function SettingsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const setStoreDisplayName = useWinsStore((s) => s.setDisplayName);
+  const localePref = useLocalePref();
+  const resolvedLocale = useResolvedLocale();
+  const languageValue =
+    localePref === "auto"
+      ? t("settings.languageAuto", { name: nativeNameFor(resolvedLocale) })
+      : nativeNameFor(localePref);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [reminderEnabled, setReminderEnabled] = useState(true);
@@ -126,7 +139,9 @@ export default function SettingsScreen() {
     if (reminderEnabled && permissionStatus === "granted") {
       await scheduleNext30Days(hhMm);
     }
-    setConfirmation(`Reminders set for ${formatHHmmFor12h(hhMm)}`);
+    setConfirmation(
+      t("settings.remindersSetFor", { time: formatHHmmFor12h(hhMm) })
+    );
   };
 
   const handleOpenBrowser = async (url: string) => {
@@ -171,22 +186,22 @@ export default function SettingsScreen() {
       <ScrollView className="px-4" contentContainerClassName="py-4">
         {loadError ? (
           <Text className="font-nunito-regular text-base text-text-secondary">
-            Couldn't load settings - please restart the app.
+            {t("settings.loadError")}
           </Text>
         ) : (
           <>
             <ScreenHeader
-              eyebrow="Control room"
-              title="Keep the streak easy."
-              body="Reminder, profile, and app settings live here."
+              eyebrow={t("settings.eyebrow")}
+              title={t("settings.title")}
+              body={t("settings.body")}
             />
-            <SettingsSection title="Reminders">
+            <SettingsSection title={t("settings.sectionReminders")}>
               <SettingsRow
                 icon="notifications-outline"
-                label="Daily Reminder"
+                label={t("settings.dailyReminder")}
                 onPress={handleToggleReminder}
                 showChevron={false}
-                accessibilityLabel="Daily Reminder"
+                accessibilityLabel={t("settings.dailyReminder")}
                 right={
                   <Switch
                     value={reminderEnabled && permissionStatus !== "denied"}
@@ -196,7 +211,7 @@ export default function SettingsScreen() {
                     thumbColor="#FFFDF8"
                     ios_backgroundColor="#D4CFC2"
                     accessibilityRole="switch"
-                    accessibilityLabel="Daily Reminder"
+                    accessibilityLabel={t("settings.dailyReminder")}
                     accessibilityState={{
                       checked: reminderEnabled && permissionStatus !== "denied",
                       disabled: permissionStatus === "denied",
@@ -215,10 +230,10 @@ export default function SettingsScreen() {
                   onPress={() => Linking.openSettings()}
                   className="px-4 py-3"
                   accessibilityRole="button"
-                  accessibilityLabel="Notifications disabled - tap to open Settings"
+                  accessibilityLabel={t("settings.notifDisabled")}
                 >
                   <Text className="font-nunito-regular text-sm text-text-secondary">
-                    Notifications disabled - tap to open Settings
+                    {t("settings.notifDisabled")}
                   </Text>
                 </Pressable>
               )}
@@ -231,7 +246,7 @@ export default function SettingsScreen() {
               </View>
             )}
 
-            <SettingsSection title="Profile">
+            <SettingsSection title={t("settings.sectionProfile")}>
               <EditableNameRow
                 value={displayName}
                 onSave={async (name) => {
@@ -239,34 +254,40 @@ export default function SettingsScreen() {
                   setDisplayName(name);
                   setStoreDisplayName(name);
                 }}
-                placeholder="Add your name"
+                placeholder={t("editableName.placeholder")}
+              />
+              <SettingsRow
+                icon="language-outline"
+                label={t("settings.language")}
+                value={languageValue}
+                onPress={() => router.push("/settings/language" as never)}
                 isLast
               />
             </SettingsSection>
-            <SettingsSection title="About">
+            <SettingsSection title={t("settings.sectionAbout")}>
               <SettingsRow
                 icon="information-circle-outline"
-                label="How It Works"
+                label={t("settings.howItWorks")}
                 onPress={() => router.push("/settings/how-it-works")}
               />
               <SettingsRow
                 icon="lock-closed-outline"
-                label="Privacy Policy"
+                label={t("settings.privacy")}
                 onPress={() => handleOpenBrowser(PRIVACY_URL)}
               />
               <SettingsRow
                 icon="document-text-outline"
-                label="Terms of Use"
+                label={t("settings.terms")}
                 onPress={() => handleOpenBrowser(TERMS_URL)}
               />
               <SettingsRow
                 icon="star-outline"
-                label="Rate App"
+                label={t("settings.rate")}
                 onPress={handleRateApp}
               />
               <SettingsRow
                 icon="share-outline"
-                label="Share App"
+                label={t("settings.share")}
                 onPress={handleShareApp}
                 isLast
               />

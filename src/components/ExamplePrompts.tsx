@@ -1,10 +1,18 @@
 import { View, Text } from "react-native";
+import { useTranslation } from "react-i18next";
 import { selectDailyPrompts } from "@/src/utils/promptUtils";
 import { toDateKey } from "@/src/utils/dateUtils";
+import { EXAMPLE_PROMPTS } from "@/src/constants/examplePrompts";
 
 export function ExamplePrompts() {
+  const { t } = useTranslation();
   const today = toDateKey();
-  const prompts = selectDailyPrompts(today, 3);
+  const pool = t("winInput.examples", {
+    returnObjects: true,
+    defaultValue: EXAMPLE_PROMPTS,
+  }) as string[];
+  const prompts = selectDailyPrompts(today, pool, 3);
+  const egPrefix = t("winInput.egPrefix", { defaultValue: "e.g." });
 
   return (
     <View
@@ -19,7 +27,7 @@ export function ExamplePrompts() {
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          e.g. {prompt}
+          {egPrefix} {prompt}
         </Text>
       ))}
     </View>

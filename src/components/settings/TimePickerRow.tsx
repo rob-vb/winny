@@ -3,6 +3,7 @@ import { Modal, Platform, Pressable, Text, View } from "react-native";
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
+import { useTranslation } from "react-i18next";
 import {
   dateToHHmm,
   formatHHmmFor12h,
@@ -23,6 +24,7 @@ export function TimePickerRow({
   disabled = false,
   isLast = false,
 }: TimePickerRowProps) {
+  const { t } = useTranslation();
   const [showPicker, setShowPicker] = useState(false);
   const [pickerDate, setPickerDate] = useState(() => parseHHmmToDate(currentTime));
 
@@ -53,17 +55,13 @@ export function TimePickerRow({
     <>
       <SettingsRow
         icon="time-outline"
-        label="Reminder Time"
+        label={t("settings.reminderTime")}
         value={formatHHmmFor12h(currentTime)}
         onPress={() => setShowPicker(true)}
         disabled={disabled}
         isLast={isLast}
-        accessibilityLabel={`Reminder Time, currently ${formatHHmmFor12h(
-          currentTime
-        )}`}
-        accessibilityHint={
-          disabled ? "Enable reminders to change this setting" : undefined
-        }
+        accessibilityLabel={t("settings.reminderTimeAria", { time: formatHHmmFor12h(currentTime) })}
+        accessibilityHint={disabled ? t("settings.reminderTimeHint") : undefined}
       />
       {Platform.OS === "ios" && showPicker && (
         <Modal transparent animationType="slide" visible>
@@ -72,12 +70,12 @@ export function TimePickerRow({
               <View className="flex-row justify-between mb-2">
                 <Pressable onPress={() => setShowPicker(false)}>
                   <Text className="font-nunito-bold text-sm text-text-secondary">
-                    Cancel
+                    {t("common.cancel")}
                   </Text>
                 </Pressable>
                 <Pressable onPress={handleDone}>
                   <Text className="font-nunito-bold text-sm text-primary">
-                    Done
+                    {t("common.done")}
                   </Text>
                 </Pressable>
               </View>

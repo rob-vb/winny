@@ -11,9 +11,11 @@ import {
 } from "@expo-google-fonts/nunito";
 import { useFonts } from "@expo-google-fonts/nunito/useFonts";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { db } from "@/src/db/client";
 import migrations from "@/drizzle/migrations";
-import { getSetting } from "@/src/db/repositories/settings";
+import { getSetting, setSetting } from "@/src/db/repositories/settings";
 import {
   hasCompletedOnboarding,
   subscribeOnboardingCompleted,
@@ -22,6 +24,12 @@ import {
   initNotificationHandler,
   scheduleNext30Days,
 } from "@/src/notifications/notificationService";
+import { initI18n } from "@/src/i18n";
+import {
+  parseStoredPref,
+  resolveLocale,
+  isSupportedLocale,
+} from "@/src/i18n/languages";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -34,6 +42,7 @@ export default function RootLayout() {
   const segments = useSegments();
   const [onboardingChecked, setOnboardingChecked] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [i18nReady, setI18nReady] = useState(false);
 
   const [fontsLoaded, fontError] = useFonts({
     Nunito_400Regular,
@@ -43,8 +52,26 @@ export default function RootLayout() {
     Nunito_900Black,
   });
 
-  // Gate splash on BOTH migrations AND fonts — prevents FOUT and DB-not-ready race (RESEARCH Pitfall 5)
-  const ready = (migrationsSuccess && fontsLoaded) || !!migrationsError || !!fontError;
+  // Gate splash on migrations + fonts + i18n — prevents FOUT, DB race, and untranslated flash
+  const ready =
+    ((migrationsSuccess && fontsLoaded && i18nReady) ||
+      !!migrationsError ||
+      !!fontError);
+
+  useEffect(() => {
+    if (!migrationsSuccess) return;
+    let cancelled = false;
+    (async () => {
+      const raw = await getSetting("locale");
+      const pref = parseStoredPref(raw);
+      const resolved = resolveLocale(pref);
+      initI18n(resolved);
+      if (!cancelled) setI18nReady(true);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [migrationsSuccess]);
 
   useEffect(() => {
     if (ready) {
@@ -79,13 +106,26 @@ export default function RootLayout() {
     if (!ready) return;
 
     const topUpReminderSchedule = async () => {
-      const [enabled, status, time] = await Promise.all([
+      const [enabled, status, time, prefRaw, lastBaked] = await Promise.all([
         getSetting("reminder_enabled"),
         getSetting("notification_permission_status"),
         getSetting("reminder_time"),
+        getSetting("locale"),
+        getSetting("lastBakedLocale"),
       ]);
+      const pref = parseStoredPref(prefRaw);
+      const resolved = resolveLocale(pref);
+      if (i18n.language !== resolved) {
+        await initI18n(resolved).changeLanguage(resolved);
+      }
       if (enabled === "true" && status === "granted" && time) {
-        await scheduleNext30Days(time);
+        const drift = isSupportedLocale(lastBaked) ? lastBaked !== resolved : true;
+        if (drift) {
+          await scheduleNext30Days(time);
+          await setSetting("lastBakedLocale", resolved);
+        } else {
+          await scheduleNext30Days(time);
+        }
       }
     };
 
@@ -114,6 +154,11 @@ export default function RootLayout() {
     return <Redirect href="/onboarding/welcome" />;
   }
 
+  return <AppStack />;
+}
+
+function AppStack() {
+  const { t } = useTranslation();
   return (
     <Stack>
       <Stack.Screen name="onboarding/welcome" options={{ headerShown: false }} />
@@ -124,7 +169,17 @@ export default function RootLayout() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="settings/how-it-works"
-        options={{ title: "How It Works", headerBackTitle: "Settings" }}
+        options={{
+          title: t("settings.howItWorksTitle"),
+          headerBackTitle: t("settings.howItWorksBack"),
+        }}
+      />
+      <Stack.Screen
+        name="settings/language"
+        options={{
+          title: t("settings.languagePickerTitle"),
+          headerBackTitle: t("settings.howItWorksBack"),
+        }}
       />
       <Stack.Screen name="+not-found" />
     </Stack>

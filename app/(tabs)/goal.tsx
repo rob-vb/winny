@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import {
   getGoals,
   addGoal,
@@ -22,18 +23,8 @@ import { WinCelebration } from "@/src/components/WinCelebration";
 import { useDisplayName } from "@/src/stores/useWinsStore";
 import type { DreamGoalItem } from "@/src/db/schema";
 
-const GOAL_BODIES = [
-  "You wrote it down. You chased it. You caught it. This is the stuff that builds a life.",
-  "Past you dared to write this down. Present you just made it real. That's how legends are made.",
-  "Most people let dreams stay dreams. You dragged this one into reality. Take the bow.",
-  "This was a maybe. Then a someday. Then a soon. Now it's done. Forever yours.",
-  "Look at this moment. Remember it. This is who you said you'd become — and you became them.",
-  "From the page to your life. From dream to done. This is what unstoppable looks like.",
-  "You didn't wait for permission. You didn't wait for perfect. You showed up and you won.",
-  "One goal closer to the future you're building. And the version of you that builds it.",
-];
-
 export default function GoalScreen() {
+  const { t } = useTranslation();
   const displayName = useDisplayName();
   const [goals, setGoals] = useState<DreamGoalItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,9 +79,13 @@ export default function GoalScreen() {
     try {
       await toggleGoalComplete(id, completed);
       if (completed && wasNotCompleted && target) {
-        const body = GOAL_BODIES[Math.floor(Math.random() * GOAL_BODIES.length)];
+        const bodies = t("goal.bodies", { returnObjects: true }) as unknown;
+        const list = Array.isArray(bodies) ? (bodies as string[]) : [];
+        const body = list[Math.floor(Math.random() * list.length)] ?? "";
         setCelebration({
-          eyebrow: displayName ? `${displayName}, goal achieved` : "Goal achieved",
+          eyebrow: displayName
+            ? t("goal.achievedEyebrowNamed", { name: displayName })
+            : t("goal.achievedEyebrow"),
           title: "",
           body: `"${target.text}"\n\n${body}`,
         });
@@ -136,14 +131,14 @@ export default function GoalScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <ScreenHeader
-            eyebrow="Goals"
-            title="Keep your goals in sight."
-            body="Add what you want to accomplish. Check it off when it's done."
+            eyebrow={t("goal.eyebrow")}
+            title={t("goal.title")}
+            body={t("goal.body")}
           />
 
           {loadError && (
             <Text className="font-nunito-regular text-sm text-accent text-center mt-2 mb-4">
-              Couldn't load your goals. Please restart the app.
+              {t("goal.loadError")}
             </Text>
           )}
 
@@ -159,7 +154,7 @@ export default function GoalScreen() {
           {achievedGoals.length > 0 && (
             <>
               <Text className="font-nunito-bold text-sm text-text-secondary mt-4 mb-3">
-                Achieved goals
+                {t("goal.achievedHeader")}
               </Text>
               {achievedGoals.map((goal) => (
                 <GoalCard
@@ -175,20 +170,20 @@ export default function GoalScreen() {
 
         <View className="border-t border-border bg-surface px-4 py-3">
           <Text className="font-nunito-extrabold text-xs text-primary uppercase mb-2">
-            Add a goal
+            {t("goal.addEyebrow")}
           </Text>
           <View className="flex-row items-center gap-3">
             <TextInput
               className="flex-1 bg-background border border-border rounded-2xl px-4 py-3 font-nunito-regular text-base text-text-primary"
-              placeholder="Add a goal..."
+              placeholder={t("goal.addPlaceholder")}
               placeholderTextColor="#8E8E93"
               value={newGoalText}
               onChangeText={setNewGoalText}
               maxLength={500}
               onSubmitEditing={handleAdd}
               returnKeyType="done"
-              accessibilityLabel="New goal text"
-              accessibilityHint="Type a goal and tap the add button"
+              accessibilityLabel={t("goal.inputAria")}
+              accessibilityHint={t("goal.addHint")}
             />
             <Pressable
               onPress={handleAdd}
@@ -197,7 +192,7 @@ export default function GoalScreen() {
                 !canAdd ? "opacity-50" : "opacity-100"
               }`}
               accessibilityRole="button"
-              accessibilityLabel="Add goal"
+              accessibilityLabel={t("goal.addAria")}
               accessibilityState={{ disabled: !canAdd }}
             >
               <Ionicons name="add" size={22} color="#17130A" />

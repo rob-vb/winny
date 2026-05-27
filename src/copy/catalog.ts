@@ -1,111 +1,10 @@
+import i18n from "i18next";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
-
-const POST_SAVE_BODIES = [
-  "One more piece of proof that you're moving.",
-  "That's a W. No takebacks.",
-  "Future you is already thanking you.",
-  "Another brick. Your wall of wins is real.",
-  "Logged. Can't unhappen.",
-  "Small wins build big things. This is proof.",
-  "Your brain just asked for more of this. Feed it.",
-  "You showed up. That's the whole game.",
-  "Stack enough of these and watch what happens.",
-  "The streak is alive. So are you.",
-  "One win closer to who you're becoming.",
-  "That counts. Every single time.",
-];
-
-export type CopyState =
-  | "firstWin"
-  | "milestone7"
-  | "milestone30"
-  | "milestone100"
-  | "comeback"
-  | "postSave"
-  | "longStreak"
-  | "homeEmpty"
-  | "historyEmpty"
-  | "dreamGoalEmpty"
-  | "notificationDisabled"
-  | "saveError"
-  | "loadError"
-  | "notificationPrompt";
 
 export interface CopyMessage {
   title: string;
   body: string;
 }
-
-export const notificationPrompts = [
-  "What was your win today?",
-  "One small win counts. Log it.",
-  "Time to notice what's working.",
-  "Your dream is built one win at a time.",
-  "Add one win — that's enough.",
-] as const;
-
-export const COPY_CATALOG: Record<CopyState, readonly string[] | CopyMessage> = {
-  firstWin: {
-    title: "First win logged",
-    body: "That's the whole move. Notice one win, then come back tomorrow.",
-  },
-  milestone7: {
-    title: "7 days of wins",
-    body: "A full week of noticing what is working. Keep building.",
-  },
-  milestone30: {
-    title: "30 days strong",
-    body: "That's a real rhythm. Your wins are starting to stack.",
-  },
-  milestone100: {
-    title: "100 days of proof",
-    body: "You have built something rare. One win at a time.",
-  },
-  comeback: {
-    title: "You're back in motion",
-    body: "Today counts. Start from this win and keep going.",
-  },
-  postSave: {
-    title: "Win added",
-    body: "One more piece of proof that you're moving.",
-  },
-  longStreak: [
-    "{n} day streak! You're building something real!",
-    "{n} day streak! Keep stacking proof.",
-    "{n} day streak! Your rhythm is real.",
-  ],
-  homeEmpty: [
-    "What was your win today?",
-    "Start with one win today.",
-    "Notice one thing that moved you forward.",
-  ],
-  historyEmpty: [
-    "Your wins will show up here.",
-    "Log your first win and your history starts here.",
-    "Every win you add becomes part of your proof.",
-  ],
-  dreamGoalEmpty: [
-    "Add a goal you want to remember.",
-    "Keep a goal visible until it is done.",
-    "Set a goal when you're ready.",
-  ],
-  notificationDisabled: [
-    "Notifications disabled — tap to open Settings",
-    "Reminders are off for now.",
-    "You can turn reminders back on any time.",
-  ],
-  saveError: [
-    "Couldn't save — tap to try again.",
-    "That did not save yet. Try once more.",
-    "Save did not finish. Your text is still here.",
-  ],
-  loadError: [
-    "Couldn't load this yet — please restart the app.",
-    "This did not load yet. Restarting the app should help.",
-    "We could not load this screen yet. Please restart the app.",
-  ],
-  notificationPrompt: notificationPrompts,
-};
 
 export function pickCopyVariant(
   variants: readonly string[],
@@ -123,55 +22,69 @@ export function pickCopyVariant(
   return variants[hash % variants.length];
 }
 
+export function getNotificationPrompts(): readonly string[] {
+  const prompts = i18n.t("notifications.prompts", {
+    returnObjects: true,
+  }) as unknown;
+  return Array.isArray(prompts) ? (prompts as string[]) : [];
+}
+
+export function getNotificationTitle(): string {
+  return i18n.t("notifications.title");
+}
+
 export function getStreakCopy(streak: number): string {
-  if (streak === 0) return "Start your streak today! 🌟";
-  if (streak === 1) return "Day 1! Every streak starts here. 🎉";
-  if (streak === 2) return "2 days! You're getting started! 🌱";
-  if (streak <= 6) return `${streak} day streak! Keep it up! 💪`;
-  if (streak <= 13) return `${streak} day streak! You're building something real! 🔥`;
-  if (streak <= 29) return `${streak} day streak! You're on fire! 🔥🔥`;
-  if (streak <= 59) return `${streak} day streak! You're unstoppable! 🚀`;
-  if (streak <= 99) return `${streak} day streak! Legendary! 🏆`;
-  return `${streak} day streak! You're a Winny champion! 👑`;
+  const key = streakLabelKey(streak);
+  return i18n.t(key, { count: streak });
+}
+
+function streakLabelKey(streak: number): string {
+  if (streak === 0) return "streak.label.zero";
+  if (streak === 1) return "streak.label.one";
+  if (streak === 2) return "streak.label.two";
+  if (streak <= 6) return "streak.label.small";
+  if (streak <= 13) return "streak.label.growing";
+  if (streak <= 29) return "streak.label.fire";
+  if (streak <= 59) return "streak.label.rocket";
+  if (streak <= 99) return "streak.label.legendary";
+  return "streak.label.champion";
 }
 
 export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessage {
-  const n = name?.trim() || "";
+  const trimmed = name?.trim() || "";
+  const hasName = trimmed.length > 0;
 
-  if (moment.type === "first-win") {
-    const base = COPY_CATALOG.firstWin as CopyMessage;
-    return n
-      ? { title: base.title, body: `That's the whole move, ${n}. Notice one win, then come back tomorrow.` }
-      : base;
-  }
-  if (moment.type === "comeback") {
-    const base = COPY_CATALOG.comeback as CopyMessage;
-    return n
-      ? { title: base.title, body: `Today counts, ${n}. Start from this win and keep going.` }
-      : base;
-  }
   if (moment.type === "post-save") {
-    const { title } = COPY_CATALOG.postSave as CopyMessage;
+    const bodies = i18n.t("postWin.postSave.bodies", {
+      returnObjects: true,
+    }) as unknown;
+    const list = Array.isArray(bodies) ? (bodies as string[]) : [];
     return {
-      title: n ? `Win added, ${n}!` : title,
-      body: pickCopyVariant(POST_SAVE_BODIES, `${moment.type}:${n}`),
+      title: hasName
+        ? i18n.t("postWin.postSave.titleNamed", { name: trimmed })
+        : i18n.t("postWin.postSave.title"),
+      body:
+        list.length > 0
+          ? pickCopyVariant(list, `${moment.type}:${trimmed}`)
+          : "",
     };
   }
 
-  if (moment.milestone === 7) {
-    const base = COPY_CATALOG.milestone7 as CopyMessage;
-    return n
-      ? { title: base.title, body: `A full week of noticing what is working, ${n}. Keep building.` }
-      : base;
-  }
-  if (moment.milestone === 30) {
-    const base = COPY_CATALOG.milestone30 as CopyMessage;
-    return n
-      ? { title: base.title, body: `That's a real rhythm, ${n}. Your wins are starting to stack.` }
-      : base;
-  }
-  const base = COPY_CATALOG.milestone100 as CopyMessage;
-  return n
-    ? { title: base.title, body: `${n}, you have built something rare. One win at a time.` }
-    : base;
+  const base =
+    moment.type === "first-win"
+      ? "postWin.firstWin"
+      : moment.type === "comeback"
+      ? "postWin.comeback"
+      : moment.milestone === 7
+      ? "postWin.milestone7"
+      : moment.milestone === 30
+      ? "postWin.milestone30"
+      : "postWin.milestone100";
+
+  return {
+    title: i18n.t(`${base}.title`),
+    body: hasName
+      ? i18n.t(`${base}.bodyNamed`, { name: trimmed })
+      : i18n.t(`${base}.body`),
+  };
 }

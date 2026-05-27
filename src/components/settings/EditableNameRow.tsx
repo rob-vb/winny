@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Animated, Keyboard, Pressable, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 interface EditableNameRowProps {
   value: string;
@@ -12,9 +13,11 @@ interface EditableNameRowProps {
 export function EditableNameRow({
   value,
   onSave,
-  placeholder = "Add your name",
+  placeholder,
   isLast = false,
 }: EditableNameRowProps) {
+  const { t } = useTranslation();
+  const effectivePlaceholder = placeholder ?? t("editableName.placeholder");
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(value);
   const savingRef = useRef(false);
@@ -49,7 +52,7 @@ export function EditableNameRow({
     Keyboard.dismiss();
   };
 
-  const displayValue = value.trim() || placeholder;
+  const displayValue = value.trim() || effectivePlaceholder;
 
   return (
     <View
@@ -62,11 +65,11 @@ export function EditableNameRow({
           onPress={beginEditing}
           className="min-h-[52px] px-4 py-3 flex-row items-center gap-3"
           accessibilityRole="button"
-          accessibilityLabel={`Your Name, ${value.trim() || "not set"}`}
+          accessibilityLabel={t("editableName.aria", { value: value.trim() || t("editableName.notSet") })}
         >
           <Ionicons name="person-outline" size={20} color="#8E8E93" />
           <Text className="font-nunito-bold text-sm text-text-primary flex-1">
-            Your Name
+            {t("editableName.label")}
           </Text>
           <Text className="font-nunito-regular text-base text-text-secondary">
             {displayValue}
@@ -81,7 +84,7 @@ export function EditableNameRow({
         <View className="min-h-[52px] px-4 py-3 justify-center">
           <TextInput
             className="font-nunito-regular text-base text-text-primary"
-            placeholder={placeholder}
+            placeholder={effectivePlaceholder}
             placeholderTextColor="#8E8E93"
             value={editText}
             onChangeText={setEditText}
@@ -90,8 +93,8 @@ export function EditableNameRow({
             returnKeyType="done"
             maxLength={50}
             autoFocus={isEditing}
-            accessibilityLabel="Your name"
-            accessibilityHint="Tap Return to save"
+            accessibilityLabel={t("editableName.inputAria")}
+            accessibilityHint={t("editableName.inputHint")}
           />
         </View>
       </Animated.View>

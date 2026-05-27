@@ -52,14 +52,14 @@ describe("GoalEditor component contract", () => {
     expect(content).toContain("Cancel");
   });
 
-  it("has accessibilityLabel='Goal text' on TextInput", () => {
+  it("uses i18n key for TextInput aria label", () => {
     const content = fs.readFileSync(GOAL_EDITOR_PATH, "utf8");
-    expect(content).toContain('accessibilityLabel="Goal text"');
+    expect(content).toMatch(/accessibilityLabel=\{t\(["']goalEditor\.inputAria["']\)\}/);
   });
 
-  it("has accessibilityLabel='Save Goal' on Save Pressable", () => {
+  it("uses i18n key for Save Pressable aria label", () => {
     const content = fs.readFileSync(GOAL_EDITOR_PATH, "utf8");
-    expect(content).toContain('accessibilityLabel="Save Goal"');
+    expect(content).toMatch(/accessibilityLabel=\{t\(["']goalEditor\.saveAria["']\)\}/);
   });
 
   it("passes style prop through to Animated.View root (for opacity crossfade)", () => {

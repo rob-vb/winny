@@ -1,6 +1,7 @@
 import * as Notifications from "expo-notifications";
+import { initI18n } from "@/src/i18n";
+import { getNotificationPrompts } from "@/src/copy/catalog";
 import {
-  COPY_POOL,
   dateToHHmm,
   formatHHmmFor12h,
   parseHHmmToDate,
@@ -8,6 +9,10 @@ import {
   requestPermission,
   scheduleNext30Days,
 } from "@/src/notifications/notificationService";
+
+beforeAll(() => {
+  initI18n("en");
+});
 
 jest.mock("expo-notifications", () => ({
   cancelAllScheduledNotificationsAsync: jest.fn(),
@@ -34,7 +39,7 @@ describe("pickPromptForDate", () => {
   });
 
   it("returns a string from the copy pool", () => {
-    expect(COPY_POOL).toContain(pickPromptForDate("2026-01-01"));
+    expect(getNotificationPrompts()).toContain(pickPromptForDate("2026-01-01"));
   });
 
   it("distributes across at least two values over 30 dates", () => {
@@ -47,7 +52,7 @@ describe("pickPromptForDate", () => {
   });
 
   it("contains no guilt language", () => {
-    for (const copy of COPY_POOL) {
+    for (const copy of getNotificationPrompts()) {
       expect(copy).not.toMatch(/missed|forgot|broke(?:n)?|failed|don't|streak broken/i);
     }
   });

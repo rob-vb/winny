@@ -6,8 +6,11 @@ import { EXAMPLE_PROMPTS } from "@/src/constants/examplePrompts";
  * D-06: Non-tappable, non-interactive — pure display content.
  * Uses position-weighted char-code sum (Pitfall 9 fix) to reduce adjacent-day collisions.
  */
-export function selectDailyPrompts(dateKey: string, count = 3): string[] {
-  const pool = EXAMPLE_PROMPTS;
+export function selectDailyPrompts(
+  dateKey: string,
+  pool: readonly string[] = EXAMPLE_PROMPTS,
+  count = 3
+): string[] {
   // Position-weighted sum reduces same-prompts-on-adjacent-days probability (Pitfall 9)
   const seed = dateKey
     .split("")

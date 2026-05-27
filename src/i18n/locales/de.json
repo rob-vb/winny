@@ -1,0 +1,272 @@
+{
+  "common": {
+    "cancel": "Abbrechen",
+    "done": "Fertig",
+    "delete": "Löschen"
+  },
+  "tabs": {
+    "home": "Start",
+    "wins": "Meine Wins",
+    "goals": "Ziele",
+    "settings": "Einstellungen"
+  },
+  "home": {
+    "loading": "Lädt...",
+    "askToday": "Was war heute dein Win?",
+    "askNamed": "Was war dein Win heute, {{name}}?",
+    "askHint": "Ein Satz reicht. Festhalten, Streak läuft weiter.",
+    "trophyAria": "Winny-Trophäe"
+  },
+  "streak": {
+    "eyebrowToday": "Heute",
+    "totalLogged_one": "{{count}} Win auf dem Konto",
+    "totalLogged_other": "{{count}} Wins auf dem Konto",
+    "badgeDayStreak_one": "Tag Streak",
+    "badgeDayStreak_other": "Tage Streak",
+    "badgeStreak": "Streak",
+    "totalWinsLabel": "Wins gesamt",
+    "namedWinsLabel": "Wins von {{name}}",
+    "winningRecord": "Dein Winrekord",
+    "ariaSummary": "{{total}} {{label}}. {{streak}}",
+    "label": {
+      "zero": "Noch keine Streak. Ändern wir heute. 🌟",
+      "one": "Tag eins steht. Der schwerste ist durch. 🎉",
+      "two": "Zwei in Folge. Offiziell eine Streak. 🌱",
+      "small": "{{count}} Tage. Du bist dabei. 💪",
+      "growing": "{{count}} Tage. Das wird langsam was. 🔥",
+      "fire": "{{count}} Tage. Halt dich keiner mehr auf. 🔥🔥",
+      "rocket": "{{count}} Tage. Ehrlich gesagt: lächerlich gut. 🚀",
+      "legendary": "{{count}} Tage. Lass auch noch was für die anderen übrig. 🏆",
+      "champion": "{{count}} Tage. Winny-Royalty, sozusagen. 👑"
+    }
+  },
+  "winCount_one": "1 Win",
+  "winCount_other": "{{count}} Wins",
+  "winSectionAria": "{{date}}, {{count}}, {{state}}",
+  "sectionState": {
+    "collapsed": "eingeklappt",
+    "expanded": "ausgeklappt"
+  },
+  "date": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "formatSameYear": "EEE, d. MMM",
+    "formatPriorYear": "d. MMM yyyy"
+  },
+  "wins": {
+    "emptyTitle": "Trophäenschrank, weit offen und leer.",
+    "emptyBody": "Log einen Win unter Start. Dann füllen wir die Regale.",
+    "emptyAria": "Noch keine Wins. Geh auf Start und log einen.",
+    "deleteConfirmTitle": "Win löschen?",
+    "deleteConfirmBody": "Diesen Win aus deinem Verlauf entfernen?",
+    "deleteAria": "Win löschen"
+  },
+  "goal": {
+    "eyebrow": "Ziele",
+    "title": "Behalt deine Ziele im Blick.",
+    "body": "Schreib auf, was du willst. Hak's ab, sobald es deins ist.",
+    "loadError": "Konnte deine Ziele nicht laden. Bitte App neu starten.",
+    "achievedHeader": "Erreichte Ziele",
+    "achievedEyebrow": "Ziel erreicht",
+    "achievedEyebrowNamed": "{{name}}, Ziel erreicht",
+    "addEyebrow": "Ziel hinzufügen",
+    "addPlaceholder": "Was willst du erreichen?",
+    "addAria": "Ziel hinzufügen",
+    "addHint": "Ziel eintippen und auf Plus tippen",
+    "inputAria": "Text des neuen Ziels",
+    "deleteConfirmTitle": "Ziel löschen?",
+    "deleteConfirmBody": "Dieses Ziel von deiner Liste nehmen?",
+    "deleteAria": "Ziel löschen",
+    "markAchieved": "Als erreicht markieren",
+    "markNotAchieved": "Als nicht erreicht markieren",
+    "bodies": [
+      "Aufgeschrieben. Verfolgt. Eingesackt. So baut man ein Leben.",
+      "Früher hast du es nur aufgeschrieben. Heute hast du's gemacht. Verbeugung steht dir gut.",
+      "Die meisten lassen Träume Träume bleiben. Du hast diesen ins Tageslicht geschleift.",
+      "Erst ein Vielleicht. Dann ein Irgendwann. Dann ein Bald. Jetzt: fertig. Für immer deins.",
+      "Merk dir diesen Moment. Das hier ist die Person, die du sein wolltest. Hi.",
+      "Vom Blatt ins Leben. Vom Traum zum Häkchen. So funktioniert's.",
+      "Nicht auf Erlaubnis gewartet. Nicht auf perfekt gewartet. Hingegangen. Gewonnen.",
+      "Ein Ziel näher an der Zukunft, die du gerade kochst. Weiter rühren."
+    ]
+  },
+  "goalEditor": {
+    "placeholder": "Was willst du erreichen?",
+    "inputAria": "Zieltext",
+    "inputHint": "Tipp dein Ziel ein, bis zu 500 Zeichen",
+    "counterAria": "{{used}} von {{max}} Zeichen genutzt",
+    "save": "Ziel speichern",
+    "saveAria": "Ziel speichern",
+    "saveHint": "Bearbeite den Text, um zu speichern",
+    "cancel": "Abbrechen",
+    "cancelAria": "Bearbeitung abbrechen"
+  },
+  "onboarding": {
+    "welcome": {
+      "tagline": "Log einen kleinen Win. Dann noch einen. Schau, was passiert.",
+      "cta": "Los geht's"
+    },
+    "goal": {
+      "eyebrow": "Ziel (optional)",
+      "title": "Heft dir ein Ziel an die Wand.",
+      "body": "Liegt im Tab Ziele. Hak's ab, sobald es deins ist.",
+      "skip": "Erstmal überspringen",
+      "skipAria": "Ziele-Einrichtung überspringen",
+      "saved": "Gespeichert. Auf zum ersten Win.",
+      "error": "Ziel konnte nicht gespeichert werden — tipp auf Ziel speichern und versuch's nochmal."
+    }
+  },
+  "winInput": {
+    "eyebrow": "Win hinzufügen",
+    "egPrefix": "z. B.",
+    "addAria": "Win hinzufügen",
+    "inputAria": "Eingabefeld für Win",
+    "inputHint": "Tipp deinen Win von heute, bis zu 200 Zeichen",
+    "examples": [
+      "Einer Kollegin geholfen",
+      "Etwas erledigt, das ich vor mir herschob",
+      "Aufgetaucht, obwohl ich keinen Bock hatte",
+      "Etwas Neues gelernt",
+      "Jemanden zum Lachen gebracht",
+      "Ein Versprechen an mich selbst gehalten",
+      "Pause gemacht, als ich sie brauchte",
+      "Für mich selbst eingestanden",
+      "Um Hilfe gebeten",
+      "Nett zu jemandem gewesen",
+      "Mich bewegt",
+      "Was Gesundes gekocht",
+      "Eine Runde rausgegangen",
+      "Nein gesagt, wo's nichts gebracht hätte",
+      "Schritt bei einem eigenen Projekt gemacht",
+      "Genug Wasser getrunken",
+      "Eine Deadline gehalten",
+      "Was außerhalb der Komfortzone probiert",
+      "Eine nötige Grenze gezogen",
+      "Lange am Stück fokussiert geblieben"
+    ]
+  },
+  "celebration": {
+    "hint": "Irgendwo tippen, um weiterzumachen",
+    "attribution": "Powered by GIPHY",
+    "aria": "Feier",
+    "dismissAria": "Feier schließen"
+  },
+  "editableName": {
+    "label": "Dein Name",
+    "placeholder": "Trag deinen Namen ein",
+    "aria": "Dein Name, {{value}}",
+    "notSet": "nicht gesetzt",
+    "inputAria": "Dein Name",
+    "inputHint": "Enter drücken zum Speichern"
+  },
+  "settings": {
+    "eyebrow": "Kontrollraum",
+    "title": "Halt die Streak leicht.",
+    "body": "Erinnerungen, Profil und App-Kram. Alles hier.",
+    "loadError": "Einstellungen konnten nicht geladen werden — App neu starten.",
+    "sectionReminders": "Erinnerungen",
+    "sectionProfile": "Profil",
+    "sectionAbout": "Über",
+    "dailyReminder": "Tägliche Erinnerung",
+    "reminderTime": "Uhrzeit",
+    "reminderTimeAria": "Uhrzeit, aktuell {{time}}",
+    "reminderTimeHint": "Erinnerungen aktivieren, um das zu ändern",
+    "remindersSetFor": "Wir stupsen dich um {{time}}",
+    "language": "Sprache",
+    "languageAuto": "Automatisch ({{name}})",
+    "languageAutoLabel": "Automatisch (System)",
+    "languagePickerTitle": "Sprache",
+    "languagePickerSubtitle": "Wähl die Sprache von Winny. \"Automatisch\" folgt deinem Gerät.",
+    "languagePickerEyebrow": "Anzeige",
+    "howItWorks": "So funktioniert's",
+    "howItWorksTitle": "So funktioniert's",
+    "howItWorksBack": "Einstellungen",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "rate": "App bewerten",
+    "share": "App teilen",
+    "notifDisabled": "Mitteilungen aus — tipp, um Einstellungen zu öffnen"
+  },
+  "howItWorks": {
+    "eyebrow": "So funktioniert's",
+    "title": "Kleine Wins, große Wirkung.",
+    "body": "Winny macht den nächsten Win schnell, offensichtlich und das Wiederkommen wert.",
+    "sections": [
+      {
+        "heading": "Was das ist",
+        "body": "Die tägliche Gewohnheit, das Gute zu bemerken. Kleine Wins summieren sich — die Streak hebt's auf."
+      },
+      {
+        "heading": "Die Streak",
+        "body": "Log einen Win, Streak geht hoch. Ein Tag aus, Streak fängt neu an — aber dein Gesamtwert geht nie zurück."
+      },
+      {
+        "heading": "Deine Wins",
+        "body": "Jeder Win bleibt deiner. Im Tab Meine Wins steht die ganze Geschichte, Tag für Tag."
+      },
+      {
+        "heading": "Ziele",
+        "body": "Setz Ziele, um deinen Wins eine Richtung zu geben. Hak ab, was erledigt ist. Neue dazu, wann immer du willst."
+      },
+      {
+        "heading": "Warum noch keine KI",
+        "body": "V1 ist kostenlos und privat — deine Wins bleiben auf deinem Gerät. Bewusst einfach gehalten."
+      }
+    ]
+  },
+  "notifications": {
+    "title": "Winny",
+    "prompts": [
+      "Was war heute dein Win?",
+      "Ein kleiner Win zählt. Rein damit.",
+      "Was lief heute gut?",
+      "Große Träume bauen sich aus kleinen Wins.",
+      "Log einen Win. Mehr brauchst du nicht."
+    ]
+  },
+  "postWin": {
+    "firstWin": {
+      "title": "Erster Win steht",
+      "body": "Das war's. Einen Win sehen, morgen wiederkommen.",
+      "bodyNamed": "Das war's, {{name}}. Einen Win sehen, morgen wiederkommen."
+    },
+    "milestone7": {
+      "title": "Eine ganze Woche",
+      "body": "Sieben Tage, in denen du dich beim Gewinnen erwischt hast. Weiter.",
+      "bodyNamed": "Sieben Tage, in denen du dich beim Gewinnen erwischt hast, {{name}}. Weiter."
+    },
+    "milestone30": {
+      "title": "30 Tage drin",
+      "body": "Das ist Gewohnheit, kein Zufall. Stark.",
+      "bodyNamed": "{{name}}, das ist Gewohnheit, kein Zufall. Stark."
+    },
+    "milestone100": {
+      "title": "100 Tage",
+      "body": "Hundert Tage am Start. Anderes Kaliber.",
+      "bodyNamed": "Hundert Tage am Start, {{name}}. Anderes Kaliber."
+    },
+    "comeback": {
+      "title": "Willkommen zurück",
+      "body": "Streak fängt neu an. Du nicht. Heute zählt.",
+      "bodyNamed": "Willkommen zurück, {{name}}. Streak fängt neu an. Du nicht."
+    },
+    "postSave": {
+      "title": "Win hinzugefügt",
+      "titleNamed": "Sauber, {{name}}",
+      "bodies": [
+        "Noch einer für die Wand.",
+        "Das ist ein Sieg. Keine Rückgabe.",
+        "Zukunfts-Ich winkt dankbar.",
+        "Noch ein Stein.",
+        "Festgehalten. Lässt sich nicht ungeschehen machen.",
+        "Kleiner Win, große Gewohnheit.",
+        "Gehirn will mehr davon. Füttern.",
+        "Du warst da. Das ist das Spiel.",
+        "Stapel genug davon und schau, was kommt.",
+        "Streak lebt. Du auch.",
+        "Einen näher dran. Tag für Tag.",
+        "Zählt. Jedes Mal."
+      ]
+    }
+  }
+}

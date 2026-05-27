@@ -1,9 +1,11 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView className="flex-1 bg-background">
@@ -13,7 +15,7 @@ export default function WelcomeScreen() {
             source={require("@/assets/images/trophy.png")}
             style={{ width: 320, height: 320 }}
             resizeMode="contain"
-            accessibilityLabel="Winny trophy"
+            accessibilityLabel={t("home.trophyAria")}
           />
         </View>
         <View className="items-center">
@@ -27,16 +29,16 @@ export default function WelcomeScreen() {
             className="font-nunito-semibold text-base text-text-secondary leading-relaxed mt-4 text-center"
             style={{ maxWidth: 320 }}
           >
-            Log one small win at a time and just keep winning.
+            {t("onboarding.welcome.tagline")}
           </Text>
           <Pressable
             onPress={() => router.replace("/onboarding/dream-goal")}
             className="bg-primary rounded-2xl min-h-[52px] px-6 mt-8 items-center justify-center self-stretch"
             accessibilityRole="button"
-            accessibilityLabel="Start Winning"
+            accessibilityLabel={t("onboarding.welcome.cta")}
           >
             <Text className="font-nunito-black text-base text-badge-ink">
-              Start Winning
+              {t("onboarding.welcome.cta")}
             </Text>
           </Pressable>
         </View>

@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { SectionList, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
-import { useWinsStore } from "@/src/stores/useWinsStore";
+import { useWinsStore, useRemoveWin } from "@/src/stores/useWinsStore";
 import { HistoryHeroHeader } from "@/src/components/HistoryHeroHeader";
 import { DateSectionHeader } from "@/src/components/DateSectionHeader";
 import { WinCard } from "@/src/components/WinCard";
@@ -37,6 +38,7 @@ function groupWinsByDate(wins: Win[]): WinSection[] {
 }
 
 export default function WinsScreen() {
+  const { t } = useTranslation();
   // Multi-field useShallow pattern — copy from index.tsx (PATTERNS.md Pattern 5)
   const { wins, totalWins, streak, isHydrated } = useWinsStore(
     useShallow((s) => ({
@@ -56,6 +58,7 @@ export default function WinsScreen() {
 
   // Memoize section grouping — mandatory at scale, prevents O(n) on every render (HIST-01)
   const sections = useMemo(() => groupWinsByDate(wins), [wins]);
+  const removeWin = useRemoveWin();
 
   const toggleSection = (date_key: string) => {
     setCollapsedSections((prev) => ({
@@ -74,11 +77,11 @@ export default function WinsScreen() {
       <SafeAreaView className="flex-1 bg-background">
         <View
           className="flex-1 px-4 pt-4"
-          accessibilityLabel="No wins yet. Head to Home to log your first win."
+          accessibilityLabel={t("wins.emptyAria")}
         >
           <ScreenHeader
-            title="Your trophy room is ready."
-            body="Log your first win on Home. This becomes the running proof that progress is happening."
+            title={t("wins.emptyTitle")}
+            body={t("wins.emptyBody")}
           />
         </View>
       </SafeAreaView>
@@ -99,7 +102,7 @@ export default function WinsScreen() {
           collapsedSections[(section as WinSection).date_key] ? (
             <View style={{ height: 0 }} />
           ) : (
-            <WinCard win={item} isNew={false} />
+            <WinCard win={item} isNew={false} onDelete={removeWin} />
           )
         }
         renderSectionHeader={({ section }) => (

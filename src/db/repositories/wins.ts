@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "../client";
 import { wins, type NewWin } from "../schema";
 import { generateId } from "@/src/utils/uuid";
@@ -16,6 +16,10 @@ export async function insertWin(text: string): Promise<void> {
 
 export async function getWins(): Promise<typeof wins.$inferSelect[]> {
   return db.select().from(wins).orderBy(desc(wins.date_key));
+}
+
+export async function deleteWin(id: string): Promise<void> {
+  await db.delete(wins).where(eq(wins.id, id));
 }
 
 export async function getDistinctDateKeys(): Promise<string[]> {

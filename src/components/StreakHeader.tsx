@@ -1,4 +1,5 @@
 import { View, Text, Image } from "react-native";
+import { useTranslation } from "react-i18next";
 import { streakLabel } from "@/src/utils/streakLabel";
 import { AchievementBadge } from "./AchievementBadge";
 
@@ -8,6 +9,7 @@ interface StreakHeaderProps {
 }
 
 export function StreakHeader({ streak, totalWins }: StreakHeaderProps) {
+  const { t } = useTranslation();
   const label = streakLabel(streak);
   return (
     <View
@@ -19,20 +21,20 @@ export function StreakHeader({ streak, totalWins }: StreakHeaderProps) {
           source={require("@/assets/images/trophy.png")}
           style={{ width: 58, height: 58 }}
           resizeMode="contain"
-          accessibilityLabel="Winny trophy"
+          accessibilityLabel={t("home.trophyAria")}
         />
         <View className="flex-1">
           <Text className="font-nunito-extrabold text-xs text-primary uppercase mb-1">
-            Today
+            {t("streak.eyebrowToday")}
           </Text>
           <Text className="font-nunito-black text-[24px] text-badge-ink leading-tight">
             {label}
           </Text>
           <Text className="font-nunito-bold text-sm text-text-secondary mt-1">
-            {totalWins} total wins logged
+            {t("streak.totalLogged", { count: totalWins })}
           </Text>
         </View>
-        <AchievementBadge value={streak} label="day streak" tone="gold" />
+        <AchievementBadge value={streak} label={t("streak.badgeDayStreak", { count: streak })} tone="gold" />
       </View>
     </View>
   );

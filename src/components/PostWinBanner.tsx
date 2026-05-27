@@ -1,5 +1,6 @@
 import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { useDisplayName } from "@/src/stores/useWinsStore";
@@ -10,6 +11,7 @@ interface PostWinBannerProps {
 }
 
 export function PostWinBanner({ moment, onDismiss }: PostWinBannerProps) {
+  const { t } = useTranslation();
   const displayName = useDisplayName();
   const copy = getPostWinCopy(moment, displayName);
 
@@ -29,7 +31,7 @@ export function PostWinBanner({ moment, onDismiss }: PostWinBannerProps) {
             onPress={onDismiss}
             className="min-h-[44px] min-w-[44px] items-center justify-center"
             accessibilityRole="button"
-            accessibilityLabel="Dismiss message"
+            accessibilityLabel={t("celebration.dismissAria")}
           >
             <Ionicons name="close-outline" size={20} color="#8E8E93" />
           </Pressable>

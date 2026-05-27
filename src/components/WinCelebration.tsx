@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { PIConfetti, type PIConfettiMethods } from "react-native-fast-confetti";
+import { useTranslation } from "react-i18next";
 import { getPostWinCopy } from "@/src/copy/catalog";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { useDisplayName } from "@/src/stores/useWinsStore";
@@ -38,6 +39,7 @@ interface WinCelebrationProps {
 }
 
 export function WinCelebration({ moment, customCopy, intensity = "normal", onDismiss }: WinCelebrationProps) {
+  const { t } = useTranslation();
   const displayName = useDisplayName();
   const copy = customCopy ?? (moment ? getPostWinCopy(moment, displayName) : { title: "", body: "" });
   const mega = intensity === "mega";
@@ -90,7 +92,7 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
         style={StyleSheet.absoluteFill}
         onPress={onDismiss}
         accessibilityRole="button"
-        accessibilityLabel="Dismiss celebration"
+        accessibilityLabel={t("celebration.dismissAria")}
       >
         <View
           style={[StyleSheet.absoluteFill, styles.backdrop]}
@@ -130,7 +132,7 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
                 style={StyleSheet.absoluteFill}
                 contentFit="cover"
                 autoplay
-                accessibilityLabel="Celebration"
+                accessibilityLabel={t("celebration.aria")}
               />
             )}
             <View style={styles.giphyAttribution} pointerEvents="none">
@@ -145,7 +147,7 @@ export function WinCelebration({ moment, customCopy, intensity = "normal", onDis
               <Text style={[styles.cardTitle, mega && styles.cardTitleMega]}>{copy.title}</Text>
             ) : null}
             <Text style={[styles.cardBody, mega && styles.cardBodyMega]}>{copy.body}</Text>
-            <Text style={styles.cardHint}>Tap anywhere to continue</Text>
+            <Text style={styles.cardHint}>{t("celebration.hint")}</Text>
           </View>
         </Animated.View>
       </Pressable>

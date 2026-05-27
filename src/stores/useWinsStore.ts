@@ -4,6 +4,7 @@ import {
   insertWin,
   getWins,
   getDistinctDateKeys,
+  deleteWin,
 } from "@/src/db/repositories/wins";
 import { getSetting, setSetting } from "@/src/db/repositories/settings";
 import {
@@ -14,6 +15,13 @@ import { computeStreak, toDateKey } from "@/src/utils/dateUtils";
 import type { PostWinMoment } from "@/src/utils/postWinMoment";
 import { getPostWinMoment } from "@/src/utils/postWinMoment";
 import type { Win } from "@/src/db/schema";
+import {
+  parseStoredPref,
+  resolveLocale,
+  type LocaleCode,
+  type LocalePref,
+} from "@/src/i18n/languages";
+import { i18n } from "@/src/i18n";
 
 export interface AddWinResult {
   moment: PostWinMoment;
@@ -30,12 +38,16 @@ interface WinsState {
   totalWins: number;
   displayName: string;
   isHydrated: boolean;
+  localePref: LocalePref;
+  resolvedLocale: LocaleCode;
 }
 
 interface WinsActions {
   hydrate: () => Promise<void>;
   addWin: (text: string) => Promise<AddWinResult>;
+  removeWin: (id: string) => Promise<void>;
   setDisplayName: (name: string) => void;
+  setLocalePref: (pref: LocalePref) => Promise<void>;
 }
 
 export const useWinsStore = create<WinsState & WinsActions>()(
@@ -46,12 +58,16 @@ export const useWinsStore = create<WinsState & WinsActions>()(
     totalWins: 0,
     displayName: "",
     isHydrated: false,
+    localePref: "auto",
+    resolvedLocale: "en",
 
     hydrate: async () => {
       const wins = await getWins();
       const dateKeys = await getDistinctDateKeys();
       const today = toDateKey();
       const displayName = (await getSetting("display_name")) ?? "";
+      const localePref = parseStoredPref(await getSetting("locale"));
+      const resolvedLocale = resolveLocale(localePref);
       set({
         wins,
         todayWins: wins.filter((w) => w.date_key === today),
@@ -59,10 +75,31 @@ export const useWinsStore = create<WinsState & WinsActions>()(
         totalWins: wins.length,
         displayName,
         isHydrated: true,
+        localePref,
+        resolvedLocale,
       });
     },
 
     setDisplayName: (name: string) => set({ displayName: name }),
+
+    setLocalePref: async (pref: LocalePref) => {
+      await setSetting("locale", pref);
+      const resolved = resolveLocale(pref);
+      if (i18n.language !== resolved) {
+        await i18n.changeLanguage(resolved);
+      }
+      set({ localePref: pref, resolvedLocale: resolved });
+
+      const [enabled, status, time] = await Promise.all([
+        getSetting("reminder_enabled"),
+        getSetting("notification_permission_status"),
+        getSetting("reminder_time"),
+      ]);
+      if (enabled === "true" && status === "granted" && time) {
+        await scheduleNext30Days(time);
+        await setSetting("lastBakedLocale", resolved);
+      }
+    },
 
     addWin: async (text: string) => {
       const previousWins = await getWins();
@@ -109,6 +146,19 @@ export const useWinsStore = create<WinsState & WinsActions>()(
         todayDateKey: today,
       };
     },
+
+    removeWin: async (id: string) => {
+      await deleteWin(id);
+      const wins = await getWins();
+      const dateKeys = await getDistinctDateKeys();
+      const today = toDateKey();
+      set({
+        wins,
+        todayWins: wins.filter((w) => w.date_key === today),
+        streak: computeStreak(dateKeys),
+        totalWins: wins.length,
+      });
+    },
   })
 );
 
@@ -119,3 +169,7 @@ export const useTotalWins = () => useWinsStore((s) => s.totalWins);
 export const useDisplayName = () => useWinsStore((s) => s.displayName);
 export const useIsHydrated = () => useWinsStore((s) => s.isHydrated);
 export const useAddWin = () => useWinsStore((s) => s.addWin);
+export const useRemoveWin = () => useWinsStore((s) => s.removeWin);
+export const useLocalePref = () => useWinsStore((s) => s.localePref);
+export const useResolvedLocale = () => useWinsStore((s) => s.resolvedLocale);
+export const useSetLocalePref = () => useWinsStore((s) => s.setLocalePref);

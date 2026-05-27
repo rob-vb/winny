@@ -1,4 +1,9 @@
 import { streakLabel } from "@/src/utils/streakLabel";
+import { initI18n } from "@/src/i18n";
+
+beforeAll(() => {
+  initI18n("en");
+});
 
 describe("streakLabel", () => {
   it("returns non-empty string for all tiers", () => {

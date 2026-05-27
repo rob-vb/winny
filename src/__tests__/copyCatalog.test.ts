@@ -1,8 +1,13 @@
+import { initI18n } from "@/src/i18n";
+import en from "@/src/i18n/locales/en.json";
+import nl from "@/src/i18n/locales/nl.json";
+import es from "@/src/i18n/locales/es.json";
+import fr from "@/src/i18n/locales/fr.json";
+import de from "@/src/i18n/locales/de.json";
 import {
-  COPY_CATALOG,
   getPostWinCopy,
   getStreakCopy,
-  notificationPrompts,
+  getNotificationPrompts,
   pickCopyVariant,
 } from "@/src/copy/catalog";
 
@@ -18,26 +23,19 @@ function collectStrings(value: unknown): string[] {
   return [];
 }
 
-describe("copy catalog", () => {
-  it("contains all required emotional state keys", () => {
-    expect(COPY_CATALOG).toHaveProperty("firstWin");
-    expect(COPY_CATALOG).toHaveProperty("milestone7");
-    expect(COPY_CATALOG).toHaveProperty("milestone30");
-    expect(COPY_CATALOG).toHaveProperty("milestone100");
-    expect(COPY_CATALOG).toHaveProperty("comeback");
-    expect(COPY_CATALOG).toHaveProperty("postSave");
-    expect(COPY_CATALOG).toHaveProperty("longStreak");
-    expect(COPY_CATALOG).toHaveProperty("homeEmpty");
-    expect(COPY_CATALOG).toHaveProperty("historyEmpty");
-    expect(COPY_CATALOG).toHaveProperty("dreamGoalEmpty");
-    expect(COPY_CATALOG).toHaveProperty("notificationDisabled");
-    expect(COPY_CATALOG).toHaveProperty("saveError");
-    expect(COPY_CATALOG).toHaveProperty("loadError");
-    expect(COPY_CATALOG).toHaveProperty("notificationPrompt");
-  });
+beforeAll(() => {
+  initI18n("en");
+});
 
-  it("contains no guilt or shame language", () => {
-    for (const copy of collectStrings(COPY_CATALOG)) {
+describe("copy catalog", () => {
+  it.each([
+    ["en", en],
+    ["nl", nl],
+    ["es", es],
+    ["fr", fr],
+    ["de", de],
+  ])("contains no guilt or shame language (%s)", (_code, bundle) => {
+    for (const copy of collectStrings(bundle)) {
       expect(copy).not.toMatch(BANNED_COPY_PATTERN);
     }
   });
@@ -69,8 +67,9 @@ describe("copy catalog", () => {
   });
 
   it("contains at least five notification prompt variants", () => {
-    expect(notificationPrompts.length).toBeGreaterThanOrEqual(5);
-    for (const prompt of notificationPrompts) {
+    const prompts = getNotificationPrompts();
+    expect(prompts.length).toBeGreaterThanOrEqual(5);
+    for (const prompt of prompts) {
       expect(prompt).toBeTruthy();
     }
   });

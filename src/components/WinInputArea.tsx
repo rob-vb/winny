@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { validateWinText } from "@/src/utils/winValidation";
 import { EXAMPLE_PROMPTS } from "@/src/constants/examplePrompts";
 
@@ -11,12 +12,18 @@ interface WinInputAreaProps {
 }
 
 export function WinInputArea({ onSubmit }: WinInputAreaProps) {
+  const { t } = useTranslation();
   const [inputText, setInputText] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const placeholder = useMemo(
-    () => EXAMPLE_PROMPTS[Math.floor(Math.random() * EXAMPLE_PROMPTS.length)],
-    []
+  const pool = t("winInput.examples", {
+    returnObjects: true,
+    defaultValue: EXAMPLE_PROMPTS,
+  }) as string[];
+  const example = useMemo(
+    () => pool[Math.floor(Math.random() * pool.length)],
+    [pool]
   );
+  const egPrefix = t("winInput.egPrefix", { defaultValue: "e.g." });
 
   const isDisabled = !validateWinText(inputText) || isAdding;
 
@@ -35,12 +42,12 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
   return (
     <View className="border-t border-border bg-surface px-4 py-3">
       <Text className="font-nunito-extrabold text-xs text-primary uppercase mb-2">
-        Add your win
+        {t("winInput.eyebrow", { defaultValue: "Add your win" })}
       </Text>
       <View className="flex-row items-center gap-3">
         <TextInput
           className="flex-1 bg-background border border-border rounded-2xl px-4 py-3 font-nunito-regular text-base text-text-primary"
-          placeholder={`e.g. ${placeholder}`}
+          placeholder={`${egPrefix} ${example}`}
           placeholderTextColor="#8E8E93"
           value={inputText}
           onChangeText={setInputText}
@@ -49,8 +56,10 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
           returnKeyType="done"
           multiline={false}
           onSubmitEditing={handleSubmit}
-          accessibilityLabel="Win text input"
-          accessibilityHint="Type your win for today, up to 200 characters"
+          accessibilityLabel={t("winInput.inputAria", { defaultValue: "Win text input" })}
+          accessibilityHint={t("winInput.inputHint", {
+            defaultValue: "Type your win for today, up to 200 characters",
+          })}
         />
         <Pressable
           onPress={handleSubmit}
@@ -58,7 +67,7 @@ export function WinInputArea({ onSubmit }: WinInputAreaProps) {
           className={`bg-primary rounded-2xl min-h-[48px] min-w-[52px] items-center justify-center px-3 ${
             isDisabled ? "opacity-50" : "opacity-100"
           }`}
-          accessibilityLabel="Add win"
+          accessibilityLabel={t("winInput.addAria", { defaultValue: "Add win" })}
           accessibilityRole="button"
         >
           <Ionicons name="arrow-up" size={21} color="#17130A" />

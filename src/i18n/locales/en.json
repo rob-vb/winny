@@ -1,0 +1,250 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "done": "Done",
+    "delete": "Delete"
+  },
+  "tabs": {
+    "home": "Home",
+    "wins": "My Wins",
+    "goals": "Goals",
+    "settings": "Settings"
+  },
+  "home": {
+    "loading": "Loading...",
+    "askToday": "What did you win today?",
+    "askNamed": "What did you win today, {{name}}?",
+    "askHint": "One sentence does it. Bank the win, keep the streak alive.",
+    "trophyAria": "Winny trophy"
+  },
+  "streak": {
+    "eyebrowToday": "Today",
+    "totalLogged_one": "{{count}} win on the board",
+    "totalLogged_other": "{{count}} wins on the board",
+    "badgeDayStreak_one": "day streak",
+    "badgeDayStreak_other": "day streak",
+    "badgeStreak": "streak",
+    "totalWinsLabel": "total wins",
+    "namedWinsLabel": "{{name}}'s wins",
+    "winningRecord": "Winning record",
+    "ariaSummary": "{{total}} {{label}}. {{streak}}",
+    "label": {
+      "zero": "No streak yet. Let's fix that. 🌟",
+      "one": "Day one. The hardest one, done. 🎉",
+      "two": "Two in a row. Officially a streak. 🌱",
+      "small": "{{count}} days. You're showing up. 💪",
+      "growing": "{{count}} days. This is becoming a thing. 🔥",
+      "fire": "{{count}} days. Try and stop you. 🔥🔥",
+      "rocket": "{{count}} days. Frankly, ridiculous. 🚀",
+      "legendary": "{{count}} days. Save some wins for the rest of us. 🏆",
+      "champion": "{{count}} days. Basically Winny royalty. 👑"
+    }
+  },
+  "winCount_one": "1 win",
+  "winCount_other": "{{count}} wins",
+  "winSectionAria": "{{date}}, {{count}}, {{state}}",
+  "sectionState": {
+    "collapsed": "collapsed",
+    "expanded": "expanded"
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "formatSameYear": "EEE, MMM d",
+    "formatPriorYear": "MMM d, yyyy"
+  },
+  "wins": {
+    "emptyTitle": "Trophy room, open and empty.",
+    "emptyBody": "Log a win from Home. We'll start filling these shelves.",
+    "emptyAria": "No wins yet. Head to Home to log one.",
+    "deleteConfirmTitle": "Delete win?",
+    "deleteConfirmBody": "Remove this win from your record?",
+    "deleteAria": "Delete win"
+  },
+  "goal": {
+    "eyebrow": "Goals",
+    "title": "Keep your goals in sight.",
+    "body": "Write down what you're chasing. Tick it off when you catch it.",
+    "loadError": "Couldn't load your goals. Restart the app and try again.",
+    "achievedHeader": "Goals you've smashed",
+    "achievedEyebrow": "Goal achieved",
+    "achievedEyebrowNamed": "{{name}}, goal achieved",
+    "addEyebrow": "Add a goal",
+    "addPlaceholder": "Add a goal...",
+    "addAria": "Add goal",
+    "addHint": "Type a goal and tap the add button",
+    "inputAria": "New goal text",
+    "deleteConfirmTitle": "Delete goal?",
+    "deleteConfirmBody": "Remove this goal from your list?",
+    "deleteAria": "Delete goal",
+    "markAchieved": "Mark as achieved",
+    "markNotAchieved": "Mark as not achieved",
+    "bodies": [
+      "Wrote it down. Chased it. Caught it. This is how lives get built.",
+      "Past you scribbled this down and hoped. Present you delivered. Take a bow.",
+      "Most people let dreams stay dreams. You dragged this one into daylight.",
+      "Was a maybe. Then a someday. Then a soon. Now it's done — and yours forever.",
+      "Remember this moment. This is the person you said you'd become. Hi.",
+      "Page to real life. Dream to done. That's the whole trick.",
+      "No permission asked. No perfect waited for. You showed up and you won.",
+      "One goal closer to the future you're cooking up. Keep stirring."
+    ]
+  },
+  "goalEditor": {
+    "placeholder": "What do you want to accomplish?",
+    "inputAria": "Goal text",
+    "inputHint": "Type your goal, up to 500 characters",
+    "counterAria": "{{used}} of {{max}} characters used",
+    "save": "Save Goal",
+    "saveAria": "Save Goal",
+    "saveHint": "Edit your goal text to enable saving",
+    "cancel": "Cancel",
+    "cancelAria": "Cancel editing"
+  },
+  "onboarding": {
+    "welcome": {
+      "tagline": "Log one small win. Then another. Watch what happens.",
+      "cta": "Let's Get Winning"
+    },
+    "goal": {
+      "eyebrow": "Optional goal",
+      "title": "Pin a goal somewhere you'll see it.",
+      "body": "It lives in the Goals tab. Tick it off when it's yours.",
+      "skip": "Skip for now",
+      "skipAria": "Skip Goals setup for now",
+      "saved": "Saved. Now let's log your first win.",
+      "error": "Couldn't save your goal — tap Save Goal to try again."
+    }
+  },
+  "winInput": {
+    "eyebrow": "Add your win",
+    "egPrefix": "e.g.",
+    "addAria": "Add win",
+    "inputAria": "Win text input",
+    "inputHint": "Type your win for today, up to 200 characters"
+  },
+  "celebration": {
+    "hint": "Tap anywhere to continue",
+    "attribution": "Powered by GIPHY",
+    "aria": "Celebration",
+    "dismissAria": "Dismiss celebration"
+  },
+  "editableName": {
+    "label": "Your Name",
+    "placeholder": "Add your name",
+    "aria": "Your Name, {{value}}",
+    "notSet": "not set",
+    "inputAria": "Your name",
+    "inputHint": "Tap Return to save"
+  },
+  "settings": {
+    "eyebrow": "Control room",
+    "title": "Keep the streak easy.",
+    "body": "Reminders, profile, and app stuff. All here.",
+    "loadError": "Couldn't load settings — restart the app.",
+    "sectionReminders": "Reminders",
+    "sectionProfile": "Profile",
+    "sectionAbout": "About",
+    "dailyReminder": "Daily Reminder",
+    "reminderTime": "Reminder Time",
+    "reminderTimeAria": "Reminder Time, currently {{time}}",
+    "reminderTimeHint": "Turn on reminders to change this",
+    "remindersSetFor": "We'll nudge you at {{time}}",
+    "language": "Language",
+    "languageAuto": "Automatic ({{name}})",
+    "languageAutoLabel": "Automatic (System)",
+    "languagePickerTitle": "Language",
+    "languagePickerSubtitle": "Pick Winny's language. \"Automatic\" follows your device.",
+    "languagePickerEyebrow": "Display",
+    "howItWorks": "How It Works",
+    "howItWorksTitle": "How It Works",
+    "howItWorksBack": "Settings",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "rate": "Rate App",
+    "share": "Share App",
+    "notifDisabled": "Notifications off — tap to open Settings"
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "Small wins, big consequences.",
+    "body": "Winny makes logging the next win fast, obvious, and a little bit fun.",
+    "sections": [
+      {
+        "heading": "What this is",
+        "body": "A daily habit of catching what went right. Small wins pile up — and your streak keeps the receipts."
+      },
+      {
+        "heading": "The streak",
+        "body": "Log a win, the streak ticks up. Miss a day, it starts over — but your total never goes backwards."
+      },
+      {
+        "heading": "Your wins",
+        "body": "Every win you log is yours, forever. My Wins shows the whole story, day by day."
+      },
+      {
+        "heading": "Goals",
+        "body": "Set goals to point your wins somewhere. Tick them off when they're yours. Add more whenever."
+      },
+      {
+        "heading": "Why no AI yet",
+        "body": "V1 is free and private — your wins never leave your device. Simple on purpose."
+      }
+    ]
+  },
+  "notifications": {
+    "title": "Winny",
+    "prompts": [
+      "What did you win today?",
+      "One small win counts. Drop it here.",
+      "Notice what worked today.",
+      "Big dreams are built from small wins.",
+      "Log one win. That's the whole ask."
+    ]
+  },
+  "postWin": {
+    "firstWin": {
+      "title": "First win, in the books",
+      "body": "That's the whole move. Catch one win, come back tomorrow.",
+      "bodyNamed": "That's the whole move, {{name}}. Catch one win, come back tomorrow."
+    },
+    "milestone7": {
+      "title": "A whole week",
+      "body": "Seven days of catching yourself winning. Keep going.",
+      "bodyNamed": "Seven days of catching yourself winning, {{name}}. Keep going."
+    },
+    "milestone30": {
+      "title": "30 days deep",
+      "body": "That's a habit, not an accident. Look at you.",
+      "bodyNamed": "{{name}}, that's a habit, not an accident. Look at you."
+    },
+    "milestone100": {
+      "title": "100 days",
+      "body": "100 days of showing up. You're built different.",
+      "bodyNamed": "100 days of showing up, {{name}}. You're built different."
+    },
+    "comeback": {
+      "title": "Welcome back",
+      "body": "Streak resets, you don't. Today counts.",
+      "bodyNamed": "Welcome back, {{name}}. Streak resets, you don't. Today counts."
+    },
+    "postSave": {
+      "title": "Win added",
+      "titleNamed": "Nice one, {{name}}",
+      "bodies": [
+        "One more on the wall.",
+        "That's a W. No refunds.",
+        "Future you sends thanks.",
+        "Another brick. Another day.",
+        "Logged. Can't unhappen.",
+        "Small win, big habit.",
+        "Brain says: do that again.",
+        "You showed up. Whole game.",
+        "Stack enough of these and watch.",
+        "Streak's alive. So are you.",
+        "One step closer. Day by day.",
+        "Counted. Every time."
+      ]
+    }
+  }
+}

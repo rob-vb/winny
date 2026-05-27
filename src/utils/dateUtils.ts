@@ -1,4 +1,7 @@
 import { isToday, isYesterday, isSameYear, format } from "date-fns";
+import i18n from "i18next";
+import { dateLocaleFor } from "@/src/i18n/dateLocale";
+import { isSupportedLocale, FALLBACK_LOCALE } from "@/src/i18n/languages";
 
 // CRITICAL: 'en-CA' locale produces YYYY-MM-DD in device LOCAL time
 // NEVER use date.toISOString().slice(0,10) — that returns UTC date (RESEARCH Pitfall 4)
@@ -44,8 +47,12 @@ export function computeStreak(distinctDateKeys: string[]): number {
 export function formatDateKey(dateKey: string): string {
   // Noon anchor: prevents UTC midnight off-by-one in negative UTC offsets (RESEARCH Pitfall 3)
   const d = new Date(dateKey + "T12:00:00");
-  if (isToday(d)) return "Today";
-  if (isYesterday(d)) return "Yesterday";
-  if (isSameYear(d, new Date())) return format(d, "EEE, MMM d"); // "Sat, May 9"
-  return format(d, "MMM d, yyyy"); // "Dec 1, 2025"
+  if (isToday(d)) return i18n.t("date.today");
+  if (isYesterday(d)) return i18n.t("date.yesterday");
+  const code = isSupportedLocale(i18n.language) ? i18n.language : FALLBACK_LOCALE;
+  const locale = dateLocaleFor(code);
+  const fmt = isSameYear(d, new Date())
+    ? i18n.t("date.formatSameYear")
+    : i18n.t("date.formatPriorYear");
+  return format(d, fmt, { locale });
 }

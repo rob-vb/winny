@@ -8,8 +8,9 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
-import { useWinsStore, useDisplayName } from "@/src/stores/useWinsStore";
+import { useWinsStore, useDisplayName, useRemoveWin } from "@/src/stores/useWinsStore";
 import { StreakHeader } from "@/src/components/StreakHeader";
 import { WinCard } from "@/src/components/WinCard";
 import { WinInputArea } from "@/src/components/WinInputArea";
@@ -22,6 +23,7 @@ import type { Win } from "@/src/db/schema";
 // Today's wins list IS the session summary — always visible.
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const displayName = useDisplayName();
   const { hydrate, isHydrated, todayWins, streak, totalWins, addWin } =
     useWinsStore(
@@ -35,6 +37,7 @@ export default function HomeScreen() {
       }))
     );
 
+  const removeWin = useRemoveWin();
   const flatListRef = useRef<FlatList<Win>>(null);
   const [postWinMoment, setPostWinMoment] = useState<PostWinMoment | null>(null);
 
@@ -71,7 +74,7 @@ export default function HomeScreen() {
         <StreakHeader streak={0} totalWins={0} />
         <View className="flex-1 items-center justify-center">
           <Text className="font-nunito-regular text-base text-text-secondary">
-            Loading...
+            {t("home.loading")}
           </Text>
         </View>
         <WinInputArea onSubmit={async () => {}} />
@@ -100,19 +103,19 @@ export default function HomeScreen() {
               source={require("@/assets/images/trophy.png")}
               style={{ width: 160, height: 160 }}
               resizeMode="contain"
-              accessibilityLabel="Winny trophy"
+              accessibilityLabel={t("home.trophyAria")}
             />
             <Text
               className="font-nunito-black text-[32px] text-badge-ink leading-tight text-center mt-6"
               style={{ maxWidth: 320 }}
             >
-              {displayName ? `What did you win, ${displayName}?` : "What did you win today?"}
+              {displayName ? t("home.askNamed", { name: displayName }) : t("home.askToday")}
             </Text>
             <Text
               className="font-nunito-semibold text-base text-text-secondary leading-relaxed mt-3 text-center"
               style={{ maxWidth: 320 }}
             >
-              One sentence is enough. Log the proof and keep the streak moving.
+              {t("home.askHint")}
             </Text>
           </View>
         ) : (
@@ -122,7 +125,7 @@ export default function HomeScreen() {
             data={displayWins}
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => (
-              <WinCard win={item} isNew={index === 0 && justAdded} />
+              <WinCard win={item} isNew={index === 0 && justAdded} onDelete={removeWin} />
             )}
             contentContainerStyle={{
               paddingHorizontal: 16,

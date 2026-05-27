@@ -1,0 +1,272 @@
+{
+  "common": {
+    "cancel": "Annuleer",
+    "done": "Klaar",
+    "delete": "Verwijder"
+  },
+  "tabs": {
+    "home": "Start",
+    "wins": "Mijn Wins",
+    "goals": "Doelen",
+    "settings": "Instellingen"
+  },
+  "home": {
+    "loading": "Even laden...",
+    "askToday": "Wat was je win vandaag?",
+    "askNamed": "Wat was je win vandaag, {{name}}?",
+    "askHint": "Eén zin is genoeg. Noteer 'm en houd je streak gaande.",
+    "trophyAria": "Winny-trofee"
+  },
+  "streak": {
+    "eyebrowToday": "Vandaag",
+    "totalLogged_one": "{{count}} win op de teller",
+    "totalLogged_other": "{{count}} wins op de teller",
+    "badgeDayStreak_one": "dag streak",
+    "badgeDayStreak_other": "dagen streak",
+    "badgeStreak": "streak",
+    "totalWinsLabel": "wins totaal",
+    "namedWinsLabel": "wins van {{name}}",
+    "winningRecord": "Jouw winrecord",
+    "ariaSummary": "{{total}} {{label}}. {{streak}}",
+    "label": {
+      "zero": "Nog geen streak. Daar gaan we vandaag wat aan doen. 🌟",
+      "one": "Dag één staat. De moeilijkste is binnen. 🎉",
+      "two": "Twee op een rij. Officieel een streak. 🌱",
+      "small": "{{count}} dagen. Lekker bezig. 💪",
+      "growing": "{{count}} dagen. Dit begint érgens op te lijken. 🔥",
+      "fire": "{{count}} dagen. Niet te stoppen, of wel? 🔥🔥",
+      "rocket": "{{count}} dagen. Belachelijk goed. 🚀",
+      "legendary": "{{count}} dagen. Laat ook nog eens wat over voor de rest. 🏆",
+      "champion": "{{count}} dagen. Officiële Winny-kanjer. 👑"
+    }
+  },
+  "winCount_one": "1 win",
+  "winCount_other": "{{count}} wins",
+  "winSectionAria": "{{date}}, {{count}}, {{state}}",
+  "sectionState": {
+    "collapsed": "ingeklapt",
+    "expanded": "uitgeklapt"
+  },
+  "date": {
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "formatSameYear": "EEE d MMM",
+    "formatPriorYear": "d MMM yyyy"
+  },
+  "wins": {
+    "emptyTitle": "De prijzenkast is leeg.",
+    "emptyBody": "Log je eerste win bij Start. Daarna vult deze kast zich vanzelf.",
+    "emptyAria": "Nog geen wins. Ga naar Start om er één te loggen.",
+    "deleteConfirmTitle": "Win verwijderen?",
+    "deleteConfirmBody": "Deze win uit je overzicht halen?",
+    "deleteAria": "Win verwijderen"
+  },
+  "goal": {
+    "eyebrow": "Doelen",
+    "title": "Houd je doelen voor ogen.",
+    "body": "Schrijf op wat je wil bereiken. Vink af zodra het binnen is.",
+    "loadError": "Kon je doelen niet laden. Start de app opnieuw op.",
+    "achievedHeader": "Behaalde doelen",
+    "achievedEyebrow": "Doel behaald",
+    "achievedEyebrowNamed": "{{name}}, doel behaald",
+    "addEyebrow": "Doel toevoegen",
+    "addPlaceholder": "Wat wil je bereiken?",
+    "addAria": "Doel toevoegen",
+    "addHint": "Typ een doel en tik op de plus",
+    "inputAria": "Nieuwe doeltekst",
+    "deleteConfirmTitle": "Doel verwijderen?",
+    "deleteConfirmBody": "Dit doel van je lijst halen?",
+    "deleteAria": "Doel verwijderen",
+    "markAchieved": "Markeer als behaald",
+    "markNotAchieved": "Markeer als nog niet behaald",
+    "bodies": [
+      "Opgeschreven. Achternagezeten. Binnengehaald. Zo bouw je een leven.",
+      "Vroeger durfde je dit alleen op te schrijven. Vandaag deed je het ook echt. Buigen mag.",
+      "De meeste mensen laten dromen dromen. Jij sleurde deze de werkelijkheid in.",
+      "Was een misschien. Toen een ooit. Toen een binnenkort. Nu klaar. Voor altijd van jou.",
+      "Onthoud dit moment. Dít is wie je zei dat je zou worden. Aangenaam.",
+      "Van papier naar leven. Van droom naar gefixt. Zo werkt het dus.",
+      "Niet op toestemming gewacht. Niet op perfect gewacht. Gewoon gedaan en gewonnen.",
+      "Eén doel dichter bij de toekomst die je bouwt. En bij de versie van jou die hem bouwt."
+    ]
+  },
+  "goalEditor": {
+    "placeholder": "Wat wil je bereiken?",
+    "inputAria": "Doeltekst",
+    "inputHint": "Typ je doel, maximaal 500 tekens",
+    "counterAria": "{{used}} van {{max}} tekens gebruikt",
+    "save": "Doel opslaan",
+    "saveAria": "Doel opslaan",
+    "saveHint": "Pas je doel aan om op te slaan",
+    "cancel": "Annuleer",
+    "cancelAria": "Bewerken annuleren"
+  },
+  "onboarding": {
+    "welcome": {
+      "tagline": "Log één kleine win. Dan nog een. Kijk wat er gebeurt.",
+      "cta": "Beginnen Maar"
+    },
+    "goal": {
+      "eyebrow": "Doel (optioneel)",
+      "title": "Voeg een doel toe.",
+      "body": "Je vindt 'm onder Doelen. Vink af als 'ie binnen is.",
+      "skip": "Sla maar over",
+      "skipAria": "Doelen-instelling overslaan",
+      "saved": "Opgeslagen. Op naar je eerste win.",
+      "error": "Doel kon niet opgeslagen worden — tik op Doel opslaan om opnieuw te proberen."
+    }
+  },
+  "winInput": {
+    "eyebrow": "Voeg je win toe",
+    "egPrefix": "bv.",
+    "addAria": "Win toevoegen",
+    "inputAria": "Win-tekstveld",
+    "inputHint": "Typ je win van vandaag, maximaal 200 tekens",
+    "examples": [
+      "Een collega geholpen",
+      "Iets afgemaakt waar ik tegenop zag",
+      "Toch opgedaagd terwijl ik geen zin had",
+      "Iets nieuws geleerd",
+      "Iemand aan het lachen gemaakt",
+      "Een belofte aan mezelf nagekomen",
+      "Pauze genomen toen ik die nodig had",
+      "Voor mezelf opgekomen",
+      "Om hulp gevraagd",
+      "Even aardig geweest tegen iemand",
+      "Mijn lijf bewogen",
+      "Gezond gekookt",
+      "Even naar buiten gewandeld",
+      "Nee gezegd tegen iets wat me niks bracht",
+      "Stap gezet in een persoonlijk project",
+      "Genoeg water gedronken",
+      "Een deadline gehaald",
+      "Iets buiten mijn comfortzone geprobeerd",
+      "Een grens gesteld",
+      "Lang gefocust gebleven"
+    ]
+  },
+  "celebration": {
+    "hint": "Tik om door te gaan",
+    "attribution": "Powered by GIPHY",
+    "aria": "Viering",
+    "dismissAria": "Viering sluiten"
+  },
+  "editableName": {
+    "label": "Je naam",
+    "placeholder": "Vul je naam in",
+    "aria": "Je naam, {{value}}",
+    "notSet": "niet ingevuld",
+    "inputAria": "Je naam",
+    "inputHint": "Druk op Enter om op te slaan"
+  },
+  "settings": {
+    "eyebrow": "Controlekamer",
+    "title": "Houd de streak makkelijk.",
+    "body": "Herinneringen, profiel en app-spullen. Alles staat hier.",
+    "loadError": "Kon instellingen niet laden — start de app opnieuw op.",
+    "sectionReminders": "Herinneringen",
+    "sectionProfile": "Profiel",
+    "sectionAbout": "Over",
+    "dailyReminder": "Dagelijkse herinnering",
+    "reminderTime": "Tijdstip",
+    "reminderTimeAria": "Tijdstip, nu {{time}}",
+    "reminderTimeHint": "Zet herinneringen aan om dit te wijzigen",
+    "remindersSetFor": "We porren je om {{time}}",
+    "language": "Taal",
+    "languageAuto": "Automatisch ({{name}})",
+    "languageAutoLabel": "Automatisch (systeem)",
+    "languagePickerTitle": "Taal",
+    "languagePickerSubtitle": "Kies de taal van Winny. \"Automatisch\" volgt je apparaat.",
+    "languagePickerEyebrow": "Weergave",
+    "howItWorks": "Hoe het werkt",
+    "howItWorksTitle": "Hoe het werkt",
+    "howItWorksBack": "Instellingen",
+    "privacy": "Privacybeleid",
+    "terms": "Gebruiksvoorwaarden",
+    "rate": "App beoordelen",
+    "share": "App delen",
+    "notifDisabled": "Meldingen uit — tik om Instellingen te openen"
+  },
+  "howItWorks": {
+    "eyebrow": "Hoe het werkt",
+    "title": "Kleine wins, groot effect.",
+    "body": "Winny zorgt dat die volgende win snel, simpel en het komen waard is.",
+    "sections": [
+      {
+        "heading": "Wat is dit eigenlijk",
+        "body": "Een dagelijks gewoontetje: zien wat er wél goed ging. Kleine wins stapelen op — je streak bewaart het bewijs."
+      },
+      {
+        "heading": "De streak",
+        "body": "Log een win, je streak gaat omhoog. Sla je een dag over, dan begint 'ie opnieuw — maar je totaal gaat nooit naar beneden."
+      },
+      {
+        "heading": "Jouw wins",
+        "body": "Elke win die je logt blijft van jou. Onder Mijn Wins zie je het hele verhaal, per dag."
+      },
+      {
+        "heading": "Doelen",
+        "body": "Stel doelen om je wins een richting te geven. Vink ze af als ze binnen zijn. Voeg nieuwe toe wanneer je wil."
+      },
+      {
+        "heading": "Waarom nog geen AI",
+        "body": "V1 is gratis en privé — je wins blijven op je telefoon. Lekker simpel houden, zodat jij het volhoudt."
+      }
+    ]
+  },
+  "notifications": {
+    "title": "Winny",
+    "prompts": [
+      "Wat was je win vandaag?",
+      "Eén kleine win telt. Gooi 'm er in.",
+      "Even checken: wat ging er goed?",
+      "Grote dromen bouw je met kleine wins.",
+      "Log één win. Meer hoef je niet."
+    ]
+  },
+  "postWin": {
+    "firstWin": {
+      "title": "Eerste win is binnen",
+      "body": "Dit is 'm. Pak één win per dag, en kom morgen terug.",
+      "bodyNamed": "Dit is 'm, {{name}}. Pak één win per dag, en kom morgen terug."
+    },
+    "milestone7": {
+      "title": "Een hele week",
+      "body": "Zeven dagen waarin je jezelf zag winnen. Ga door.",
+      "bodyNamed": "Zeven dagen waarin je jezelf zag winnen, {{name}}. Ga door."
+    },
+    "milestone30": {
+      "title": "30 dagen diep",
+      "body": "Dit is een gewoonte, geen toeval. Knap hoor.",
+      "bodyNamed": "{{name}}, dit is een gewoonte, geen toeval. Knap hoor."
+    },
+    "milestone100": {
+      "title": "100 dagen",
+      "body": "Honderd dagen opdagen. Andere koek.",
+      "bodyNamed": "Honderd dagen opdagen, {{name}}. Andere koek."
+    },
+    "comeback": {
+      "title": "Welkom terug",
+      "body": "Streak resetten kan. Jij niet. Vandaag telt.",
+      "bodyNamed": "Welkom terug, {{name}}. Streak resetten kan. Jij niet."
+    },
+    "postSave": {
+      "title": "Win toegevoegd",
+      "titleNamed": "Mooi gedaan, {{name}}",
+      "bodies": [
+        "Eentje erbij in de kast.",
+        "Dat is een W. Geen terugnames.",
+        "Toekomstige jij stuurt nu al een bedankje.",
+        "Nog een steen erbij.",
+        "Gelogd. Niet meer terug te draaien.",
+        "Kleine win, grote gewoonte.",
+        "Je brein wil meer. Voeren maar.",
+        "Je was er. Dat is het hele spel.",
+        "Stapel er genoeg op en kijk wat er komt.",
+        "Streak leeft. Jij ook.",
+        "Eentje dichterbij. Stap voor stap.",
+        "Geteld. Elke keer weer."
+      ]
+    }
+  }
+}

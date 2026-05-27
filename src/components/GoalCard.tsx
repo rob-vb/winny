@@ -1,5 +1,6 @@
 import { View, Text, Pressable, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import type { DreamGoalItem } from "@/src/db/schema";
 
 interface GoalCardProps {
@@ -9,13 +10,15 @@ interface GoalCardProps {
 }
 
 export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
+  const { t } = useTranslation();
   return (
     <View className="flex-row items-center bg-surface rounded-2xl px-3 py-3 border border-border mb-3">
       <Pressable
         onPress={() => onToggle(goal.id, !goal.completed)}
-        className="min-h-[44px] min-w-[44px] items-center justify-center"
+        hitSlop={12}
+        className="px-1 py-1"
         accessibilityRole="checkbox"
-        accessibilityLabel={goal.completed ? "Mark as not achieved" : "Mark as achieved"}
+        accessibilityLabel={goal.completed ? t("goal.markNotAchieved") : t("goal.markAchieved")}
         accessibilityState={{ checked: !!goal.completed }}
       >
         <Ionicons
@@ -36,14 +39,15 @@ export function GoalCard({ goal, onToggle, onDelete }: GoalCardProps) {
       </Text>
       <Pressable
         onPress={() =>
-          Alert.alert("Delete Goal", "Remove this goal?", [
-            { text: "Cancel", style: "cancel" },
-            { text: "Delete", style: "destructive", onPress: () => onDelete(goal.id) },
+          Alert.alert(t("goal.deleteConfirmTitle"), t("goal.deleteConfirmBody"), [
+            { text: t("common.cancel"), style: "cancel" },
+            { text: t("common.delete"), style: "destructive", onPress: () => onDelete(goal.id) },
           ])
         }
-        className="min-h-[44px] min-w-[44px] items-center justify-center"
+        hitSlop={12}
+        className="px-2 py-1"
         accessibilityRole="button"
-        accessibilityLabel="Delete goal"
+        accessibilityLabel={t("goal.deleteAria")}
       >
         <Ionicons name="trash-outline" size={16} color="#C7C7CC" />
       </Pressable>

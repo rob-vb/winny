@@ -1,12 +1,13 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import { notificationPrompts, pickCopyVariant } from "@/src/copy/catalog";
+import {
+  getNotificationPrompts,
+  getNotificationTitle,
+  pickCopyVariant,
+} from "@/src/copy/catalog";
 import { toDateKey } from "@/src/utils/dateUtils";
 
 const CHANNEL_ID = "daily-reminder";
-const NOTIFICATION_TITLE = "Winny";
-
-export const COPY_POOL = notificationPrompts;
 
 export function initNotificationHandler(): void {
   Notifications.setNotificationHandler({
@@ -20,7 +21,9 @@ export function initNotificationHandler(): void {
 }
 
 export function pickPromptForDate(dateKey: string): string {
-  return pickCopyVariant(COPY_POOL, dateKey);
+  const pool = getNotificationPrompts();
+  if (pool.length === 0) return "";
+  return pickCopyVariant(pool, dateKey);
 }
 
 export function parseHHmmToDate(hhMm: string): Date {
@@ -76,7 +79,7 @@ export async function scheduleNext30Days(reminderTimeHHmm: string): Promise<void
     const dateKey = toDateKey(target);
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: NOTIFICATION_TITLE,
+        title: getNotificationTitle(),
         body: pickPromptForDate(dateKey),
         sound: false,
       },

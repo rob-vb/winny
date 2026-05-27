@@ -1,0 +1,272 @@
+{
+  "common": {
+    "cancel": "Annuler",
+    "done": "Terminé",
+    "delete": "Supprimer"
+  },
+  "tabs": {
+    "home": "Accueil",
+    "wins": "Mes Victoires",
+    "goals": "Objectifs",
+    "settings": "Réglages"
+  },
+  "home": {
+    "loading": "Chargement...",
+    "askToday": "Tu as gagné quoi aujourd'hui ?",
+    "askNamed": "Tu as gagné quoi aujourd'hui, {{name}} ?",
+    "askHint": "Une phrase suffit. Note-la, la série continue.",
+    "trophyAria": "Trophée Winny"
+  },
+  "streak": {
+    "eyebrowToday": "Aujourd'hui",
+    "totalLogged_one": "{{count}} victoire au compteur",
+    "totalLogged_other": "{{count}} victoires au compteur",
+    "badgeDayStreak_one": "jour de série",
+    "badgeDayStreak_other": "jours de série",
+    "badgeStreak": "série",
+    "totalWinsLabel": "victoires au total",
+    "namedWinsLabel": "victoires de {{name}}",
+    "winningRecord": "Ton palmarès",
+    "ariaSummary": "{{total}} {{label}}. {{streak}}",
+    "label": {
+      "zero": "Pas encore de série. On corrige ça aujourd'hui. 🌟",
+      "one": "Jour un. Le plus dur est passé. 🎉",
+      "two": "Deux d'affilée. Officiellement une série. 🌱",
+      "small": "{{count}} jours. Tu réponds présent. 💪",
+      "growing": "{{count}} jours. Ça commence à ressembler à quelque chose. 🔥",
+      "fire": "{{count}} jours. Qui va t'arrêter ? 🔥🔥",
+      "rocket": "{{count}} jours. Franchement, c'est presque trop. 🚀",
+      "legendary": "{{count}} jours. Laisse-en pour les autres. 🏆",
+      "champion": "{{count}} jours. Royauté Winny, en gros. 👑"
+    }
+  },
+  "winCount_one": "1 victoire",
+  "winCount_other": "{{count}} victoires",
+  "winSectionAria": "{{date}}, {{count}}, {{state}}",
+  "sectionState": {
+    "collapsed": "replié",
+    "expanded": "déplié"
+  },
+  "date": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "formatSameYear": "EEE d MMM",
+    "formatPriorYear": "d MMM yyyy"
+  },
+  "wins": {
+    "emptyTitle": "La vitrine est ouverte, et vide.",
+    "emptyBody": "Note une victoire depuis Accueil. On va remplir les étagères.",
+    "emptyAria": "Pas encore de victoires. Va sur Accueil pour en noter une.",
+    "deleteConfirmTitle": "Supprimer la victoire ?",
+    "deleteConfirmBody": "Retirer cette victoire de ton historique ?",
+    "deleteAria": "Supprimer la victoire"
+  },
+  "goal": {
+    "eyebrow": "Objectifs",
+    "title": "Garde tes objectifs en vue.",
+    "body": "Écris ce que tu vises. Coche quand c'est attrapé.",
+    "loadError": "Impossible de charger tes objectifs. Redémarre l'app.",
+    "achievedHeader": "Objectifs décrochés",
+    "achievedEyebrow": "Objectif atteint",
+    "achievedEyebrowNamed": "{{name}}, objectif atteint",
+    "addEyebrow": "Ajouter un objectif",
+    "addPlaceholder": "Qu'est-ce que tu veux décrocher ?",
+    "addAria": "Ajouter un objectif",
+    "addHint": "Saisis un objectif et appuie sur +",
+    "inputAria": "Texte du nouvel objectif",
+    "deleteConfirmTitle": "Supprimer l'objectif ?",
+    "deleteConfirmBody": "Retirer cet objectif de ta liste ?",
+    "deleteAria": "Supprimer l'objectif",
+    "markAchieved": "Marquer comme atteint",
+    "markNotAchieved": "Marquer comme non atteint",
+    "bodies": [
+      "Tu l'as écrit. Tu l'as poursuivi. Tu l'as attrapé. Une vie se construit comme ça.",
+      "Toi d'avant a osé l'écrire. Toi d'aujourd'hui l'a livré. Tu peux saluer.",
+      "La plupart laissent les rêves rester des rêves. Toi, tu as traîné celui-ci dehors.",
+      "C'était un peut-être. Puis un un jour. Puis un bientôt. Maintenant : fait. À toi pour de bon.",
+      "Souviens-toi de ce moment. C'est la personne que tu disais devenir. Bonjour.",
+      "De la page à la vraie vie. Du rêve au coché. C'est toute l'astuce.",
+      "Pas demandé la permission. Pas attendu le parfait. Présent, gagné.",
+      "Un objectif plus près du futur que tu mijotes. Continue de remuer."
+    ]
+  },
+  "goalEditor": {
+    "placeholder": "Qu'est-ce que tu veux décrocher ?",
+    "inputAria": "Texte de l'objectif",
+    "inputHint": "Saisis ton objectif, jusqu'à 500 caractères",
+    "counterAria": "{{used}} sur {{max}} caractères utilisés",
+    "save": "Enregistrer",
+    "saveAria": "Enregistrer l'objectif",
+    "saveHint": "Modifie le texte pour pouvoir enregistrer",
+    "cancel": "Annuler",
+    "cancelAria": "Annuler la modification"
+  },
+  "onboarding": {
+    "welcome": {
+      "tagline": "Note une petite victoire. Puis une autre. Regarde ce que ça donne.",
+      "cta": "C'est parti"
+    },
+    "goal": {
+      "eyebrow": "Objectif (facultatif)",
+      "title": "Pose un objectif là où tu le verras.",
+      "body": "Il vit dans l'onglet Objectifs. Coche-le quand il est à toi.",
+      "skip": "Passer pour l'instant",
+      "skipAria": "Passer la configuration des Objectifs",
+      "saved": "Enregistré. Direction ta première victoire.",
+      "error": "Objectif non enregistré — appuie sur Enregistrer pour réessayer."
+    }
+  },
+  "winInput": {
+    "eyebrow": "Ajoute ta victoire",
+    "egPrefix": "ex.",
+    "addAria": "Ajouter la victoire",
+    "inputAria": "Champ de la victoire",
+    "inputHint": "Tape ta victoire du jour, jusqu'à 200 caractères",
+    "examples": [
+      "Aidé un collègue",
+      "Terminé un truc que je reportais",
+      "Présent, même sans en avoir envie",
+      "Appris quelque chose de nouveau",
+      "Fait sourire quelqu'un",
+      "Tenu une promesse envers moi",
+      "Fait une pause quand j'en avais besoin",
+      "Pris la parole pour moi",
+      "Demandé de l'aide",
+      "Été sympa avec quelqu'un",
+      "Bougé un peu",
+      "Cuisiné quelque chose de sain",
+      "Fait un tour dehors",
+      "Dit non à un truc qui ne m'apportait rien",
+      "Avancé sur un projet perso",
+      "Bu assez d'eau",
+      "Tenu une deadline",
+      "Tenté un truc hors de ma zone de confort",
+      "Posé une limite qu'il fallait poser",
+      "Resté concentré un bon moment"
+    ]
+  },
+  "celebration": {
+    "hint": "Touche pour continuer",
+    "attribution": "Powered by GIPHY",
+    "aria": "Célébration",
+    "dismissAria": "Fermer la célébration"
+  },
+  "editableName": {
+    "label": "Ton prénom",
+    "placeholder": "Mets ton prénom",
+    "aria": "Ton prénom, {{value}}",
+    "notSet": "non défini",
+    "inputAria": "Ton prénom",
+    "inputHint": "Appuie sur Entrée pour enregistrer"
+  },
+  "settings": {
+    "eyebrow": "Centre de contrôle",
+    "title": "Garde la série simple.",
+    "body": "Rappels, profil, et réglages de l'app. Tout est ici.",
+    "loadError": "Impossible de charger les réglages — redémarre l'app.",
+    "sectionReminders": "Rappels",
+    "sectionProfile": "Profil",
+    "sectionAbout": "À propos",
+    "dailyReminder": "Rappel quotidien",
+    "reminderTime": "Heure",
+    "reminderTimeAria": "Heure du rappel, actuellement {{time}}",
+    "reminderTimeHint": "Active les rappels pour changer l'heure",
+    "remindersSetFor": "On te pingue à {{time}}",
+    "language": "Langue",
+    "languageAuto": "Automatique ({{name}})",
+    "languageAutoLabel": "Automatique (système)",
+    "languagePickerTitle": "Langue",
+    "languagePickerSubtitle": "Choisis la langue de Winny. \"Automatique\" suit ton appareil.",
+    "languagePickerEyebrow": "Affichage",
+    "howItWorks": "Comment ça marche",
+    "howItWorksTitle": "Comment ça marche",
+    "howItWorksBack": "Réglages",
+    "privacy": "Confidentialité",
+    "terms": "Conditions d'utilisation",
+    "rate": "Noter l'app",
+    "share": "Partager l'app",
+    "notifDisabled": "Notifications désactivées — touche pour ouvrir Réglages"
+  },
+  "howItWorks": {
+    "eyebrow": "Comment ça marche",
+    "title": "Petites victoires, grands effets.",
+    "body": "Winny rend la prochaine victoire rapide, évidente, et un brin amusante.",
+    "sections": [
+      {
+        "heading": "C'est quoi ?",
+        "body": "L'habitude quotidienne de remarquer ce qui a marché. Les petites victoires s'empilent — ta série garde les preuves."
+      },
+      {
+        "heading": "La série",
+        "body": "Tu notes une victoire, la série monte. Un jour sauté, elle repart à zéro — mais ton total ne recule jamais."
+      },
+      {
+        "heading": "Tes victoires",
+        "body": "Chaque victoire notée est à toi, pour toujours. Mes Victoires affiche toute l'histoire, jour par jour."
+      },
+      {
+        "heading": "Objectifs",
+        "body": "Mets des objectifs pour orienter tes victoires. Coche-les quand ils sont à toi. Ajoutes-en quand tu veux."
+      },
+      {
+        "heading": "Pourquoi pas d'IA",
+        "body": "La V1 est gratuite et privée — tes victoires ne quittent jamais ton appareil. Simple, exprès."
+      }
+    ]
+  },
+  "notifications": {
+    "title": "Winny",
+    "prompts": [
+      "Tu as gagné quoi aujourd'hui ?",
+      "Une petite victoire compte. Lâche-la ici.",
+      "Qu'est-ce qui a marché aujourd'hui ?",
+      "Les grands rêves sont faits de petites victoires.",
+      "Note une victoire. C'est tout ce qu'on demande."
+    ]
+  },
+  "postWin": {
+    "firstWin": {
+      "title": "Première victoire, notée",
+      "body": "C'est toute la démarche. Une victoire repérée, et tu reviens demain.",
+      "bodyNamed": "C'est toute la démarche, {{name}}. Une victoire repérée, et tu reviens demain."
+    },
+    "milestone7": {
+      "title": "Une semaine entière",
+      "body": "Sept jours à te surprendre en train de gagner. Continue.",
+      "bodyNamed": "Sept jours à te surprendre en train de gagner, {{name}}. Continue."
+    },
+    "milestone30": {
+      "title": "30 jours dedans",
+      "body": "C'est une habitude, pas un hasard. Joli.",
+      "bodyNamed": "{{name}}, c'est une habitude, pas un hasard. Joli."
+    },
+    "milestone100": {
+      "title": "100 jours",
+      "body": "Cent jours présent. Autre catégorie.",
+      "bodyNamed": "Cent jours présent, {{name}}. Autre catégorie."
+    },
+    "comeback": {
+      "title": "Te revoilà",
+      "body": "La série repart. Toi, non. Aujourd'hui compte.",
+      "bodyNamed": "Te revoilà, {{name}}. La série repart. Toi, non."
+    },
+    "postSave": {
+      "title": "Victoire ajoutée",
+      "titleNamed": "Joué, {{name}}",
+      "bodies": [
+        "Une de plus sur le mur.",
+        "C'est une V. Pas de retour.",
+        "Le toi du futur envoie un merci.",
+        "Une brique de plus.",
+        "Notée. Impossible à défaire.",
+        "Petite victoire, grosse habitude.",
+        "Ton cerveau en redemande. Sers.",
+        "Tu étais là. C'est tout le jeu.",
+        "Empiles-en assez et tu verras.",
+        "La série vit. Toi aussi.",
+        "Un pas plus près. Jour après jour.",
+        "Comptée. À chaque fois."
+      ]
+    }
+  }
+}

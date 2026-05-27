@@ -1,14 +1,17 @@
 import { useEffect, useRef } from "react";
-import { Animated, Text, View } from "react-native";
+import { Animated, Alert, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import type { Win } from "@/src/db/schema";
 
 interface WinCardProps {
   win: Win;
   isNew: boolean;
+  onDelete?: (id: string) => void;
 }
 
-export function WinCard({ win, isNew }: WinCardProps) {
+export function WinCard({ win, isNew, onDelete }: WinCardProps) {
+  const { t } = useTranslation();
   const scale = useRef(new Animated.Value(isNew ? 0.8 : 1)).current;
   const opacity = useRef(new Animated.Value(isNew ? 0 : 1)).current;
 
@@ -20,6 +23,22 @@ export function WinCard({ win, isNew }: WinCardProps) {
       ]).start();
     }
   }, []);
+
+  const confirmDelete = () => {
+    if (!onDelete) return;
+    Alert.alert(
+      t("wins.deleteConfirmTitle"),
+      t("wins.deleteConfirmBody"),
+      [
+        { text: t("common.cancel"), style: "cancel" },
+        {
+          text: t("common.delete"),
+          style: "destructive",
+          onPress: () => onDelete(win.id),
+        },
+      ]
+    );
+  };
 
   return (
     <Animated.View
@@ -46,6 +65,17 @@ export function WinCard({ win, isNew }: WinCardProps) {
           {win.text}
         </Text>
       </View>
+      {onDelete ? (
+        <Pressable
+          onPress={confirmDelete}
+          hitSlop={12}
+          className="px-2 py-1"
+          accessibilityRole="button"
+          accessibilityLabel={t("wins.deleteAria")}
+        >
+          <Ionicons name="trash-outline" size={16} color="#C7C7CC" />
+        </Pressable>
+      ) : null}
     </Animated.View>
   );
 }

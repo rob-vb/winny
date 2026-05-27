@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { formatDateKey } from "@/src/utils/dateUtils";
-
-const winCountLabel = (count: number): string =>
-  count === 1 ? "1 win" : `${count} wins`;
 
 interface WinSection {
   date_key: string;
@@ -23,6 +21,7 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
   isCollapsed,
   onToggle,
 }: DateSectionHeaderProps) {
+  const { t } = useTranslation();
   const rotation = useRef(new Animated.Value(isCollapsed ? 1 : 0)).current;
 
   useEffect(() => {
@@ -44,13 +43,15 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
 
   const dateLabel = formatDateKey(section.date_key);
   const count = section.data.length;
+  const countLabel = t("winCount", { count });
+  const stateLabel = isCollapsed ? t("sectionState.collapsed") : t("sectionState.expanded");
 
   return (
     <Pressable
       onPress={onToggle}
       className="flex-row items-center px-4 py-3 bg-background"
       accessibilityRole="button"
-      accessibilityLabel={`${dateLabel}, ${winCountLabel(count)}, ${isCollapsed ? "collapsed" : "expanded"}`}
+      accessibilityLabel={t("winSectionAria", { date: dateLabel, count: countLabel, state: stateLabel })}
     >
       <Text className="font-nunito-extrabold text-sm text-badge-ink flex-1">
         {dateLabel}
@@ -60,7 +61,7 @@ export const DateSectionHeader = React.memo(function DateSectionHeader({
         accessibilityElementsHidden={true}
       >
         <Text className="font-nunito-extrabold text-xs text-badge-ink">
-          {winCountLabel(count)}
+          {countLabel}
         </Text>
       </View>
       <Animated.View
