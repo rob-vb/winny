@@ -2,16 +2,17 @@
   "expo": {
     "name": "Winny",
     "slug": "winny",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "winny",
+    "platforms": ["ios", "android"],
     "userInterfaceStyle": "light",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/68833b07-973e-43b0-9845-8d9881301850"
+      "url": "https://u.expo.dev/a5f388d0-3b3d-43a6-b6e9-69ee72370d74"
     },
     "splash": {
       "image": "./assets/images/splash-icon.png",

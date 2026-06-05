@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -13,7 +14,9 @@ interface PostWinBannerProps {
 export function PostWinBanner({ moment, onDismiss }: PostWinBannerProps) {
   const { t } = useTranslation();
   const displayName = useDisplayName();
-  const copy = getPostWinCopy(moment, displayName);
+  // Fresh seed per mount so the post-save body rotates each win (D-08).
+  const [seed] = useState(() => Math.floor(Math.random() * 1_000_000));
+  const copy = getPostWinCopy(moment, displayName, seed);
 
   return (
     <View className="mx-4 mt-3 mb-1 bg-warm-paper rounded-3xl border border-primary overflow-hidden">

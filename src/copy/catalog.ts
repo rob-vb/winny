@@ -50,7 +50,11 @@ function streakLabelKey(streak: number): string {
   return "streak.label.champion";
 }
 
-export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessage {
+export function getPostWinCopy(
+  moment: PostWinMoment,
+  name?: string,
+  seed?: string | number
+): CopyMessage {
   const trimmed = name?.trim() || "";
   const hasName = trimmed.length > 0;
 
@@ -65,7 +69,7 @@ export function getPostWinCopy(moment: PostWinMoment, name?: string): CopyMessag
         : i18n.t("postWin.postSave.title"),
       body:
         list.length > 0
-          ? pickCopyVariant(list, `${moment.type}:${trimmed}`)
+          ? pickCopyVariant(list, seed ?? `${moment.type}:${trimmed}`)
           : "",
     };
   }

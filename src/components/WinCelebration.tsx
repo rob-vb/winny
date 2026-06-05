@@ -41,7 +41,9 @@ interface WinCelebrationProps {
 export function WinCelebration({ moment, customCopy, intensity = "normal", onDismiss }: WinCelebrationProps) {
   const { t } = useTranslation();
   const displayName = useDisplayName();
-  const copy = customCopy ?? (moment ? getPostWinCopy(moment, displayName) : { title: "", body: "" });
+  // Fresh seed per mount so the post-save body rotates each win (D-08).
+  const [seed] = useState(() => Math.floor(Math.random() * 1_000_000));
+  const copy = customCopy ?? (moment ? getPostWinCopy(moment, displayName, seed) : { title: "", body: "" });
   const mega = intensity === "mega";
   const contentScale = useRef(new Animated.Value(0.6)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
