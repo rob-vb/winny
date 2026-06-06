@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Redirect, Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import * as Updates from "expo-updates";
 import { AppState, type AppStateStatus } from "react-native";
 import {
   Nunito_400Regular,
@@ -142,6 +143,42 @@ export default function RootLayout() {
 
     return () => subscription.remove();
   }, [ready]);
+
+  // OTA self-heal: apply the newest published update immediately instead of
+  // next-launch. The installed binary boots the cached/embedded bundle first
+  // (fallbackToCacheTimeout: 0), so without this a single cold open can show a
+  // stale bundle. Check on cold start and on every foreground; reload only when
+  // a new update was actually fetched. No-ops in dev / Expo Go.
+  useEffect(() => {
+    if (__DEV__ || !Updates.isEnabled) return;
+
+    let cancelled = false;
+    const syncUpdate = async () => {
+      try {
+        const check = await Updates.checkForUpdateAsync();
+        if (cancelled || !check.isAvailable) return;
+        const fetched = await Updates.fetchUpdateAsync();
+        if (cancelled || !fetched.isNew) return;
+        await Updates.reloadAsync();
+      } catch {
+        // Offline or transient — try again on next foreground.
+      }
+    };
+
+    syncUpdate();
+
+    const subscription = AppState.addEventListener(
+      "change",
+      (nextState: AppStateStatus) => {
+        if (nextState === "active") syncUpdate();
+      }
+    );
+
+    return () => {
+      cancelled = true;
+      subscription.remove();
+    };
+  }, []);
 
   if (!ready || !onboardingChecked) return null;
 
